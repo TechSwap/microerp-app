@@ -1,1 +1,61 @@
-<p>modal-cliente works!</p>
+<div class="container" style="width: 850px;">
+  <h3 mat-dialog-title>Adicionar Cliente</h3>
+  <mat-dialog-content>
+    <form>
+      <div class="form-fields">
+        <mat-form-field>
+          <input matInput placeholder="Nome" name="nome" required>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="CNPJ" name="cnpj" required>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Inscricao Estadual" name="inscricaoEstadual">
+        </mat-form-field>
+      </div>
+      <div class="form-fields">
+        <mat-form-field>
+          <input matInput placeholder="Celular" name="contato1">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Comercial" name="contato2">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Email" name="email">
+        </mat-form-field>
+      </div>
+      <div class="form-fields">
+        <mat-form-field>
+          <input matInput placeholder="Cep" name="cep" (change)="buscaCep($event)">
+        </mat-form-field>
+      </div>
+      <div class="form-fields">
+        <mat-form-field>
+          <input matInput placeholder="Endereco" name="endereco">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Numero" name="numero">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Bairro" name="bairro">
+        </mat-form-field>
+      </div>
+      <div class="form-fields">
+        <mat-form-field>
+          <input matInput placeholder="Cidade" name="cidade">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Estado" name="estado">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Complemento" name="complemento">
+        </mat-form-field>
+      </div>
+
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close (click)="onCloseClick()">Cancelar</button>
+    <button mat-button type="submit">Adicionar</button>
+  </mat-dialog-actions>
+</div>
