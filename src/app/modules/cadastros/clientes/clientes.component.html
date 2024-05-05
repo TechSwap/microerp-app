@@ -1,0 +1,39 @@
+<mat-accordion>
+  <mat-expansion-panel [expanded]=false (opened)=true>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Clientes
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+  </mat-expansion-panel>
+  <div class="formSearchClientes">
+    <h4>Pesquisa</h4>
+    <form>
+      <div class="d-flex flex-row">
+        <mat-form-field class="form-field" style="margin-left: 10px;">
+          <mat-label>Cliente</mat-label>
+          <input matInput>
+        </mat-form-field>
+        <mat-form-field style="margin-left: 20px;">
+          <mat-label>CNPJ</mat-label>
+          <input matInput>
+        </mat-form-field>
+        <mat-form-field style="margin-left: 20px;">
+          <mat-label>Contato</mat-label>
+          <input matInput>
+        </mat-form-field>
+        <mat-form-field style="margin-left: 20px;">
+          <mat-label>Email</mat-label>
+          <input matInput>
+        </mat-form-field>
+      </div>
+      <div class="row" style="align-items: end; margin-left: 700px;">
+        <button mat-raised-button color="primary">Pesquisar</button>
+        <button style="margin-left: 30px;" mat-raised-button color="primary"
+          (click)="$event.preventDefault(); openAddCliente()">Adicionar</button>
+      </div>
+    </form>
+  </div>
+  <hr />
+  <app-grid-cliente></app-grid-cliente>
+</mat-accordion>
