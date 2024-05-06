@@ -1,54 +1,54 @@
 <div class="container" style="width: 850px;">
   <h3 mat-dialog-title>Adicionar Cliente</h3>
   <mat-dialog-content>
-    <form>
+    <form [formGroup]="clienteForm" (ngSubmit)="onSubmit()">
       <div class="form-fields">
         <mat-form-field>
-          <input matInput placeholder="Nome" name="nome" required>
+          <input matInput placeholder="Nome" formControlName="nome" required>
         </mat-form-field>
         <mat-form-field>
-          <input matInput placeholder="CNPJ" name="cnpj" required>
+          <input matInput placeholder="CNPJ" formControlName="cnpj" required>
         </mat-form-field>
         <mat-form-field>
-          <input matInput placeholder="Inscricao Estadual" name="inscricaoEstadual">
+          <input matInput placeholder="Inscricao Estadual" formControlName="inscricaoEstadual">
         </mat-form-field>
       </div>
       <div class="form-fields">
         <mat-form-field>
-          <input matInput placeholder="Celular" name="contato1">
+          <input matInput placeholder="Celular" formControlName="contato1">
         </mat-form-field>
         <mat-form-field>
-          <input matInput placeholder="Comercial" name="contato2">
+          <input matInput placeholder="Comercial" formControlName="contato2">
         </mat-form-field>
         <mat-form-field>
-          <input matInput placeholder="Email" name="email">
-        </mat-form-field>
-      </div>
-      <div class="form-fields">
-        <mat-form-field>
-          <input matInput placeholder="Cep" name="cep" (change)="buscaCep($event)">
+          <input matInput placeholder="Email" formControlName="email">
         </mat-form-field>
       </div>
       <div class="form-fields">
         <mat-form-field>
-          <input matInput placeholder="Endereco" name="endereco">
-        </mat-form-field>
-        <mat-form-field>
-          <input matInput placeholder="Numero" name="numero">
-        </mat-form-field>
-        <mat-form-field>
-          <input matInput placeholder="Bairro" name="bairro">
+          <input matInput placeholder="Cep" (change)="buscaCep($event)" formControlName="cep">
         </mat-form-field>
       </div>
       <div class="form-fields">
         <mat-form-field>
-          <input matInput placeholder="Cidade" name="cidade">
+          <input matInput placeholder="Endereco" formControlName="endereco">
         </mat-form-field>
         <mat-form-field>
-          <input matInput placeholder="Estado" name="estado">
+          <input matInput placeholder="Numero" formControlName="numero">
         </mat-form-field>
         <mat-form-field>
-          <input matInput placeholder="Complemento" name="complemento">
+          <input matInput placeholder="Bairro" formControlName="bairro">
+        </mat-form-field>
+      </div>
+      <div class="form-fields">
+        <mat-form-field>
+          <input matInput placeholder="Cidade" formControlName="cidade">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Estado" formControlName="estado">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Complemento" formControlName="complemento">
         </mat-form-field>
       </div>
 

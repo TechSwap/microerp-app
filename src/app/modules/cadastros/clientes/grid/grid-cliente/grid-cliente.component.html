@@ -4,29 +4,29 @@
     <!-- Column definitions -->
     <ng-container matColumnDef="nome">
       <th mat-header-cell *matHeaderCellDef>Nome</th>
-      <td mat-cell *matCellDef="let cliente">{{cliente.nome}}</td>
+      <td style="width: 200px;" mat-cell *matCellDef="let cliente">{{cliente.nome}}</td>
     </ng-container>
     <ng-container matColumnDef="cnpj">
       <th mat-header-cell *matHeaderCellDef>CNPJ</th>
-      <td mat-cell *matCellDef="let cliente" style="width: 100px;">{{cliente.cnpj}}</td>
+      <td style="width: 200px;" mat-cell *matCellDef="let cliente">{{cliente.cnpj}}</td>
     </ng-container>
     <ng-container matColumnDef="contato1">
       <th mat-header-cell *matHeaderCellDef>Contato</th>
-      <td mat-cell *matCellDef="let cliente">{{cliente.contato1}}</td>
+      <td style="width: 150px;" mat-cell *matCellDef="let cliente">{{cliente.contato1}}</td>
     </ng-container>
     <ng-container matColumnDef="email">
       <th mat-header-cell *matHeaderCellDef>E-mail</th>
-      <td mat-cell *matCellDef="let cliente">{{cliente.email}}</td>
+      <td style="width: 200px;" mat-cell *matCellDef="let cliente">{{cliente.email}}</td>
     </ng-container>
     <!-- Ativo Column -->
     <ng-container matColumnDef="ativo">
       <th mat-header-cell *matHeaderCellDef> Ativo </th>
-      <td mat-cell *matCellDef="let element"> {{element.ativo ? 'Sim' : 'Não'}} </td>
+      <td style="width: 200px;" mat-cell *matCellDef="let element"> {{element.ativo ? 'Sim' : 'Não'}} </td>
     </ng-container>
 
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef> Ações </th>
-      <td mat-cell *matCellDef="let element" style="width: 100px;">
+      <td style="width: 150px;" mat-cell *matCellDef="let element">
         <button mat-icon-button color="primary" (click)="edit(element)">
           <mat-icon>edit</mat-icon>
         </button>

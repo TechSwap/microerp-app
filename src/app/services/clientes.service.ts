@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import { ClientService } from './client.service';
 import { Router } from '@angular/router';
 import { Metadata, ResultList } from '../models/resultlist';
-import { formatingRoute } from '../utils/http-helpers.utils';
+import { formatingRoute, getToken } from '../utils/http-helpers.utils';
+import { Result } from '../models/result';
+import { EmpresaRequest } from '../models/request/empresa-request.model';
 
 @Injectable({
   providedIn: 'root'
@@ -22,5 +24,14 @@ export class ClientesService {
     let route = formatingRoute(`/cliente/lista-clientes?metaData.pageNumber=${pageNumber}&metaData.pageSize=${pageSize}`)
 
     return this._service.get<ResultList>(route, null)
+  }
+
+
+  postcliente(request: EmpresaRequest) {
+    let route = formatingRoute('/cliente')
+
+    let token = getToken()
+
+    return this._service.post<Result>(route, token, request)
   }
 }
