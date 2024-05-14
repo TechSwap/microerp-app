@@ -29,6 +29,7 @@ export class ClientesService {
 
   postcliente(request: EmpresaRequest) {
     let route = formatingRoute('/cliente')
+    console.info('Rota: ', route)
 
     let token = getToken()
 

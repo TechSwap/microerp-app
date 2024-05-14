@@ -1,7 +1,7 @@
 <div class="container" style="width: 850px;">
   <h3 mat-dialog-title>Adicionar Cliente</h3>
   <mat-dialog-content>
-    <form [formGroup]="clienteForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="clienteForm">
       <div class="form-fields">
         <mat-form-field>
           <input matInput placeholder="Nome" formControlName="nome" required>
@@ -56,6 +56,6 @@
   </mat-dialog-content>
   <mat-dialog-actions align="end">
     <button mat-button mat-dialog-close (click)="onCloseClick()">Cancelar</button>
-    <button mat-button type="submit">Adicionar</button>
+    <button mat-button (click)="onSubmit()">Adicionar</button>
   </mat-dialog-actions>
 </div>

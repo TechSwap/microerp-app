@@ -35,7 +35,7 @@ export class ModalClienteComponent implements OnInit {
 
    constructor(
     public dialogRef: MatDialogRef<ModalClienteComponent>,
-     private baseService: BaseService,
+    private baseService: BaseService,
     private clientesService: ClientesService,
     private formBuilder: FormBuilder,
     private spinner: NgxSpinnerService,
@@ -51,8 +51,9 @@ export class ModalClienteComponent implements OnInit {
   }
 
   onSubmit(): void {
-     this.spinner.show();
+    this.spinner.show();
     let dados = this.clienteForm.value;
+
     let req: EmpresaRequest = {
       nome: dados.nome,
       cnpj: dados.cnpj,
@@ -70,11 +71,25 @@ export class ModalClienteComponent implements OnInit {
     }
 
     this.clientesService.postcliente(req).subscribe((result) => {
-      if (result.statusCode === 200) {
+      console.info('Result: ',result)
+      if (result.statusCode === 201) {
         this.spinner.hide();
         this.dialogRef.close();
+      } else {
+        this.toastrService.error('Error',  '', {
+          timeOut: 3000,
+        });
       }
     }, (error) => {
+      console.info('Error: ', error)
+
+      if (error.status === 400 || error.status === 404) {
+        let msg = error.error.errors[0].userMessage
+         this.toastrService.warning('Atenção!',  msg, {
+          timeOut: 3000,
+        });
+      }
+
        this.spinner.hide();
     })
   }

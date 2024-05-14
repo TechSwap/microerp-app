@@ -12,6 +12,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CadastrosModule } from './modules/cadastros/cadastros.module';
+import { OrdensModule } from './modules/ordens/ordens.module';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { CadastrosModule } from './modules/cadastros/cadastros.module';
     NgxSpinnerModule.forRoot({ type: 'ball-scale-multiple' }),
     ReactiveFormsModule,
     HttpClientModule,
-    CadastrosModule
+    CadastrosModule,
+    OrdensModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [ToastrService],
