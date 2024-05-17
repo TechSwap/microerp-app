@@ -2,50 +2,49 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ClientService } from './client.service';
 import { Metadata, ResultList } from '../models/resultlist';
-import { formatingRoute } from '../utils/http-helpers.utils';
+import {formatingRoute, getToken} from '../utils/http-helpers.utils';
 import { Result } from '../models/result';
 import { OrdemServicosRequestModel } from '../models/request/ordem-servico.request.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class OrdemServicosService {
-
+  _token: null | string = ''
   constructor(
     private _service: ClientService,
-    private router: Router,
-  ) { }
-
+    private router: Router) {
+    this._token = getToken();
+  }
 
   listaOs(metaData: Metadata) {
-    let pageNumber = metaData != null ? metaData.pageNumber : 1
-    let pageSize = metaData != null ? metaData.pageSize : 20
+    let pageNumber = metaData != null ? metaData.pageNumber : 1;
+    let pageSize = metaData != null ? metaData.pageSize : 200;
 
-    const route = formatingRoute(`/ordemservicos/lista-os?metaData.pageNumber=${pageNumber}&metaData.pageSize=${pageSize}`)
+    const route = formatingRoute(
+      `/ordemservico/lista-os?metaData.pageNumber=${pageNumber}&metaData.pageSize=${pageSize}`
+    );
 
-     return this._service.get<ResultList>(route, null)
-
+    return this._service.get<ResultList>(route, this._token);
   }
 
   getNovaOS() {
-    const route = formatingRoute('ordemservico/novaos')
+    const route = formatingRoute('/ordemservico/novaos');
 
-    return this._service.get<Result>(route, null)
+    return this._service.get<Result>(route, this._token);
   }
 
   addNovaOs(request: OrdemServicosRequestModel) {
+    const route = formatingRoute('/ordemservico');
 
-    const route = formatingRoute('/ordemservico')
-
-    return this._service.post<Result>(route, null, request)
+    return this._service.post<Result>(route, this._token, request);
   }
 
   getOneOs(idOrdemServico: string) {
-    const route = formatingRoute(`/ordemservico?idOrdemServico=${idOrdemServico}`)
+    const route = formatingRoute(
+      `/ordemservico/find-one?idOrdemServico=${idOrdemServico}`
+    );
 
-    return this._service.get<Result>(route, null)
+    return this._service.get<Result>(route, this._token);
   }
-
-  findOs() {}
-
 }

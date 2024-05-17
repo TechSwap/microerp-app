@@ -1,1 +1,48 @@
-<p>grid-servicos works!</p>
+<div>
+  <table mat-table [dataSource]="servicos" class="mat-elevation-z8">
+
+    <!-- Column definitions -->
+    <ng-container matColumnDef="numeroOS">
+      <th mat-header-cell *matHeaderCellDef>OS</th>
+      <td style="width: 80px;" mat-cell *matCellDef="let servico">{{servico.numeroOS}}</td>
+    </ng-container>
+    <ng-container matColumnDef="cliente">
+      <th mat-header-cell *matHeaderCellDef>Cliente</th>
+      <td style="width: 250px;" mat-cell *matCellDef="let servico">{{servico.cliente}}</td>
+    </ng-container>
+    <ng-container matColumnDef="solicitante">
+      <th mat-header-cell *matHeaderCellDef>Solicitante</th>
+      <td style="width: 150px;" mat-cell *matCellDef="let servico">{{servico.solicitante}}</td>
+    </ng-container>
+    <ng-container matColumnDef="valorTotal">
+      <th mat-header-cell *matHeaderCellDef>Valor Total</th>
+      <td style="width: 200px;" mat-cell *matCellDef="let servico">{{servico.valorTotal}}</td>
+    </ng-container>
+    <ng-container matColumnDef="itens">
+      <th mat-header-cell *matHeaderCellDef>Itens</th>
+      <td style="width: 200px;" mat-cell *matCellDef="let servico">{{servico.itens}}</td>
+    </ng-container>
+    <ng-container matColumnDef="dataPrevisaoEntrega">
+      <th mat-header-cell *matHeaderCellDef> Previsao de Entrega  </th>
+      <td style="width: 200px;" mat-cell *matCellDef="let servico"> {{ servico.dataPrevisaoEntrega }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Ações </th>
+      <td style="width: 150px;" mat-cell *matCellDef="let servico">
+        <button mat-icon-button color="primary" (click)="editOrdem(servico)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <!-- Add other columns similarly -->
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+</div>

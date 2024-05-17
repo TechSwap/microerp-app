@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ModalServicoComponent } from './modal/modal-servico/modal-servico.component';
+import {DetalheOrdemServico, OrdemServicoModel} from "../../../models/ordemServico.model";
 
 @Component({
   selector: 'app-servicos',
@@ -8,6 +9,23 @@ import { ModalServicoComponent } from './modal/modal-servico/modal-servico.compo
   styleUrls: ['./servicos.component.css']
 })
 export class ServicosComponent implements OnInit {
+
+  novaOs: OrdemServicoModel = {
+    idOrdemServico: '',
+    numeroOS: 0,
+    idCliente: '',
+    solicitante: '',
+    notaSaida: '',
+    notaEntrada: '',
+    pedido: '',
+    orcamento: '',
+    valorTotal: 0,
+    prazo: 0,
+    dataCadastro: new Date,
+    dataPrevisaoEntrega: new Date,
+    dataEntrega: new Date,
+    DetalheOrdemServicos: []
+  }
 
   constructor(
     public dialog: MatDialog
@@ -17,8 +35,6 @@ export class ServicosComponent implements OnInit {
   ngOnInit(): void {
 
   }
-
-
   openAddOS() {
 
     const dialogConfig = new MatDialogConfig();
@@ -28,7 +44,11 @@ export class ServicosComponent implements OnInit {
     };
 
 
-    const dialogRef = this.dialog.open(ModalServicoComponent);
+    const dialogRef = this.dialog.open(ModalServicoComponent,{
+      data: {
+        OS: this.novaOs
+      }
+    });
 
     dialogRef.afterClosed().subscribe(result => {
 
