@@ -23,28 +23,32 @@ export class ClientesComponent implements OnInit {
         idCliente: '',
         nome: '',
         cnpj: '',
+        fantasia: '',
+        responsavel: '',
         inscricaoEstadual: '',
         contato1: '',
         contato2: '',
         email: '',
         isCliente: true,
         cep: '',
-        endereco: '',
+        logradouro: '',
         bairro: '',
         numero: '',
         cidade: '',
-        estado: ''
+        estado: '',
+        complemento: ''
     }
 
     const dialogConfig = new MatDialogConfig();
       dialogConfig.autoFocus = true;
       dialogConfig.disableClose = true;
       dialogConfig.data = {
-        width: '700px'
+        width: '700px',
+        dados: data
       };
 
 
-    const dialogRef = this.dialog.open(ModalClienteComponent)
+    const dialogRef = this.dialog.open(ModalClienteComponent, dialogConfig)
 
     dialogRef.afterClosed().subscribe(result => {
 

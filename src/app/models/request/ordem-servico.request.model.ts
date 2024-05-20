@@ -7,7 +7,7 @@ export interface OrdemServicosRequestModel {
   orcamento: string,
   valorTotal: number,
   prazo: number
-  produtos: ProdutoRequestModel[]
+  detalhes: ProdutoRequestModel[]
 }
 
 

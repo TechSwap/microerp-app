@@ -2,7 +2,7 @@
   <h3 mat-dialog-title>Ordem Servicos</h3>
   <mat-dialog-content>
     <h3>{{ this.osNumber }}</h3>
-    <form>
+    <form [formGroup]="osForm">
       <div class="d-flex flex-row">
         <mat-form-field>
           <mat-label>Cliente</mat-label>

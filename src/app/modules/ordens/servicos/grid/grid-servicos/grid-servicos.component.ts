@@ -53,13 +53,19 @@ export class GridServicosComponent implements OnInit {
 
     this.ordemServicosService.listaOs(metaData).subscribe(
       (result) => {
-        if (result.statusCode === 200) {
-          this.servicos = new MatTableDataSource<OrdemServicoResponse>(
-            result.data
-          );
-        } else {
-          console.info('Erro ao Listar: ', result.errors);
-          this.toastrService.warning('Erro ao Listar', 'Atenção!');
+        if(result !== null) {
+          if (result.statusCode === 200 && result.data.length > 0) {
+            this.servicos = new MatTableDataSource<OrdemServicoResponse>(
+              result.data
+            );
+          } else {
+            this.servicos = new MatTableDataSource<OrdemServicoResponse>();
+
+            console.info('Erro ao Listar: ', result.errors);
+            this.toastrService.warning('Erro ao Listar', 'Atenção!');
+          }
+        }else {
+          this.servicos = new MatTableDataSource<OrdemServicoResponse>()
         }
         this.loading.hide();
       },

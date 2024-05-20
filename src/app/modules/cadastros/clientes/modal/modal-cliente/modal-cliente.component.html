@@ -3,11 +3,12 @@
   <mat-dialog-content>
     <form [formGroup]="clienteForm">
       <div class="form-fields">
+        <input hidden formControlName="idCliente">
         <mat-form-field>
           <input matInput placeholder="Nome" formControlName="nome" required>
         </mat-form-field>
         <mat-form-field>
-          <input matInput placeholder="CNPJ" formControlName="cnpj" required>
+          <input matInput placeholder="CNPJ" formControlName="cnpj" required [readonly]="isReadonly">
         </mat-form-field>
         <mat-form-field>
           <input matInput placeholder="Inscricao Estadual" formControlName="inscricaoEstadual">
@@ -15,13 +16,21 @@
       </div>
       <div class="form-fields">
         <mat-form-field>
+          <input matInput placeholder="Nome Fantasia" formControlName="fantasia">
+        </mat-form-field>
+        <mat-form-field>
           <input matInput placeholder="Celular" formControlName="contato1">
         </mat-form-field>
         <mat-form-field>
           <input matInput placeholder="Comercial" formControlName="contato2">
         </mat-form-field>
+      </div>
+      <div class="form-fields">
         <mat-form-field>
           <input matInput placeholder="Email" formControlName="email">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Responsavel" formControlName="responsavel">
         </mat-form-field>
       </div>
       <div class="form-fields">

@@ -3,6 +3,8 @@ export interface EmpresaRequest {
   idFornecedor?: string,
   nome: string,
   cnpj: string,
+  fantasia: string,
+  responsavel: string,
   inscricaoEstadual: string,
   contato1: string,
   contato2: string,
@@ -10,9 +12,10 @@ export interface EmpresaRequest {
   isCliente?: boolean,
   isFornecedor?: boolean,
   cep: string,
-  endereco: string,
+  logradouro: string,
   bairro: string,
   numero: string,
   cidade: string,
-  estado: string
+  estado: string,
+  complemento: string
 }

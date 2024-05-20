@@ -1,7 +1,7 @@
 export interface ResultList{
   data: any
   statusCode: number
-  metadata: Metadata
+  metaData: Metadata
   msg: string,
   errors: Errors
 }

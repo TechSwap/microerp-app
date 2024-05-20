@@ -24,7 +24,7 @@ export class ServicosComponent implements OnInit {
     dataCadastro: new Date,
     dataPrevisaoEntrega: new Date,
     dataEntrega: new Date,
-    DetalheOrdemServicos: []
+    Detalhes: []
   }
 
   constructor(

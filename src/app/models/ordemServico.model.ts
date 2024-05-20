@@ -12,7 +12,7 @@ export interface OrdemServicoModel {
   dataCadastro: Date;
   dataPrevisaoEntrega: Date;
   dataEntrega: Date;
-  DetalheOrdemServicos: DetalheOrdemServico[];
+  Detalhes: DetalheOrdemServico[];
 }
 
 export interface DetalheOrdemServico {

@@ -17,9 +17,8 @@ export class ClientesService {
   ) { }
 
   listClientes(metaData: Metadata) {
-
     let pageNumber = metaData != null ? metaData.pageNumber : 1
-    let pageSize = metaData != null ? metaData.pageSize : 20
+    let pageSize = metaData != null ? metaData.pageSize : 15
 
     let route = formatingRoute(`/cliente/lista-clientes?metaData.pageNumber=${pageNumber}&metaData.pageSize=${pageSize}`)
 
@@ -34,5 +33,21 @@ export class ClientesService {
     let token = getToken()
 
     return this._service.post<Result>(route, token, request)
+  }
+
+  findOneCliente(idCliente: string) {
+    let route = formatingRoute(`/cliente?idCliente=${idCliente}`)
+
+    let token = getToken()
+
+    return this._service.get<Result>(route, token)
+  }
+
+  putCliente(request: EmpresaRequest) {
+    let route = formatingRoute('/cliente')
+
+    let token = getToken()
+
+    return this._service.put<Result>(route, token, request)
   }
 }

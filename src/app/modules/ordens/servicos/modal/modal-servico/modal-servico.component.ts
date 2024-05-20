@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import {FormBuilder, FormGroup} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
@@ -26,8 +26,12 @@ export class ModalServicoComponent implements OnInit {
     { value: 'MT', viewValue: 'Metros' },
     { value: 'LT', viewValue: 'Litros' },
   ];
-
   os: any
+
+  osForm: FormGroup = this.formBuilder.group({
+
+  })
+
 
   public descricao: string = '';
   public valorUnitario: number = 0;
@@ -63,7 +67,6 @@ export class ModalServicoComponent implements OnInit {
     this.ordemServicosService.getNovaOS().subscribe(
       (result) => {
         if (result.statusCode === 200) {
-          console.info('Result: ', result.data);
           this.osNumber = result.data.ordemServico;
         } else {
           console.info('Erro ao Listar: ', result.errors);
@@ -126,5 +129,8 @@ export class ModalServicoComponent implements OnInit {
     );
   }
 
-  onSubmit(): void {}
+  onSubmit(): void {
+    this.loading.show();
+
+  }
 }

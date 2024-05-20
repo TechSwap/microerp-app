@@ -16,7 +16,7 @@ export class ClientService {
     return this.http.get<Result>(url, opt);
   }
 
-  public getList<ResultList>(url: string, token: string): Observable<ResultList> {
+  public getList<ResultList>(url: string, token: string | null): Observable<ResultList> {
     let opt = headers(token)
 
     return this.http.get<ResultList>(url, opt);
@@ -27,13 +27,13 @@ export class ClientService {
     return this.http.post<Result>(url, item, opt);
   }
 
-  public put<Result>(url: string, token: string, item: any): Observable<Result> {
+  public put<Result>(url: string, token: string | null, item: any): Observable<Result> {
     let opt = headers(token)
 
     return this.http.put<Result>(url, item, opt);
   }
 
-  public delete<Result>(url: string, token: string): Observable<Result> {
+  public delete<Result>(url: string, token: string | null): Observable<Result> {
     let opt = headers(token)
 
     return this.http.delete<Result>(url, opt);

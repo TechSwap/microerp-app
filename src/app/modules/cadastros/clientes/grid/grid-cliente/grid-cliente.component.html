@@ -10,8 +10,12 @@
       <th mat-header-cell *matHeaderCellDef>CNPJ</th>
       <td style="width: 200px;" mat-cell *matCellDef="let cliente">{{cliente.cnpj}}</td>
     </ng-container>
+    <ng-container matColumnDef="fantasia">
+      <th mat-header-cell *matHeaderCellDef>Nome Fantasia</th>
+      <td style="width: 200px;" mat-cell *matCellDef="let cliente">{{cliente.fantasia}}</td>
+    </ng-container>
     <ng-container matColumnDef="contato1">
-      <th mat-header-cell *matHeaderCellDef>Contato</th>
+      <th mat-header-cell *matHeaderCellDef>Responsavel</th>
       <td style="width: 150px;" mat-cell *matCellDef="let cliente">{{cliente.contato1}}</td>
     </ng-container>
     <ng-container matColumnDef="email">
@@ -41,5 +45,12 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
-  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+  <mat-paginator #paginator
+                 (page)="pageChangeEvent($event)"
+                 [length]="totalRecords"
+                 [pageSize]="pageSize"
+                 [pageIndex]="pageIndex"
+                 [pageSizeOptions]="[5, 10, 30]"
+                 showFirstLastButtons>
+  </mat-paginator>
 </div>

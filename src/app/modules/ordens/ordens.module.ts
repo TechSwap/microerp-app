@@ -8,6 +8,7 @@ import { DEFAULT_DIALOG_CONFIG } from '@angular/cdk/dialog';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ModalServicoComponent } from './servicos/modal/modal-servico/modal-servico.component';
 import { GridServicosComponent } from './servicos/grid/grid-servicos/grid-servicos.component';
+import {SharedModule} from "../../shared/shared.module";
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import { GridServicosComponent } from './servicos/grid/grid-servicos/grid-servic
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
+    SharedModule
   ],
    schemas: [CUSTOM_ELEMENTS_SCHEMA],
     providers: [
