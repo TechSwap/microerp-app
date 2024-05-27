@@ -13,6 +13,8 @@ import { ServicosComponent } from './modules/ordens/servicos/servicos.component'
 import { ResumoComponent } from './modules/producao/resumo/resumo.component';
 import { UsuariosComponent } from './modules/usuarios/usuarios/usuarios.component';
 import { PerfilComponent } from './modules/usuarios/perfil/perfil.component';
+import {FuncionariosComponent} from "./modules/cadastros/funcionarios/funcionarios.component";
+import {FornecedoresComponent} from "./modules/cadastros/fornecedores/fornecedores.component";
 
 const routes: Routes = [
   {
@@ -27,6 +29,8 @@ const routes: Routes = [
       { path: 'cadastros/ferramentas', component: FerramentasComponent, canActivate: [AuthenticadedGuard] },
       { path: 'cadastros/clientes', component: ClientesComponent, canActivate: [AuthenticadedGuard] },
       { path: 'cadastros/produtos', component: ProdutosComponent, canActivate: [AuthenticadedGuard] },
+      { path: 'cadastros/funcionarios', component: FuncionariosComponent, canActivate: [AuthenticadedGuard] },
+      { path: 'cadastros/fornecedores', component: FornecedoresComponent, canActivate: [AuthenticadedGuard] },
       { path: 'cadastros/maquinas', component: MaquinasComponent, canActivate: [AuthenticadedGuard] },
       { path: 'ordens/compras', component: ComprasComponent, canActivate: [AuthenticadedGuard] },
       { path: 'ordens/producao', component: ProducaoComponent, canActivate: [AuthenticadedGuard] },

@@ -13,6 +13,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CadastrosModule } from './modules/cadastros/cadastros.module';
 import { OrdensModule } from './modules/ordens/ordens.module';
+import {CurrencyMaskModule} from "ng2-currency-mask";
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { OrdensModule } from './modules/ordens/ordens.module';
     ReactiveFormsModule,
     HttpClientModule,
     CadastrosModule,
-    OrdensModule
+    OrdensModule,
+    CurrencyMaskModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [ToastrService],

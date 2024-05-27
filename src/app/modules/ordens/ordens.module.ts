@@ -9,6 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ModalServicoComponent } from './servicos/modal/modal-servico/modal-servico.component';
 import { GridServicosComponent } from './servicos/grid/grid-servicos/grid-servicos.component';
 import {SharedModule} from "../../shared/shared.module";
+import {CurrencyMaskModule} from "ng2-currency-mask";
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import {SharedModule} from "../../shared/shared.module";
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    SharedModule
+    SharedModule,
+    CurrencyMaskModule
   ],
    schemas: [CUSTOM_ELEMENTS_SCHEMA],
     providers: [

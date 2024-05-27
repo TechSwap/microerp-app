@@ -10,6 +10,12 @@ import { GridClienteComponent } from './clientes/grid/grid-cliente/grid-cliente.
 import { ModalClienteComponent } from './clientes/modal/modal-cliente/modal-cliente.component';
 import { ToastrModule } from 'ngx-toastr';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FornecedoresComponent } from './fornecedores/fornecedores.component';
+import { GridFornecedorComponent } from './fornecedores/grid/grid-fornecedor/grid-fornecedor.component';
+import { ModalFornecedorComponent } from './fornecedores/modal/modal-fornecedor/modal-fornecedor.component';
+import { FuncionariosComponent } from './funcionarios/funcionarios.component';
+import { GridFuncionarioComponent } from './funcionarios/grid/grid-funcionario/grid-funcionario.component';
+import { ModalFuncionarioComponent } from './funcionarios/modal/modal-funcionario/modal-funcionario.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +24,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MaquinasComponent,
     ProdutosComponent,
     GridClienteComponent,
-    ModalClienteComponent
+    ModalClienteComponent,
+    FornecedoresComponent,
+    GridFornecedorComponent,
+    ModalFornecedorComponent,
+    FuncionariosComponent,
+    GridFuncionarioComponent,
+    ModalFuncionarioComponent
   ],
   imports: [
     CommonModule,

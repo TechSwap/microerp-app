@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
+import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
@@ -27,7 +27,10 @@ export class GridServicosComponent implements OnInit {
   ];
   servicos!: MatTableDataSource<OrdemServicoResponse>;
 
-  resultsLength = 0;
+  @ViewChild('paginator', { static: true }) paginator!: MatPaginator;
+  totalRecords? = 0;
+  pageSize = 15;
+  pageIndex = 0;
 
   constructor(
     private ordemServicosService: OrdemServicosService,
@@ -36,32 +39,33 @@ export class GridServicosComponent implements OnInit {
     private toastrService: ToastrService
   ) {}
 
-  @ViewChild(MatPaginator)
-  paginator!: MatPaginator;
-
   ngOnInit(): void {
-    this.getListaOs();
-  }
-
-  getListaOs() {
     let metaData: Metadata = {
       pageNumber: 1,
-      pageSize: 20,
-    };
+      pageSize: 15,
+    }
+    this.getListaOs(metaData);
+  }
 
+  pageChangeEvent(event: PageEvent) {
+    let metaData: Metadata = {
+      pageNumber: event.pageIndex + 1,
+      pageSize: event.pageSize,
+    }
+    this.getListaOs(metaData)
+  }
+
+  getListaOs(metaData: Metadata) {
     this.loading.show();
 
     this.ordemServicosService.listaOs(metaData).subscribe(
       (result) => {
         if(result !== null) {
           if (result.statusCode === 200 && result.data.length > 0) {
-            this.servicos = new MatTableDataSource<OrdemServicoResponse>(
-              result.data
-            );
+            this.servicos = new MatTableDataSource<OrdemServicoResponse>(result.data);
+            this.totalRecords = result.metaData?.totalRecords != 0 ?  result.metaData?.totalRecords : 0
           } else {
             this.servicos = new MatTableDataSource<OrdemServicoResponse>();
-
-            console.info('Erro ao Listar: ', result.errors);
             this.toastrService.warning('Erro ao Listar', 'Atenção!');
           }
         }else {
@@ -77,7 +81,6 @@ export class GridServicosComponent implements OnInit {
   }
 
   editOrdem(servico: OrdemServicoResponse) {
-
     this.ordemServicosService.getOneOs(servico.idOrdemServico).subscribe(
       (result) => {
         if (result.statusCode === 200) {
@@ -86,13 +89,17 @@ export class GridServicosComponent implements OnInit {
               OS:result.data
             }
           });
-
-          dialogRef.afterClosed().subscribe(result => {
-
+          dialogRef.afterClosed().subscribe((result) => {
+            if(result.success) {
+              let metaData: Metadata = {
+                pageNumber: 1,
+                pageSize: 15,
+              }
+              this.getListaOs(metaData)
+            }
           });
 
         } else {
-          console.info('Erro ao Listar: ', result.errors);
           this.toastrService.warning('Erro ao Listar', 'Atenção!');
         }
         this.loading.hide();
@@ -102,8 +109,6 @@ export class GridServicosComponent implements OnInit {
         this.loading.hide();
       }
     );
-
-
   }
 
   removerOrdem(servico: OrdemServicoResponse) {

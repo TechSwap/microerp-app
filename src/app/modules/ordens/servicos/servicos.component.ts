@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ModalServicoComponent } from './modal/modal-servico/modal-servico.component';
-import {DetalheOrdemServico, OrdemServicoModel} from "../../../models/ordemServico.model";
+import {OrdemServicoModel} from "../../../models/ordemServico.model";
+import {GridServicosComponent} from "./grid/grid-servicos/grid-servicos.component";
+import {Metadata} from "../../../models/resultlist";
 
 @Component({
   selector: 'app-servicos',
@@ -9,6 +11,8 @@ import {DetalheOrdemServico, OrdemServicoModel} from "../../../models/ordemServi
   styleUrls: ['./servicos.component.css']
 })
 export class ServicosComponent implements OnInit {
+
+  @ViewChild(GridServicosComponent) gridComponent!: any;
 
   novaOs: OrdemServicoModel = {
     idOrdemServico: '',
@@ -36,7 +40,6 @@ export class ServicosComponent implements OnInit {
 
   }
   openAddOS() {
-
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.data = {
@@ -50,8 +53,14 @@ export class ServicosComponent implements OnInit {
       }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-
+    dialogRef.afterClosed().subscribe((result) => {
+      if(result.success) {
+        let metaData: Metadata = {
+          pageNumber: 1,
+          pageSize: 15,
+        }
+        this.gridComponent.getListaOs(metaData)
+      }
     });
   }
 }

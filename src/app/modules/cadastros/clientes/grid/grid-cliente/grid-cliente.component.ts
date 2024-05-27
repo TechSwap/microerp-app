@@ -51,7 +51,6 @@ export class GridClienteComponent implements OnInit {
           this.clientes = new MatTableDataSource<Cliente>(result.data)
           this.totalRecords = result.metaData?.totalRecords != 0 ?  result.metaData?.totalRecords : 0
         } else {
-          console.info('Erro ao Listar: ', result.errors)
           this.toastrService.warning('Erro ao Listar', 'Atenção!');
         }
         this.loading.hide();
