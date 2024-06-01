@@ -1,5 +1,5 @@
 <div class="container" style="width: 850px;">
-  <h3 mat-dialog-title>Adicionar Cliente</h3>
+  <h3 mat-dialog-title>{{ isUpdate ? 'Atualizar Cliente' : 'Adicionar Cliente'}}</h3>
   <mat-dialog-content>
     <form [formGroup]="clienteForm">
       <div class="form-fields">
@@ -65,6 +65,6 @@
   </mat-dialog-content>
   <mat-dialog-actions align="end">
     <button mat-button mat-dialog-close (click)="onCloseClick()">Cancelar</button>
-    <button mat-button (click)="onSubmit()">Adicionar</button>
+    <button mat-button (click)="onSubmit()">{{ isUpdate ? 'Atualizar' : 'Adicionar'}}</button>
   </mat-dialog-actions>
 </div>

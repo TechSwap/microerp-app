@@ -16,6 +16,10 @@ import { ModalFornecedorComponent } from './fornecedores/modal/modal-fornecedor/
 import { FuncionariosComponent } from './funcionarios/funcionarios.component';
 import { GridFuncionarioComponent } from './funcionarios/grid/grid-funcionario/grid-funcionario.component';
 import { ModalFuncionarioComponent } from './funcionarios/modal/modal-funcionario/modal-funcionario.component';
+import { DepartamentosComponent } from './departamentos/departamentos.component';
+import { ModalDepartamentosComponent } from './departamentos/modal/modal-departamentos/modal-departamentos.component';
+import { GridDepartamentosComponent } from './departamentos/grid/grid-departamentos/grid-departamentos.component';
+import {NgxMaskDirective} from "ngx-mask";
 
 @NgModule({
   declarations: [
@@ -30,7 +34,10 @@ import { ModalFuncionarioComponent } from './funcionarios/modal/modal-funcionari
     ModalFornecedorComponent,
     FuncionariosComponent,
     GridFuncionarioComponent,
-    ModalFuncionarioComponent
+    ModalFuncionarioComponent,
+    DepartamentosComponent,
+    ModalDepartamentosComponent,
+    GridDepartamentosComponent,
   ],
   imports: [
     CommonModule,
@@ -42,6 +49,7 @@ import { ModalFuncionarioComponent } from './funcionarios/modal/modal-funcionari
     }),
     FormsModule,
     ReactiveFormsModule,
+    NgxMaskDirective,
   ],
   providers: [
     { provide: DEFAULT_DIALOG_CONFIG, useValue: { hasBackdrop: false } },

@@ -8,32 +8,30 @@
   </mat-expansion-panel>
   <div class="formSearchClientes">
     <br />
-    <form>
+    <form [formGroup]="searchClienteForm">
       <div class="d-flex flex-row">
-        <mat-form-field class="form-field" style="margin-left: 10px;">
-          <mat-label>Cliente</mat-label>
-          <input matInput>
+        <mat-form-field style="margin-left: 20px;">
+          <mat-select placeholder="Cliente" formControlName="idCliente">
+            <mat-option *ngFor="let cliente of dropClientes" [value]="cliente.Id">{{cliente.Descricao}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field style="margin-left: 20px; margin-top: 15px;">
+          <input mask="000.000.000/0000-00" placeholder="CNPJ" formControlName="cnpj" matInput>
         </mat-form-field>
         <mat-form-field style="margin-left: 20px;">
-          <mat-label>CNPJ</mat-label>
-          <input matInput>
+          <input  placeholder="Contato" formControlName="contato" matInput>
         </mat-form-field>
         <mat-form-field style="margin-left: 20px;">
-          <mat-label>Contato</mat-label>
-          <input matInput>
-        </mat-form-field>
-        <mat-form-field style="margin-left: 20px;">
-          <mat-label>Email</mat-label>
-          <input matInput>
+          <input  placeholder="Email" formControlName="email" matInput>
         </mat-form-field>
       </div>
       <div class="row" style="align-items: end; margin-left: 700px;">
-        <button mat-raised-button color="primary">Pesquisar</button>
+        <button mat-raised-button color="primary" (click)="$event.preventDefault(); searchClientes()">Pesquisar</button>
         <button style="margin-left: 30px;" mat-raised-button color="primary"
           (click)="$event.preventDefault(); openAddCliente()">Adicionar</button>
       </div>
     </form>
   </div>
   <hr />
-  <app-grid-cliente></app-grid-cliente>
+  <app-grid-cliente #GridClienteComponent></app-grid-cliente>
 </mat-accordion>

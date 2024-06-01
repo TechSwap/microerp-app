@@ -48,8 +48,7 @@ export class GridClienteComponent implements OnInit {
     this.clienteService.listClientes(metaData).subscribe(
       (result) => {
         if (result.statusCode === 200) {
-          this.clientes = new MatTableDataSource<Cliente>(result.data)
-          this.totalRecords = result.metaData?.totalRecords != 0 ?  result.metaData?.totalRecords : 0
+          this.loadGrid(result.data, result.metaData.totalRecords)
         } else {
           this.toastrService.warning('Erro ao Listar', 'Atenção!');
         }
@@ -59,6 +58,12 @@ export class GridClienteComponent implements OnInit {
         this.toastrService.warning('Erro ao Listar', 'Atenção!');
         this.loading.hide();
       })
+  }
+
+  public loadGrid(list: Cliente[], totalRecords: number | undefined ) {
+    this.clientes = new MatTableDataSource<Cliente>(list)
+    this.totalRecords = totalRecords != 0 ? totalRecords : 0
+
   }
 
   pageChangeEvent(event: PageEvent) {

@@ -15,6 +15,7 @@ import { ClientesService } from 'src/app/services/clientes.service';
 export class ModalClienteComponent implements OnInit {
 
   isReadonly: boolean = false
+  isUpdate: boolean = false
 
   clienteForm: FormGroup = this.formBuilder.group({
     'idCliente': [''],
@@ -85,7 +86,6 @@ export class ModalClienteComponent implements OnInit {
     }
 
     if(req.idCliente === '') {
-
       this.clientesService.postcliente(req).subscribe((result) => {
         console.info('Result: ', result)
         if (result.statusCode === 201) {
@@ -145,6 +145,9 @@ export class ModalClienteComponent implements OnInit {
   }
 
   loadData(dados: EmpresaRequest) {
+
+    this.isUpdate = dados.idCliente !== ''
+
     this.clienteForm.controls['idCliente'].setValue(dados.idCliente)
     this.clienteForm.controls['nome'].setValue(dados.nome)
     this.clienteForm.controls['cnpj'].setValue(dados.cnpj)

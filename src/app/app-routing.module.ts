@@ -15,6 +15,7 @@ import { UsuariosComponent } from './modules/usuarios/usuarios/usuarios.componen
 import { PerfilComponent } from './modules/usuarios/perfil/perfil.component';
 import {FuncionariosComponent} from "./modules/cadastros/funcionarios/funcionarios.component";
 import {FornecedoresComponent} from "./modules/cadastros/fornecedores/fornecedores.component";
+import {DepartamentosComponent} from "./modules/cadastros/departamentos/departamentos.component";
 
 const routes: Routes = [
   {
@@ -30,6 +31,7 @@ const routes: Routes = [
       { path: 'cadastros/clientes', component: ClientesComponent, canActivate: [AuthenticadedGuard] },
       { path: 'cadastros/produtos', component: ProdutosComponent, canActivate: [AuthenticadedGuard] },
       { path: 'cadastros/funcionarios', component: FuncionariosComponent, canActivate: [AuthenticadedGuard] },
+      { path: 'cadastros/departamentos', component: DepartamentosComponent, canActivate: [AuthenticadedGuard] },
       { path: 'cadastros/fornecedores', component: FornecedoresComponent, canActivate: [AuthenticadedGuard] },
       { path: 'cadastros/maquinas', component: MaquinasComponent, canActivate: [AuthenticadedGuard] },
       { path: 'ordens/compras', component: ComprasComponent, canActivate: [AuthenticadedGuard] },

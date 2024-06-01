@@ -14,6 +14,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { CadastrosModule } from './modules/cadastros/cadastros.module';
 import { OrdensModule } from './modules/ordens/ordens.module';
 import {CurrencyMaskModule} from "ng2-currency-mask";
+import {IConfig, NgxMaskDirective, NgxMaskPipe, provideEnvironmentNgxMask} from 'ngx-mask';
+
+
+const maskConfig: Partial<IConfig> = {
+  validation: false,
+};
 
 @NgModule({
   declarations: [
@@ -36,10 +42,16 @@ import {CurrencyMaskModule} from "ng2-currency-mask";
     HttpClientModule,
     CadastrosModule,
     OrdensModule,
-    CurrencyMaskModule
+    CurrencyMaskModule,
+    NgxMaskDirective,
+    NgxMaskPipe
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [ToastrService],
+  providers: [
+    ToastrService,
+    provideEnvironmentNgxMask(maskConfig),
+
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
