@@ -1,1 +1,46 @@
-<p>grid-departamentos works!</p>
+<div>
+  <table mat-table [dataSource]="departamentos" class="mat-elevation-z8">
+
+    <!-- Column definitions -->
+    <ng-container matColumnDef="nome">
+      <th mat-header-cell *matHeaderCellDef>Departamento</th>
+      <td style="width: 200px;" mat-cell *matCellDef="let departamento">{{departamento.nome}}</td>
+    </ng-container>
+    <ng-container matColumnDef="responsavel">
+      <th mat-header-cell *matHeaderCellDef>Responsavel</th>
+      <td style="width: 200px;" mat-cell *matCellDef="let departamento">{{departamento.responsavel}}</td>
+    </ng-container>
+    <ng-container matColumnDef="centroCusto">
+      <th mat-header-cell *matHeaderCellDef>Centro de Custo</th>
+      <td style="width: 200px;" mat-cell *matCellDef="let departamento">{{departamento.centroCusto}}</td>
+    </ng-container>
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef>Status</th>
+      <td style="width: 200px;" mat-cell *matCellDef="let departamento">{{departamento.status}}</td>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Ações </th>
+      <td style="width: 150px;" mat-cell *matCellDef="let element">
+        <button mat-icon-button color="primary" (click)="edit(element)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="delete(element)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <!-- Add other columns similarly -->
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  <mat-paginator #paginator
+                 (page)="pageChangeEvent($event)"
+                 [length]="totalRecords"
+                 [pageSize]="pageSize"
+                 [pageIndex]="pageIndex"
+                 [pageSizeOptions]="[5, 10, 30]"
+                 showFirstLastButtons>
+  </mat-paginator>
+</div>
