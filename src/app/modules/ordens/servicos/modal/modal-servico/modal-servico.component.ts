@@ -60,6 +60,8 @@ export class ModalServicoComponent implements OnInit {
     'notaSaida': ['']
   })
 
+
+
   displayedColumns: string[] = ['descricao', 'valorUnitario', 'qtd', 'unidade'];
 
   constructor(

@@ -62,8 +62,7 @@ export class GridServicosComponent implements OnInit {
       (result) => {
         if(result !== null) {
           if (result.statusCode === 200 && result.data.length > 0) {
-            this.servicos = new MatTableDataSource<OrdemServicoResponse>(result.data);
-            this.totalRecords = result.metaData?.totalRecords != 0 ?  result.metaData?.totalRecords : 0
+            this.loadGrid(result.data,  result.metaData?.totalRecords)
           } else {
             this.servicos = new MatTableDataSource<OrdemServicoResponse>();
             this.toastrService.warning('Erro ao Listar', 'Atenção!');
@@ -78,6 +77,12 @@ export class GridServicosComponent implements OnInit {
         this.loading.hide();
       }
     );
+  }
+
+  public loadGrid(data: OrdemServicoResponse[], totalRecords: number | undefined ) {
+    this.servicos = new MatTableDataSource<OrdemServicoResponse>(data);
+    this.totalRecords = totalRecords != 0 ?  totalRecords : 0
+
   }
 
   editOrdem(servico: OrdemServicoResponse) {

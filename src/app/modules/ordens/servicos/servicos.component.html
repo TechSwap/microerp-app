@@ -8,29 +8,32 @@
   </mat-expansion-panel>
   <div class="formSearchClientes">
     <br />
-    <form>
+    <form [formGroup]="searchOsForm">
       <div class="d-flex flex-row">
-        <mat-form-field class="form-field" style="margin-left: 10px;">
-          <mat-label>Cliente</mat-label>
-          <input matInput>
+        <mat-form-field style="margin-left: 10px;">
+          <mat-select placeholder="Cliente" formControlName="idCliente">
+            <mat-option *ngFor="let cliente of clientes" [value]="cliente.idCliente">{{cliente.nome}}</mat-option>
+          </mat-select>
         </mat-form-field>
         <mat-form-field style="margin-left: 20px;">
-          <mat-label>Produto</mat-label>
-          <input matInput>
+          <input formControlName="solicitante" placeholder="Solicitante" matInput>
         </mat-form-field>
-        <mat-form-field style="margin-left: 20px;">
-          <mat-label>Solicitante</mat-label>
-          <input matInput>
-        </mat-form-field>
-        <mat-form-field style="margin-left: 20px;">
-          <mat-label>Data</mat-label>
-          <input matInput>
+        <mat-form-field style="margin-left: 10px;">
+          <input matInput [matDatepicker]="dataLancamento"
+                 placeholder="Data Lancamento"
+                 formControlName="dataLancamento">
+          <mat-datepicker-toggle matIconSuffix [for]="dataLancamento"></mat-datepicker-toggle>
+          <mat-datepicker #dataLancamento></mat-datepicker>
         </mat-form-field>
       </div>
       <div class="row" style="align-items: end; margin-left: 700px;">
-        <button mat-raised-button color="primary">Pesquisar</button>
+        <button mat-raised-button
+                color="primary"
+                (click)="$event.preventDefault(); searchOs()"
+        >Pesquisar</button>
         <button style="margin-left: 30px;" mat-raised-button color="primary"
           (click)="$event.preventDefault(); openAddOS()">Adicionar</button>
+        <button style="margin-left: 30px;" mat-raised-button color="primary">Exportar Excel</button>
       </div>
     </form>
   </div>

@@ -28,6 +28,22 @@ export class OrdemServicosService {
     return this._service.get<ResultList>(route, this._token);
   }
 
+  searchOs(idCliente: string, solicitante: string, dataLancamento: string) {
+    let pageNumber = 1;
+    let pageSize =  200;
+
+    let cliente = idCliente === '' ? '' : `?idCliente=${idCliente}`;
+    let lancamento = dataLancamento === '' ? '' : `${ idCliente === '' ? '?': '&'}dataLancamento=${dataLancamento}`;
+    let solicitanteReq = solicitante === '' ? '' : `${ idCliente === '' && dataLancamento === '' ? '?': '&'}solicitante=${solicitante}`;
+
+
+    const route =  cliente !== '' || lancamento !== '' || solicitanteReq !== ''
+      ? formatingRoute(`/ordemservico/lista-os${cliente}${lancamento}${solicitanteReq}&metaData.pageNumber=${pageNumber}&metaData.pageSize=${pageSize}`)
+      : formatingRoute(`/ordemservico/lista-os?metaData.pageNumber=${pageNumber}&metaData.pageSize=${pageSize}`);
+
+    return this._service.get<ResultList>(route, this._token);
+  }
+
   getNovaOS() {
     const route = formatingRoute('/ordemservico/novaos');
 
