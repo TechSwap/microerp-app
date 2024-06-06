@@ -63,7 +63,6 @@ export class GridClienteComponent implements OnInit {
   public loadGrid(list: Cliente[], totalRecords: number | undefined ) {
     this.clientes = new MatTableDataSource<Cliente>(list)
     this.totalRecords = totalRecords != 0 ? totalRecords : 0
-
   }
 
   pageChangeEvent(event: PageEvent) {

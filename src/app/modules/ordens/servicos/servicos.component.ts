@@ -9,14 +9,18 @@ import {ClientesService} from "../../../services/clientes.service";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {DateAdapter} from "@angular/material/core";
 import {OrdemServicosService} from "../../../services/ordem-servicos.service";
+import {ClientesComponent} from "../../cadastros/clientes/clientes.component";
+import {SelectModel} from "../../../models/SelectModel";
+import {BaseComponent} from "../../shared/base/base.component";
 
 @Component({
   selector: 'app-servicos',
   templateUrl: './servicos.component.html',
   styleUrls: ['./servicos.component.css']
 })
-export class ServicosComponent implements OnInit {
+export class ServicosComponent extends BaseComponent implements OnInit {
   clientes: Cliente[] = [];
+  dropClientes: SelectModel[] =  []
 
   @ViewChild(GridServicosComponent) gridComponent!: any;
 
@@ -50,6 +54,7 @@ export class ServicosComponent implements OnInit {
     private ordemServicosService: OrdemServicosService,
     public dialog: MatDialog
   ) {
+    super();
     this.dateAdapter.setLocale('pt-BR'); //dd/MM/yyyy
   }
 
@@ -94,6 +99,7 @@ export class ServicosComponent implements OnInit {
       (result) => {
         if (result.statusCode === 200) {
           this.clientes = result.data
+          this.dropClientes = this.loadDropClientes(result.data, this.dropClientes)
         }
       },
       (error) => {
@@ -121,4 +127,8 @@ export class ServicosComponent implements OnInit {
   }
 
   protected readonly encodeURI = encodeURI;
+
+  exportExcel() {
+    this.gridComponent.exportAsXLSX()
+  }
 }

@@ -3,12 +3,12 @@ import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
-import { Cliente } from 'src/app/models/response/cliente-response.model';
 import { OrdemServicoResponse } from 'src/app/models/response/ordem-servico-response.model';
 import { Metadata } from 'src/app/models/resultlist';
 import { OrdemServicosService } from 'src/app/services/ordem-servicos.service';
 import {ModalServicoComponent} from "../../modal/modal-servico/modal-servico.component";
 import {MatDialog} from "@angular/material/dialog";
+import {ExcelService} from "src/app/services/excel.service";
 
 @Component({
   selector: 'app-grid-servicos',
@@ -25,7 +25,18 @@ export class GridServicosComponent implements OnInit {
     'dataPrevisaoEntrega',
     'actions',
   ];
+
+  headersColumns: string[] = [
+    'NumeroOS',
+    'Cliente',
+    'Solicitante',
+    'ValorTotal',
+    'Itens',
+    'DataPrevisaoEntrega'
+  ];
   servicos!: MatTableDataSource<OrdemServicoResponse>;
+
+  jsonServicos: OrdemServicoResponse[] = []
 
   @ViewChild('paginator', { static: true }) paginator!: MatPaginator;
   totalRecords? = 0;
@@ -36,6 +47,7 @@ export class GridServicosComponent implements OnInit {
     private ordemServicosService: OrdemServicosService,
     public dialog: MatDialog,
     private loading: NgxSpinnerService,
+    private excelService: ExcelService,
     private toastrService: ToastrService
   ) {}
 
@@ -82,7 +94,7 @@ export class GridServicosComponent implements OnInit {
   public loadGrid(data: OrdemServicoResponse[], totalRecords: number | undefined ) {
     this.servicos = new MatTableDataSource<OrdemServicoResponse>(data);
     this.totalRecords = totalRecords != 0 ?  totalRecords : 0
-
+    this.jsonServicos = data
   }
 
   editOrdem(servico: OrdemServicoResponse) {
@@ -118,5 +130,9 @@ export class GridServicosComponent implements OnInit {
 
   removerOrdem(servico: OrdemServicoResponse) {
     alert('Remover ' + servico.idOrdemServico);
+  }
+
+  public exportAsXLSX():void {
+    this.excelService.exportAsExcelFile(this.jsonServicos,  'OrdemServico');
   }
 }

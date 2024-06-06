@@ -1,14 +1,14 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { EmpresaRequest } from 'src/app/models/request/empresa-request.model';
 import { ModalClienteComponent } from './modal/modal-cliente/modal-cliente.component';
 import {Metadata} from "../../../models/resultlist";
 import {ClientesService} from "../../../services/clientes.service";
 import {Cliente} from "../../../models/response/cliente-response.model";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {MatPaginator} from "@angular/material/paginator";
+import {FormBuilder, FormGroup} from "@angular/forms";
 import {GridClienteComponent} from "./grid/grid-cliente/grid-cliente.component";
 import {SelectModel} from "../../../models/SelectModel";
+import {BaseComponent} from "../../shared/base/base.component";
 
 @Component({
   selector: 'app-clientes',
@@ -16,7 +16,7 @@ import {SelectModel} from "../../../models/SelectModel";
   styleUrls: ['./clientes.component.css']
 })
 
-export class ClientesComponent implements OnInit {
+export class ClientesComponent extends BaseComponent implements OnInit {
   dropClientes: SelectModel[] =  []
 
   @ViewChild('GridClienteComponent')
@@ -34,7 +34,9 @@ export class ClientesComponent implements OnInit {
     public dialog: MatDialog,
     private formBuilder: FormBuilder,
     private clienteService: ClientesService
-  ) { }
+  ) {
+    super();
+  }
 
   ngOnInit(): void {
     this.getListaClientes()
@@ -105,29 +107,14 @@ export class ClientesComponent implements OnInit {
     this.clienteService.listClientes(metaData).subscribe(
       (result) => {
         if (result.statusCode === 200) {
-          this.loadDropClientes(result.data)
+          this.dropClientes = this.loadDropClientes(result.data, this.dropClientes)
         } else {
 
         }
       },
       (error) => {
-
       }
     );
-  }
-
-  loadDropClientes(clientes: Cliente[]) {
-
-    let firstPosition: SelectModel = { Id: "", Descricao: "Selecione" }
-    this.dropClientes.push(firstPosition)
-
-    clientes.forEach(cliente => {
-      this.dropClientes.push({
-        Id: cliente.idCliente,
-        Descricao: cliente.nome
-      });
-    });
-
   }
 
 }

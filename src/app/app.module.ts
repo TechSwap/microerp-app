@@ -15,6 +15,7 @@ import { CadastrosModule } from './modules/cadastros/cadastros.module';
 import { OrdensModule } from './modules/ordens/ordens.module';
 import {CurrencyMaskModule} from "ng2-currency-mask";
 import {IConfig, NgxMaskDirective, NgxMaskPipe, provideEnvironmentNgxMask} from 'ngx-mask';
+import {BaseComponent} from "./modules/shared/base/base.component";
 
 
 const maskConfig: Partial<IConfig> = {
@@ -25,7 +26,8 @@ const maskConfig: Partial<IConfig> = {
   declarations: [
     AppComponent,
     LoginComponent,
-    MainComponent
+    MainComponent,
+    BaseComponent
   ],
   imports: [
     BrowserModule,
@@ -50,7 +52,9 @@ const maskConfig: Partial<IConfig> = {
   providers: [
     ToastrService,
     provideEnvironmentNgxMask(maskConfig),
-
+  ],
+  exports: [
+    BaseComponent
   ],
   bootstrap: [AppComponent]
 })

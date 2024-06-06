@@ -12,7 +12,7 @@
       <div class="d-flex flex-row">
         <mat-form-field style="margin-left: 10px;">
           <mat-select placeholder="Cliente" formControlName="idCliente">
-            <mat-option *ngFor="let cliente of clientes" [value]="cliente.idCliente">{{cliente.nome}}</mat-option>
+            <mat-option *ngFor="let cliente of dropClientes" [value]="cliente.Id">{{cliente.Descricao}}</mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field style="margin-left: 20px;">
@@ -31,9 +31,18 @@
                 color="primary"
                 (click)="$event.preventDefault(); searchOs()"
         >Pesquisar</button>
-        <button style="margin-left: 30px;" mat-raised-button color="primary"
-          (click)="$event.preventDefault(); openAddOS()">Adicionar</button>
-        <button style="margin-left: 30px;" mat-raised-button color="primary">Exportar Excel</button>
+
+        <button style="margin-left: 30px;"
+                mat-raised-button
+                color="primary"
+            (click)="$event.preventDefault(); openAddOS()"
+        >Adicionar</button>
+
+        <button style="margin-left: 30px;"
+                mat-raised-button
+                color="primary"
+                (click)="$event.preventDefault(); exportExcel()"
+        >Exportar Excel</button>
       </div>
     </form>
   </div>

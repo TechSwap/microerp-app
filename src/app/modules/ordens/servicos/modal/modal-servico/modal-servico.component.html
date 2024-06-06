@@ -1,12 +1,13 @@
 <div class="container" style="width: 950px;">
-  <h3 mat-dialog-title>Ordem Servicos</h3>
+  <h3 mat-dialog-title>{{ isUpdate ? 'Atualizar Ordem': 'Ordem Servicos'}}</h3>
   <mat-dialog-content>
     <h3>{{ this.osNumber }}</h3>
     <form [formGroup]="osForm">
       <div class="d-flex flex-row">
+        <input type="hidden" formControlName="idOrdemServico" name="idOrdemServico">
         <mat-form-field>
             <mat-select placeholder="Cliente" formControlName="idCliente">
-              <mat-option *ngFor="let cliente of clientes" [value]="cliente.idCliente">{{cliente.nome}}</mat-option>
+              <mat-option *ngFor="let cliente of dropClientes" [value]="cliente.Id">{{cliente.Descricao}}</mat-option>
             </mat-select>
         </mat-form-field>
         <mat-form-field style="margin-left: 10px;">
@@ -81,6 +82,8 @@
           <ng-container *ngIf="this.conteudo" >
             <div class="d-flex flex-row">
               <form [formGroup]="detalhesOS">
+                <input type="hidden" formControlName="idDetalhesOrdemServico" name="idDetalhesOrdemServico">
+                <input type="hidden" formControlName="ordemServicoId" name="ordemServicoId">
                 <mat-form-field fxFlex="40">
                   <input matInput placeholder="Descricao" formControlName="descricao" name="descricao">
                 </mat-form-field>
@@ -107,7 +110,7 @@
               <div class="d-flex flex-row">
               <ng-container *ngIf="detalheOrdemServicos.length > 0">
                 <div>
-                  <table mat-table [dataSource]="detalheOrdemServicos" class="mat-elevation-z8">
+                  <table mat-table [dataSource]="detalhes" class="mat-elevation-z8">
                     <ng-container matColumnDef="descricao">
                       <th mat-header-cell *matHeaderCellDef>Descricao</th>
                       <td style="width: 200px;" mat-cell *matCellDef="let detalheOrdemServico">{{detalheOrdemServico.descricao}}</td>
@@ -125,7 +128,9 @@
                       <td style="width: 200px;" mat-cell *matCellDef="let detalheOrdemServico">{{detalheOrdemServico.unidade}}</td>
                     </ng-container>
                     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    <tr mat-row *matRowDef="let row;
+                    columns: displayedColumns;"
+                    (click)="getItemLista(row)" ></tr>
                   </table>
                 </div>
               </ng-container>
@@ -137,6 +142,6 @@
   </mat-dialog-content>
   <mat-dialog-actions align="end">
     <button mat-button mat-dialog-close (click)="onCloseClick()">Cancelar</button>
-    <button mat-button (click)="onSubmit()">Adicionar</button>
+    <button mat-button (click)="onSubmit()">{{ isUpdate ? 'Atualizar' : 'Adicionar'}}</button>
   </mat-dialog-actions>
 </div>

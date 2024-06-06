@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -13,24 +13,25 @@ import {DateAdapter} from "@angular/material/core";
 import {MatDatepickerInputEvent} from "@angular/material/datepicker";
 import {dataPrevEntrega, numericOnly} from "../../../../../utils/input-helpers.utils";
 import * as moment from 'moment';
-import {MatTableDataSource} from "@angular/material/table";
-import {
-  OrdemServicosRequestModel,
-  ProdutoRequestModel
-} from "../../../../../models/request/ordem-servico.request.model";
+import {MatTable, MatTableDataSource} from "@angular/material/table";
+import { OrdemServicosRequestModel } from "../../../../../models/request/ordem-servico.request.model";
+import {BaseComponent} from "../../../../shared/base/base.component";
+import {SelectModel} from "../../../../../models/SelectModel";
 
 @Component({
   selector: 'app-modal-servico',
   templateUrl: './modal-servico.component.html',
   styleUrls: ['./modal-servico.component.css'],
 })
-export class ModalServicoComponent implements OnInit {
+export class ModalServicoComponent extends BaseComponent implements OnInit {
   osNumber: number = 0;
   resultAddItem = {}
   conteudo = false;
   clientes: Cliente[] = [];
   detalheOrdemServicos: DetalheOrdemServico[] = [];
-  detalhes = new  MatTableDataSource<DetalheOrdemServico>();
+  detalhes = new MatTableDataSource<DetalheOrdemServico>()
+
+  isUpdate = false
 
   unidades: UnidadeMedida[] = [
     { value: 'PC', viewValue: 'Pecas' },
@@ -38,15 +39,21 @@ export class ModalServicoComponent implements OnInit {
     { value: 'LT', viewValue: 'Litros' },
   ];
   os: any
+  dropClientes: SelectModel[] =  []
 
   detalhesOS:  FormGroup = this.formBuilder.group({
+    'idDetalhesOrdemServico': [''],
+    'ordemServicoId': [''],
     'descricao': [''],
     'valorUnitario': [''],
     'qtd': [''],
     'unidade': ['']
   })
 
+  //@ViewChild(MatTable) table!: MatTable<DetalheOrdemServico>;
+
   osForm: FormGroup = this.formBuilder.group({
+    'idOrdemServico': [''],
     'idCliente': [''],
     'solicitante': [''],
     'notaEntrada': [''],
@@ -60,8 +67,6 @@ export class ModalServicoComponent implements OnInit {
     'notaSaida': ['']
   })
 
-
-
   displayedColumns: string[] = ['descricao', 'valorUnitario', 'qtd', 'unidade'];
 
   constructor(
@@ -74,19 +79,19 @@ export class ModalServicoComponent implements OnInit {
     private toastrService: ToastrService,
     private dateAdapter: DateAdapter<Date>
   ) {
+    super();
     this.dateAdapter.setLocale('pt-BR'); //dd/MM/yyyy
   }
 
   ngOnInit(): void {
     this.os = this.data.OS
-
     if(this.os.numeroOS !== 0) {
       this.osNumber = this.os.numeroOS;
       this.loadData(this.os)
+      this.isUpdate = true;
     }else {
       this.getLastOs();
     }
-
     this.getListaClientes();
   }
 
@@ -117,19 +122,49 @@ export class ModalServicoComponent implements OnInit {
 
   addListaDetalhes() {
     let details: DetalheOrdemServico = {
+      idDetalhesOrdemServico: this.detalhesOS.controls['idDetalhesOrdemServico'].value,
+      ordemServicoId:  this.detalhesOS.controls['ordemServicoId'].value,
       descricao: this.detalhesOS.controls['descricao'].value,
       valorUnitario: parseFloat(this.detalhesOS.controls['valorUnitario'].value),
       quantidade: Number(this.detalhesOS.controls['qtd'].value),
       unidade: this.detalhesOS.controls['unidade'].value,
     };
 
-    this.detalheOrdemServicos.push(details);
-    this.detalhes.data = this.detalheOrdemServicos
+    this.detalheOrdemServicos = this.atualizaDetalhes(this.detalheOrdemServicos, details);
+    this.detalhes.data = [...this.detalheOrdemServicos]
     this.resetFormLista();
   }
 
+  atualizaDetalhes(lista: DetalheOrdemServico[], item: DetalheOrdemServico) {
+    let index = lista.findIndex(itm => itm.idDetalhesOrdemServico === item.idDetalhesOrdemServico)
+    if(index !== -1) {
+      lista[index] = item
+    }else {
+      lista.push(item)
+    }
+    return lista;
+  }
+
+  loadFormDetalhes(item: DetalheOrdemServico) {
+    this.detalhesOS.controls['idDetalhesOrdemServico'].setValue(item.idDetalhesOrdemServico)
+    this.detalhesOS.controls['ordemServicoId'].setValue(item.ordemServicoId)
+    this.detalhesOS.controls['descricao'].setValue(item.descricao)
+    this.detalhesOS.controls['valorUnitario'].setValue(item.valorUnitario)
+    this.detalhesOS.controls['qtd'].setValue(item.quantidade)
+    this.detalhesOS.controls['unidade'].setValue(item.unidade)
+  }
+
+  getItemLista(detalhe: DetalheOrdemServico) {
+    this.loadFormDetalhes(detalhe)
+  }
+
   resetFormLista() {
-    this.detalhesOS.reset()
+    this.detalhesOS.controls['idDetalhesOrdemServico'].setValue('')
+    this.detalhesOS.controls['ordemServicoId'].setValue('')
+    this.detalhesOS.controls['descricao'].setValue('')
+    this.detalhesOS.controls['valorUnitario'].setValue('')
+    this.detalhesOS.controls['qtd'].setValue('')
+    this.detalhesOS.controls['unidade'].setValue('')
   }
 
   getListaClientes() {
@@ -142,6 +177,7 @@ export class ModalServicoComponent implements OnInit {
       (result) => {
         if (result.statusCode === 200) {
           this.clientes = result.data;
+          this.dropClientes = this.loadDropClientes(result.data, this.dropClientes)
         } else {
           this.toastrService.warning('Erro ao Listar', 'Atenção!');
         }
@@ -174,6 +210,7 @@ export class ModalServicoComponent implements OnInit {
     let detalhes = this.detalheOrdemServicos
 
     let req: OrdemServicosRequestModel = {
+      idOrdemServico: dados.idOrdemServico,
       numeroOs: Number(this.osNumber),
       idCliente: dados.idCliente,
       solicitante: dados.solicitante,
@@ -189,28 +226,49 @@ export class ModalServicoComponent implements OnInit {
       detalhes: detalhes,
     }
 
-    this.ordemServicosService.addNovaOs(req).subscribe(
-      (result) => {
-        if (result.statusCode === 204) {
-          this.resultAddItem = {success: true}
+    console.info('ID: ', dados.idOrdemServico)
+
+    if(dados.idOrdemServico === '') {
+      this.ordemServicosService.addNovaOs(req).subscribe(
+        (result) => {
+          if (result.statusCode === 204) {
+            this.resultAddItem = {success: true}
+            this.loading.hide();
+            this.dialogRef.close(this.resultAddItem);
+          }
+        },
+        (error) => {
           this.loading.hide();
-          this.dialogRef.close(this.resultAddItem);
+          this.toastrService.warning('Erro ao Listar', 'Atenção!');
         }
-      },
-      (error) => {
-        this.loading.hide();
-        this.toastrService.warning('Erro ao Listar', 'Atenção!');
-      })
+      )
+    }else {
+      console.info('Update: ')
+      this.ordemServicosService.putOs(req).subscribe(
+        (result) => {
+          if (result.statusCode === 204) {
+            this.resultAddItem = {success: true}
+            this.loading.hide();
+            this.dialogRef.close(this.resultAddItem);
+          }
+        },
+        (error) => {
+          console.info('Error: ', error)
+          this.loading.hide();
+          this.toastrService.warning('Erro ao Listar', 'Atenção!');
+        }
+      )
+    }
   }
 
   loadData(dados: any) {
-
     let dataPrevEntrega = moment(dados.dataPrevEntrega).toDate()
     let dataEntrega = dados.dataEntrega !== '' ? moment(dados.dataEntrega).toDate() : moment(dados.lancamento).add(dados.prazo, 'd').toDate()
     let lancamento = moment(dados.lancamento).toDate()
 
     this.detalheOrdemServicos = dados.detalheOrdemServicos;
 
+    this.osForm.controls['idOrdemServico'].setValue(dados.idOrdemServico)
     this.osForm.controls['idCliente'].setValue(dados.idCliente)
     this.osForm.controls['solicitante'].setValue(dados.solicitante)
     this.osForm.controls['notaEntrada'].setValue(dados.notaEntrada)
@@ -223,10 +281,8 @@ export class ModalServicoComponent implements OnInit {
     this.osForm.controls['dataEntrega'].setValue(dataEntrega )
     this.osForm.controls['notaSaida'].setValue(dados.notaSaida)
     this.mostraConteudo()
-    this.detalhes.data = this.detalheOrdemServicos
-
+    this.detalhes.data.push(...this.detalheOrdemServicos);
   }
 
   protected readonly numericOnly = numericOnly;
-  protected readonly print = print;
 }

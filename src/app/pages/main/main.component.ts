@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { NgxSpinnerService } from 'ngx-spinner';
-import { ToastrService } from 'ngx-toastr';
-import { BaseComponent } from 'src/app/components/base/base.component';
 import { getUser } from 'src/app/utils/http-helpers.utils';
 
 @Component({
@@ -29,9 +26,6 @@ export class MainComponent implements OnInit {
     localStorage.removeItem('accessToken')
     localStorage.removeItem('User')
     localStorage.removeItem('expires_at')
-
      this.router.navigate(['login'])
-
   }
-
 }

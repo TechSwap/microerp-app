@@ -1,6 +1,7 @@
 import {DetalheOrdemServico} from "../ordemServico.model";
 
 export interface OrdemServicosRequestModel {
+  idOrdemServico?: string
   numeroOs: number,
   idCliente: string,
   solicitante: string,

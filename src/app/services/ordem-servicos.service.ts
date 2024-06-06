@@ -63,4 +63,10 @@ export class OrdemServicosService {
 
     return this._service.get<Result>(route, this._token);
   }
+
+  putOs(request: OrdemServicosRequestModel) {
+    const route = formatingRoute('/ordemservico');
+
+    return this._service.put<Result>(route, this._token, request);
+  }
 }

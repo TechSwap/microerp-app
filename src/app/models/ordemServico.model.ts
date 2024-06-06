@@ -17,10 +17,9 @@ export interface OrdemServicoModel {
 
 export interface DetalheOrdemServico {
   idDetalhesOrdemServico?: string;
-  ordemServicoId?: string;
+  ordemServicoId: string;
   descricao: string;
   valorUnitario: number;
   quantidade: number;
   unidade: string;
-  prazoEntrega?: Date;
 }

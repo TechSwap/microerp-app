@@ -88,7 +88,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatTreeModule,
     PortalModule,
     ScrollingModule,
-    MatFormFieldModule,
-  ],
+    MatFormFieldModule
+  ]
 })
 export class MaterialModule {}
