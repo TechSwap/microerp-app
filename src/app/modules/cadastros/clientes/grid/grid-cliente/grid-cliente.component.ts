@@ -75,7 +75,6 @@ export class GridClienteComponent implements OnInit {
 
 
   edit(cliente: Cliente) {
-    console.info('Row: ', cliente)
     this.loading.show();
     this.clienteService.findOneCliente(cliente.idCliente).subscribe(
       (result) => {

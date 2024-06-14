@@ -60,3 +60,13 @@ body {
   background: rgba(0, 0, 0, 0.32);
   z-index: 2000;
 }
+
+.ativo {
+  color: #03DAC5;
+}
+.inativo {
+  color: #B00020;
+}
+
+
+

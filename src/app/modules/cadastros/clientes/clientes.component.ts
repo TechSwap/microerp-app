@@ -80,9 +80,7 @@ export class ClientesComponent extends BaseComponent implements OnInit {
   }
 
   searchClientes() {
-
     let dados = this.searchClienteForm.value;
-    console.info('Search Clientes: ', dados)
 
     this.clienteService.searchClientes(dados.idCliente, dados.cnpj, dados.contato, dados.email).subscribe(
       (result) => {

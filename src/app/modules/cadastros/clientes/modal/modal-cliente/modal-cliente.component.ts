@@ -47,7 +47,6 @@ export class ModalClienteComponent implements OnInit {
     private formBuilder: FormBuilder,
     private spinner: NgxSpinnerService,
     private toastrService: ToastrService
-
   ) { }
 
    ngOnInit(): void {

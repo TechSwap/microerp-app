@@ -1,1 +1,36 @@
-<p>funcionarios works!</p>
+<mat-accordion>
+  <mat-expansion-panel [expanded]=false (opened)=true>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Funcionarios
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+  </mat-expansion-panel>
+  <div>
+    <br />
+    <form [formGroup]="searchForm">
+      <div class="d-flex flex-row">
+        <mat-form-field>
+          <mat-select placeholder="Departamento" formControlName="departamentoId">
+            <mat-option *ngFor="let departamento of dropDepartamentos" [value]="departamento.Id">{{departamento.Descricao}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="form-field" style="margin-left: 10px;" >
+          <input matInput formControlName="nome" placeholder="Nome">
+        </mat-form-field>
+        <mat-form-field class="form-field" style="margin-left: 10px;">
+          <input matInput formControlName="funcao" placeholder="Funcao">
+        </mat-form-field>
+      </div>
+      <div class="row" style="align-items: end; margin-left: 700px;">
+        <button mat-raised-button color="primary"
+                (click)="$event.preventDefault(); SearchFuncionario()"
+        >Pesquisar</button>
+        <button style="margin-left: 30px;" mat-raised-button color="primary"
+                (click)="$event.preventDefault(); AddFuncionario()">Adicionar</button>
+      </div>
+    </form>
+  </div>
+  <hr />
+  <app-grid-funcionario #GridFuncionarioComponent></app-grid-funcionario>
+</mat-accordion>

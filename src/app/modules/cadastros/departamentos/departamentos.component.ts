@@ -26,7 +26,7 @@ export class DepartamentosComponent implements OnInit{
   openModalDepartamento() {
     let data: Departamento = {
       idDepartamento: '',
-      nome: '',
+      descricao: '',
       responsavel: '',
       centroCusto: '',
       status: true

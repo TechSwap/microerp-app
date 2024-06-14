@@ -1,1 +1,41 @@
-<p>modal-funcionario works!</p>
+<div class="container" style="width: 850px;">
+  <h3 mat-dialog-title>{{ isUpdate ? 'Atualizar Funcionario' : 'Adicionar Funcionario'}}</h3>
+  <mat-dialog-content>
+    <form [formGroup]="funcionarioForm">
+      <div class="form-fields">
+        <input hidden formControlName="idFuncionario">
+        <mat-form-field style="margin-left: 10px;">
+          <input matInput placeholder="Nome" formControlName="nome" required>
+        </mat-form-field>
+        <mat-form-field style="margin-left: 10px;">
+          <input matInput placeholder="Codigo" formControlName="codigo">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select placeholder="Departamento" formControlName="departamentoId">
+            <mat-option *ngFor="let departamento of dropDepartamentos" [value]="departamento.Id">{{departamento.Descricao}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="form-fields">
+        <mat-form-field style="margin-left: 10px;">
+          <input matInput placeholder="Centro de Custo" formControlName="centroCusto">
+        </mat-form-field>
+        <mat-form-field style="margin-left: 10px;">
+          <input matInput placeholder="Funcao" formControlName="funcao">
+        </mat-form-field>
+        <mat-form-field style="margin-left: 10px;">
+          <input matInput
+                 placeholder="Valor Hora"
+                 formControlName="valorHora"
+                 currencyMask
+                 [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
+          >
+        </mat-form-field>
+      </div>
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close (click)="onCloseClick()">Cancelar</button>
+    <button mat-button (click)="onSubmit()">{{ isUpdate ? 'Atualizar' : 'Adicionar'}}</button>
+  </mat-dialog-actions>
+</div>

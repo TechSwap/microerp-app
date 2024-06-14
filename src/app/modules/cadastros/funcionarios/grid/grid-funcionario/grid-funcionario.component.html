@@ -1,1 +1,49 @@
-<p>grid-funcionario works!</p>
+<div>
+  <table mat-table [dataSource]="funcionarios" class="mat-elevation-z8">
+    <!-- Column definitions -->
+    <ng-container matColumnDef="nome">
+      <th mat-header-cell *matHeaderCellDef>Nome</th>
+      <td style="width: 200px;" mat-cell *matCellDef="let funcionario">{{funcionario.nome}}</td>
+    </ng-container>
+    <ng-container matColumnDef="departamento">
+      <th mat-header-cell *matHeaderCellDef>Departamento</th>
+      <td style="width: 200px;" mat-cell *matCellDef="let funcionario">{{funcionario.departamento}}</td>
+    </ng-container>
+    <ng-container matColumnDef="funcao">
+      <th mat-header-cell *matHeaderCellDef>Funcao</th>
+      <td style="width: 200px;" mat-cell *matCellDef="let funcionario">{{funcionario.funcao}}</td>
+    </ng-container>
+    <!-- Ativo Column -->
+    <ng-container matColumnDef="ativo">
+      <th mat-header-cell *matHeaderCellDef> Ativo </th>
+      <td style="width: 200px;" mat-cell *matCellDef="let element"> {{element.ativo ? 'Sim' : 'Não'}} </td>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Ações </th>
+      <td style="width: 150px;" mat-cell *matCellDef="let element">
+        <button mat-icon-button color="primary" (click)="editFuncionario(element)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button (click)="activeFuncionario(element)">
+          <mat-icon [ngClass]="element.ativo ? 'ativo' : 'inativo' ">task_alt</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="deleteFuncionario(element)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <!-- Add other columns similarly -->
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  <mat-paginator #paginator
+                 (page)="pageChangeEvent($event)"
+                 [length]="totalRecords"
+                 [pageSize]="pageSize"
+                 [pageIndex]="pageIndex"
+                 [pageSizeOptions]="[5, 10, 30]"
+                 showFirstLastButtons>
+  </mat-paginator>
+</div>

@@ -35,7 +35,6 @@ export class ClientService {
 
   public delete<Result>(url: string, token: string | null): Observable<Result> {
     let opt = headers(token)
-
     return this.http.delete<Result>(url, opt);
   }
 }

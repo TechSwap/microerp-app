@@ -20,6 +20,7 @@ import { DepartamentosComponent } from './departamentos/departamentos.component'
 import { ModalDepartamentosComponent } from './departamentos/modal/modal-departamentos/modal-departamentos.component';
 import { GridDepartamentosComponent } from './departamentos/grid/grid-departamentos/grid-departamentos.component';
 import {NgxMaskDirective} from "ngx-mask";
+import {CurrencyMaskModule} from "ng2-currency-mask";
 
 @NgModule({
   declarations: [
@@ -39,18 +40,19 @@ import {NgxMaskDirective} from "ngx-mask";
     ModalDepartamentosComponent,
     GridDepartamentosComponent,
   ],
-  imports: [
-    CommonModule,
-    MaterialModule,
-    ToastrModule.forRoot({
-      timeOut: 150000, // 15 seconds
-      closeButton: true,
-      progressBar: true,
-    }),
-    FormsModule,
-    ReactiveFormsModule,
-    NgxMaskDirective,
-  ],
+    imports: [
+        CommonModule,
+        MaterialModule,
+        ToastrModule.forRoot({
+            timeOut: 150000, // 15 seconds
+            closeButton: true,
+            progressBar: true,
+        }),
+        FormsModule,
+        ReactiveFormsModule,
+        NgxMaskDirective,
+        CurrencyMaskModule,
+    ],
   providers: [
     { provide: DEFAULT_DIALOG_CONFIG, useValue: { hasBackdrop: false } },
   ]
