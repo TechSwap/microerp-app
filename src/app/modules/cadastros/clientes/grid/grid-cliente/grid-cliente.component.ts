@@ -8,6 +8,7 @@ import { Metadata } from 'src/app/models/resultlist';
 import { ClientesService } from 'src/app/services/clientes.service';
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {ModalClienteComponent} from "../../modal/modal-cliente/modal-cliente.component";
+import {Funcionario} from "../../../../../models/response/funcionario.model";
 
 @Component({
   selector: 'app-grid-cliente',
@@ -17,6 +18,11 @@ import {ModalClienteComponent} from "../../modal/modal-cliente/modal-cliente.com
 export class GridClienteComponent implements OnInit {
   displayedColumns: string[] = ['nome', 'cnpj', 'fantasia', 'contato1', 'email', 'ativo', 'actions'];
   clientes!: MatTableDataSource<Cliente>;
+
+  metaData: Metadata = {
+    pageNumber: 1,
+    pageSize: 15,
+  }
 
   resultsLength = 0;
   totalRecords? = 0;
@@ -33,12 +39,7 @@ export class GridClienteComponent implements OnInit {
   ) {  }
 
   ngOnInit() {
-    let metaData: Metadata = {
-      pageNumber: 1,
-      pageSize: 15,
-    }
-
-    this.getListaClientes(metaData)
+    this.getListaClientes(this.metaData)
   }
 
   getListaClientes(metaData: Metadata) {
@@ -70,6 +71,7 @@ export class GridClienteComponent implements OnInit {
       pageNumber: event.pageIndex + 1,
       pageSize: event.pageSize,
     }
+
     this.getListaClientes(metaData)
   }
 
@@ -102,12 +104,31 @@ export class GridClienteComponent implements OnInit {
 
    }
 
-  delete(row: any) {
-    console.info('Row: ', row)
+  deleteCliente(cliente: Cliente) {
+    this.loading.show();
+    this.clienteService.deleteCliente(cliente.idCliente).subscribe(
+      (result) => {
+        if (result.statusCode === 204) {
+          this.getListaClientes(this.metaData)
+        }
+        this.loading.hide();
+
+      }, (error) => {
+        this.loading.hide();
+      })
   }
 
-  active(row: any) {
-    console.info('Row: ', row)
-  }
+  activeCliente(cliente: Cliente) {
+    this.loading.show();
+    this.clienteService.activeCliente(cliente.idCliente).subscribe(
+      (result) => {
+        if (result.statusCode === 204) {
+          this.getListaClientes(this.metaData)
+        }
+        this.loading.hide();
 
+      }, (error) => {
+        this.loading.hide();
+      })
+  }
 }

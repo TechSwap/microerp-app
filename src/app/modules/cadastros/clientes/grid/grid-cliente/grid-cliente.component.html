@@ -16,7 +16,8 @@
     </ng-container>
     <ng-container matColumnDef="contato1">
       <th mat-header-cell *matHeaderCellDef>Responsavel</th>
-      <td style="width: 150px;" mat-cell *matCellDef="let cliente">{{cliente.contato1}}</td>
+      <td style="width: 100px;" mat-cell *matCellDef="let cliente">{{cliente.contato1}}</td>
+
     </ng-container>
     <ng-container matColumnDef="email">
       <th mat-header-cell *matHeaderCellDef>E-mail</th>
@@ -25,16 +26,19 @@
     <!-- Ativo Column -->
     <ng-container matColumnDef="ativo">
       <th mat-header-cell *matHeaderCellDef> Ativo </th>
-      <td style="width: 200px;" mat-cell *matCellDef="let element"> {{element.ativo ? 'Sim' : 'Não'}} </td>
+      <td style="width: 100px;" mat-cell *matCellDef="let element"> {{element.ativo ? 'Sim' : 'Não'}} </td>
     </ng-container>
 
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef> Ações </th>
-      <td style="width: 150px;" mat-cell *matCellDef="let element">
+      <td style="width: 250px;" mat-cell *matCellDef="let element">
         <button mat-icon-button color="primary" (click)="edit(element)">
           <mat-icon>edit</mat-icon>
         </button>
-        <button mat-icon-button color="warn" (click)="delete(element)">
+        <button mat-icon-button (click)="activeCliente(element)">
+          <mat-icon [ngClass]="element.ativo ? 'ativo' : 'inativo' ">task_alt</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="deleteCliente(element)">
           <mat-icon>delete</mat-icon>
         </button>
       </td>

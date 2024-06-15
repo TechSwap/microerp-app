@@ -27,14 +27,10 @@ export class ClientesService {
   }
 
   searchClientes(idCliente: string, cnpj: string, responsavel: string, email: string) {
-
-
     let clientes = idCliente !== '' ? `?idCliente=${idCliente}` : ''
     let cnpjComp = cnpj !== '' ? `${clientes === '' ? '?': '&'}cnpj=${cnpj}` : ''
     let respComp = responsavel !== '' ? `${clientes === '' && cnpj === '' ? '?': '&'}responsavel=${responsavel}` : ''
     let emailComp = email !== '' ? `${clientes === '' && cnpj === '' && responsavel === ''  ? '?': '&'}email=${email}` : ''
-
-    let composeRoute = `/cliente/lista-clientes?`
 
     let route =  clientes === '' && cnpj === '' && responsavel === '' && email === ''
       ? formatingRoute(`/cliente/lista-clientes?metaData.pageNumber=1&metaData.pageSize=15`)
@@ -44,29 +40,33 @@ export class ClientesService {
     return this._service.get<ResultList>(route, token)
   }
 
-
   postcliente(request: EmpresaRequest) {
     let route = formatingRoute('/cliente')
-    console.info('Rota: ', route)
-
     let token = getToken()
-
     return this._service.post<Result>(route, token, request)
   }
 
   findOneCliente(idCliente: string) {
     let route = formatingRoute(`/cliente?idCliente=${idCliente}`)
-
     let token = getToken()
-
     return this._service.get<Result>(route, token)
+  }
+
+  activeCliente(idCliente: string) {
+    let route = formatingRoute(`/cliente/active?idCliente=${idCliente}`)
+    let token = getToken()
+    return this._service.post<Result>(route, token, null)
+  }
+
+  deleteCliente(idCliente: string) {
+    let route = formatingRoute(`/cliente?idCliente=${idCliente}`)
+    let token = getToken()
+    return this._service.delete<Result>(route, token)
   }
 
   putCliente(request: EmpresaRequest) {
     let route = formatingRoute('/cliente')
-
     let token = getToken()
-
     return this._service.put<Result>(route, token, request)
   }
 }
