@@ -1,1 +1,56 @@
-<p>grid-fornecedor works!</p>
+<div>
+  <table mat-table [dataSource]="fornecedores" class="mat-elevation-z8">
+    <!-- Column definitions -->
+    <ng-container matColumnDef="nome">
+      <th mat-header-cell *matHeaderCellDef>Nome</th>
+      <td style="width: 200px;" mat-cell *matCellDef="let fornecedor">{{fornecedor.nome}}</td>
+    </ng-container>
+    <ng-container matColumnDef="cnpj">
+      <th mat-header-cell *matHeaderCellDef>CNPJ</th>
+      <td style="width: 200px;" mat-cell *matCellDef="let fornecedor">{{fornecedor.cnpj}}</td>
+    </ng-container>
+    <ng-container matColumnDef="fantasia">
+      <th mat-header-cell *matHeaderCellDef>Nome Fantasia</th>
+      <td style="width: 200px;" mat-cell *matCellDef="let fornecedor">{{fornecedor.fantasia}}</td>
+    </ng-container>
+    <ng-container matColumnDef="contato1">
+      <th mat-header-cell *matHeaderCellDef>Contato</th>
+      <td style="width: 100px;" mat-cell *matCellDef="let fornecedor">{{fornecedor.contato1}}</td>
+
+    </ng-container>
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef>E-mail</th>
+      <td style="width: 200px;" mat-cell *matCellDef="let fornecedor">{{fornecedor.email}}</td>
+    </ng-container>
+    <!-- Ativo Column -->
+    <ng-container matColumnDef="ativo">
+      <th mat-header-cell *matHeaderCellDef> Ativo </th>
+      <td style="width: 100px;" mat-cell *matCellDef="let element"> {{element.ativo ? 'Sim' : 'Não'}} </td>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Ações </th>
+      <td style="width: 250px;" mat-cell *matCellDef="let element">
+        <button mat-icon-button color="primary" (click)="editFornecedor(element)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button (click)="activeFornecedor(element)">
+          <mat-icon [ngClass]="element.ativo ? 'ativo' : 'inativo' ">task_alt</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="deleteFornecedor(element)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+    <!-- Add other columns similarly -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  <mat-paginator #paginator
+                 (page)="pageChangeEvent($event)"
+                 [length]="totalRecords"
+                 [pageSize]="pageSize"
+                 [pageIndex]="pageIndex"
+                 [pageSizeOptions]="[5, 10, 30]"
+                 showFirstLastButtons>
+  </mat-paginator>
+</div>

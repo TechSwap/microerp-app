@@ -6,25 +6,23 @@
       </mat-panel-title>
     </mat-expansion-panel-header>
   </mat-expansion-panel>
-  <div class="formSearchClientes">
+  <div class="searchFornecedorForm">
     <br />
-    <form>
+    <form [formGroup]="searchFornecedorForm">
       <div class="d-flex flex-row">
-        <mat-form-field class="form-field" style="margin-left: 10px;">
-          <mat-label>Fornecedor</mat-label>
-          <input matInput>
+        <mat-form-field style="margin-left: 20px;">
+          <mat-select placeholder="Fornecedor" formControlName="idFornecedor">
+            <mat-option *ngFor="let fornecedor of dropFornecedores" [value]="fornecedor.Id">{{fornecedor.Descricao}}</mat-option>
+          </mat-select>
         </mat-form-field>
         <mat-form-field style="margin-left: 20px;">
-          <mat-label>CNPJ</mat-label>
-          <input matInput>
+          <input matInput placeholder="CNPJ" formControlName="cnpj">
         </mat-form-field>
         <mat-form-field style="margin-left: 20px;">
-          <mat-label>Contato</mat-label>
-          <input matInput>
+          <input matInput placeholder="Contato" formControlName="contato">
         </mat-form-field>
         <mat-form-field style="margin-left: 20px;">
-          <mat-label>Email</mat-label>
-          <input matInput>
+          <input matInput placeholder="Email" formControlName="email">
         </mat-form-field>
       </div>
       <div class="row" style="align-items: end; margin-left: 700px;">
@@ -35,5 +33,5 @@
     </form>
   </div>
   <hr />
-  <app-grid-fornecedor></app-grid-fornecedor>
+  <app-grid-fornecedor #GridFornecedorComponent></app-grid-fornecedor>
 </mat-accordion>

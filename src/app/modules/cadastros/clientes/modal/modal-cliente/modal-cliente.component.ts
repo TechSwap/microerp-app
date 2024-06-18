@@ -2,10 +2,11 @@ import {Component, Inject, OnInit} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { ToastrService } from 'ngx-toastr';
 import { EmpresaRequest } from 'src/app/models/request/empresa-request.model';
 import { BaseService } from 'src/app/services/base.service';
 import { ClientesService } from 'src/app/services/clientes.service';
+import {ModalResult} from "../../../../../models/modal-result.model";
+import {NotificationService} from "../../../../../services/notification.service";
 
 @Component({
   selector: 'app-modal-cliente',
@@ -13,7 +14,6 @@ import { ClientesService } from 'src/app/services/clientes.service';
   styleUrls: ['./modal-cliente.component.css']
 })
 export class ModalClienteComponent implements OnInit {
-
   isReadonly: boolean = false
   isUpdate: boolean = false
 
@@ -36,9 +36,6 @@ export class ModalClienteComponent implements OnInit {
     'complemento': ['']
    })
 
-
-
-
    constructor(
     public dialogRef: MatDialogRef<ModalClienteComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -46,14 +43,12 @@ export class ModalClienteComponent implements OnInit {
     private clientesService: ClientesService,
     private formBuilder: FormBuilder,
     private spinner: NgxSpinnerService,
-    private toastrService: ToastrService
+    private notification: NotificationService
   ) { }
 
    ngOnInit(): void {
     this.loadData(this.data.dados)
-
      this.isReadonly = this.data.dados.idCliente !== ''
-
   }
 
   onCloseClick(): void {
@@ -89,23 +84,20 @@ export class ModalClienteComponent implements OnInit {
         console.info('Result: ', result)
         if (result.statusCode === 201) {
           this.spinner.hide();
-          this.dialogRef.close();
+          let resultModal: ModalResult = {
+            success: true,
+            msg: result.msg
+          }
+          this.dialogRef.close(resultModal);
         } else {
-          this.toastrService.error('Error', '', {
-            timeOut: 3000,
-          });
+          this.notification.warning(result.msg);
           this.spinner.hide();
         }
       }, (error) => {
-        console.info('Error: ', error)
-
         if (error.status === 400 || error.status === 404) {
           let msg = error.error.errors[0].userMessage
-          this.toastrService.warning('Atenção!', msg, {
-            timeOut: 3000,
-          });
+          this.notification.warning(msg);
         }
-
         this.spinner.hide();
       })
     }else{
@@ -113,15 +105,18 @@ export class ModalClienteComponent implements OnInit {
         (result) => {
           if (result.statusCode === 204) {
             this.spinner.hide();
-            this.dialogRef.close();
+            let resultModal: ModalResult = {
+              success: true,
+              msg: result.msg
+            }
+            this.dialogRef.close(resultModal);
           }
         },
         (error) => {
-          console.info('Error Update Cliente: ', error)
-          this.spinner.hide();
+          this.notification.warning('Erro ao atualizar ');
+          this.spinner.hide()
         }
       )
-
     }
   }
 
@@ -130,7 +125,6 @@ export class ModalClienteComponent implements OnInit {
     this.baseService.getCep(e.target.value).subscribe(result => {
       if (result != null) {
         this.spinner.hide();
-
         this.clienteForm.controls['endereco'].setValue(result.logradouro)
         this.clienteForm.controls['bairro'].setValue(result.bairro)
         this.clienteForm.controls['cidade'].setValue(result.localidade)
@@ -138,15 +132,12 @@ export class ModalClienteComponent implements OnInit {
       }
     }, (error) => {
       this.spinner.hide();
-      console.info('Error BuscaCep: ', error)
-      this.toastrService.success('CEP Error!', 'Title Success!');
+      this.notification.warning('Erro ao buscar o CEP!');
     })
   }
 
   loadData(dados: EmpresaRequest) {
-
     this.isUpdate = dados.idCliente !== ''
-
     this.clienteForm.controls['idCliente'].setValue(dados.idCliente)
     this.clienteForm.controls['nome'].setValue(dados.nome)
     this.clienteForm.controls['cnpj'].setValue(dados.cnpj)
@@ -164,5 +155,4 @@ export class ModalClienteComponent implements OnInit {
     this.clienteForm.controls['estado'].setValue(dados.estado)
     this.clienteForm.controls['complemento'].setValue(dados.complemento)
   }
-
 }

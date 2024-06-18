@@ -9,6 +9,8 @@ import {FuncionariosService} from "../../../../../services/funcionarios.service"
 import {SelectModel} from "../../../../../models/SelectModel";
 import {Metadata} from "../../../../../models/resultlist";
 import {DepartamentosService} from "../../../../../services/departamentos.service";
+import {ToastrService} from "ngx-toastr";
+import {NotificationService} from "../../../../../services/notification.service";
 
 @Component({
   selector: 'app-modal-funcionario',
@@ -35,7 +37,8 @@ export class ModalFuncionarioComponent extends BaseComponent implements OnInit{
     private formBuilder: FormBuilder,
     private loading: NgxSpinnerService,
     private funcionarioService: FuncionariosService,
-    private departamentoService: DepartamentosService
+    private departamentoService: DepartamentosService,
+    private notification: NotificationService
   ) {
     super();
   }
@@ -60,11 +63,11 @@ export class ModalFuncionarioComponent extends BaseComponent implements OnInit{
         this.loading.hide();
       },
       (error) => {
-        console.info('Error Codigo Funcionario: ', error)
+        this.notification.error('Erro ao buscar codigo')
+
         this.loading.hide();
       }
     )
-
   }
 
   loadDataFuncionario(dados: Funcionario) {
@@ -100,14 +103,15 @@ export class ModalFuncionarioComponent extends BaseComponent implements OnInit{
       this.funcionarioService.postFuncionario(req).subscribe((result) => {
         console.info('Result: ', result)
         if (result.statusCode === 201) {
-          this.dialogRef.close();
+          this.dialogRef.close({
+            success: true
+          });
         }
         this.loading.hide();
       }, (error) => {
-        console.info('Error: ', error)
         if (error.status === 400 || error.status === 404) {
-          let msg = error.error.errors[0].userMessage
-
+          let msg = error.statusText
+          this.notification.warning(msg)
         }
         this.loading.hide();
       })
@@ -146,7 +150,4 @@ export class ModalFuncionarioComponent extends BaseComponent implements OnInit{
       }
     );
   }
-
-
-
 }

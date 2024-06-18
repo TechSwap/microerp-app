@@ -12,8 +12,7 @@ import { EmpresaRequest } from '../models/request/empresa-request.model';
 export class ClientesService {
 
   constructor(
-    private _service: ClientService,
-    private router: Router,
+    private _service: ClientService
   ) { }
 
   listClientes(metaData: Metadata) {

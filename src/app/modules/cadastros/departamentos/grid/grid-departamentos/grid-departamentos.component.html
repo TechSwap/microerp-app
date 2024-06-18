@@ -4,7 +4,7 @@
     <!-- Column definitions -->
     <ng-container matColumnDef="nome">
       <th mat-header-cell *matHeaderCellDef>Departamento</th>
-      <td style="width: 200px;" mat-cell *matCellDef="let departamento">{{departamento.nome}}</td>
+      <td style="width: 200px;" mat-cell *matCellDef="let departamento">{{departamento.descricao}}</td>
     </ng-container>
     <ng-container matColumnDef="responsavel">
       <th mat-header-cell *matHeaderCellDef>Responsavel</th>
@@ -16,15 +16,18 @@
     </ng-container>
     <ng-container matColumnDef="status">
       <th mat-header-cell *matHeaderCellDef>Status</th>
-      <td style="width: 200px;" mat-cell *matCellDef="let departamento">{{departamento.status}}</td>
+      <td style="width: 200px;" mat-cell *matCellDef="let departamento">{{ departamento.status ? 'Ativo' : 'Inativo' }}</td>
     </ng-container>
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef> Ações </th>
       <td style="width: 150px;" mat-cell *matCellDef="let element">
-        <button mat-icon-button color="primary" (click)="edit(element)">
+        <button mat-icon-button color="primary" (click)="editDepartamento(element)">
           <mat-icon>edit</mat-icon>
         </button>
-        <button mat-icon-button color="warn" (click)="delete(element)">
+        <button mat-icon-button (click)="activeDepartamento(element)">
+          <mat-icon [ngClass]="element.status ? 'ativo' : 'inativo' ">task_alt</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="deleteDepartamento(element)">
           <mat-icon>delete</mat-icon>
         </button>
       </td>

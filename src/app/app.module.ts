@@ -35,7 +35,7 @@ const maskConfig: Partial<IConfig> = {
     BrowserAnimationsModule,
     MaterialModule,
     ToastrModule.forRoot({
-      timeOut: 150000, // 15 seconds
+      timeOut: 1500,
       closeButton: true,
       progressBar: true,
     }),

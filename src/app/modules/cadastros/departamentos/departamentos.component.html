@@ -8,11 +8,12 @@
   </mat-expansion-panel>
   <div>
     <br />
-    <form>
+    <form [formGroup]="searchDepartamento">
       <div class="d-flex flex-row">
-        <mat-form-field class="form-field" style="margin-left: 10px;">
-          <mat-label>Departamento</mat-label>
-          <input matInput>
+        <mat-form-field style="margin-left: 10px;">
+          <mat-select placeholder="Departamento" formControlName="idDepartamento">
+            <mat-option *ngFor="let departamento of dropDepartamentos" [value]="departamento.Id">{{departamento.Descricao}}</mat-option>
+          </mat-select>
         </mat-form-field>
       </div>
 
@@ -24,5 +25,5 @@
     </form>
   </div>
   <hr />
-  <app-grid-departamentos></app-grid-departamentos>
+  <app-grid-departamentos #GridDepartamentosComponent></app-grid-departamentos>
 </mat-accordion>

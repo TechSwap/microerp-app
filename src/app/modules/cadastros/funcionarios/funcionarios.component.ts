@@ -10,6 +10,7 @@ import {Metadata} from "../../../models/resultlist";
 import {DepartamentosService} from "../../../services/departamentos.service";
 import {FuncionariosService} from "../../../services/funcionarios.service";
 import {NgxSpinnerService} from "ngx-spinner";
+import {NotificationService} from "../../../services/notification.service";
 
 @Component({
   selector: 'app-funcionarios',
@@ -33,7 +34,8 @@ export class FuncionariosComponent extends BaseComponent implements OnInit {
     private departamentoService: DepartamentosService,
     private funcionarioService: FuncionariosService,
     private formBuilder: FormBuilder,
-    private loading: NgxSpinnerService
+    private loading: NgxSpinnerService,
+    private notification: NotificationService
   ) {
     super();
   }
@@ -66,7 +68,9 @@ export class FuncionariosComponent extends BaseComponent implements OnInit {
     const dialogRef = this.dialog.open(ModalFuncionarioComponent, dialogConfig)
 
     dialogRef.afterClosed().subscribe(result => {
-
+      if(result.success) {
+        this.notification.success('Adicionado com sucesso')
+      }
     });
   }
 
@@ -107,6 +111,7 @@ export class FuncionariosComponent extends BaseComponent implements OnInit {
       (result) => {
         if (result.statusCode === 200) {
           this.dropDepartamentos = this.loadDropDepartamentos(result.data, this.dropDepartamentos)
+
         } else {
 
         }

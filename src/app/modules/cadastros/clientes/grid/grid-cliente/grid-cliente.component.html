@@ -32,7 +32,7 @@
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef> Ações </th>
       <td style="width: 250px;" mat-cell *matCellDef="let element">
-        <button mat-icon-button color="primary" (click)="edit(element)">
+        <button mat-icon-button color="primary" (click)="editCliente(element)">
           <mat-icon>edit</mat-icon>
         </button>
         <button mat-icon-button (click)="activeCliente(element)">

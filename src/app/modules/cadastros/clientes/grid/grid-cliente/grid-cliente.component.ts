@@ -2,13 +2,13 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { ToastrService } from 'ngx-toastr';
 import { Cliente } from 'src/app/models/response/cliente-response.model';
 import { Metadata } from 'src/app/models/resultlist';
 import { ClientesService } from 'src/app/services/clientes.service';
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {ModalClienteComponent} from "../../modal/modal-cliente/modal-cliente.component";
-import {Funcionario} from "../../../../../models/response/funcionario.model";
+import {NotificationService} from "../../../../../services/notification.service";
+import {ModalResult} from "../../../../../models/modal-result.model";
 
 @Component({
   selector: 'app-grid-cliente',
@@ -24,7 +24,6 @@ export class GridClienteComponent implements OnInit {
     pageSize: 15,
   }
 
-  resultsLength = 0;
   totalRecords? = 0;
   pageSize = 15;
   pageIndex = 0;
@@ -34,7 +33,7 @@ export class GridClienteComponent implements OnInit {
   constructor(
     private clienteService: ClientesService,
     private loading: NgxSpinnerService,
-    private toastrService: ToastrService,
+    private notification: NotificationService,
     public dialog: MatDialog
   ) {  }
 
@@ -43,7 +42,6 @@ export class GridClienteComponent implements OnInit {
   }
 
   getListaClientes(metaData: Metadata) {
-
     this.loading.show();
 
     this.clienteService.listClientes(metaData).subscribe(
@@ -51,12 +49,12 @@ export class GridClienteComponent implements OnInit {
         if (result.statusCode === 200) {
           this.loadGrid(result.data, result.metaData.totalRecords)
         } else {
-          this.toastrService.warning('Erro ao Listar', 'Atenção!');
+          this.notification.warning('Erro ao Listar');
         }
         this.loading.hide();
 
       }, (error) => {
-        this.toastrService.warning('Erro ao Listar', 'Atenção!');
+        this.notification.warning('Erro ao Listar');
         this.loading.hide();
       })
   }
@@ -76,7 +74,7 @@ export class GridClienteComponent implements OnInit {
   }
 
 
-  edit(cliente: Cliente) {
+  editCliente(cliente: Cliente) {
     this.loading.show();
     this.clienteService.findOneCliente(cliente.idCliente).subscribe(
       (result) => {
@@ -91,8 +89,11 @@ export class GridClienteComponent implements OnInit {
           };
           const dialogRef = this.dialog.open(ModalClienteComponent, dialogConfig)
 
-          dialogRef.afterClosed().subscribe(result => {
-
+          dialogRef.afterClosed().subscribe((result: ModalResult) => {
+            if(result.success) {
+              this.notification.success('Cliente atualizado com sucesso.')
+              this.getListaClientes(this.metaData)
+            }
           });
         }
       },
@@ -101,7 +102,6 @@ export class GridClienteComponent implements OnInit {
         console.info('Error Load Modal Cliente: ', error)
       }
     )
-
    }
 
   deleteCliente(cliente: Cliente) {
@@ -110,12 +110,14 @@ export class GridClienteComponent implements OnInit {
       (result) => {
         if (result.statusCode === 204) {
           this.getListaClientes(this.metaData)
+          this.notification.success('Deletado com sucesso!')
         }
         this.loading.hide();
 
       }, (error) => {
         this.loading.hide();
-      })
+        this.notification.warning('Erro ao deletar.')
+    })
   }
 
   activeCliente(cliente: Cliente) {
@@ -124,11 +126,13 @@ export class GridClienteComponent implements OnInit {
       (result) => {
         if (result.statusCode === 204) {
           this.getListaClientes(this.metaData)
+          this.notification.success('Atualizado com sucesso!')
         }
         this.loading.hide();
 
       }, (error) => {
         this.loading.hide();
+        this.notification.warning('Erro ao atualizar.')
       })
   }
 }
