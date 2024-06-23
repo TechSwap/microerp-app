@@ -9,13 +9,14 @@ import { OrdemServicosService } from 'src/app/services/ordem-servicos.service';
 import {ModalServicoComponent} from "../../modal/modal-servico/modal-servico.component";
 import {MatDialog} from "@angular/material/dialog";
 import {ExcelService} from "src/app/services/excel.service";
+import {BaseComponent} from "../../../../shared/base/base.component";
 
 @Component({
   selector: 'app-grid-servicos',
   templateUrl: './grid-servicos.component.html',
   styleUrls: ['./grid-servicos.component.css'],
 })
-export class GridServicosComponent implements OnInit {
+export class GridServicosComponent extends BaseComponent implements OnInit {
   displayedColumns: string[] = [
     'numeroOS',
     'cliente',
@@ -49,7 +50,9 @@ export class GridServicosComponent implements OnInit {
     private loading: NgxSpinnerService,
     private excelService: ExcelService,
     private toastrService: ToastrService
-  ) {}
+  ) {
+    super();
+  }
 
   ngOnInit(): void {
     let metaData: Metadata = {

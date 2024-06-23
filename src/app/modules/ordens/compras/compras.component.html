@@ -1,1 +1,48 @@
-<p>compras works!</p>
+<mat-accordion>
+  <mat-expansion-panel [expanded]=false (opened)=true>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Ordem de Compras
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+  </mat-expansion-panel>
+  <div class="formSearchClientes">
+    <br />
+    <form [formGroup]="searchComprasForm">
+      <div class="d-flex flex-row">
+        <mat-form-field style="margin-left: 10px;">
+          <mat-select placeholder="Fornecedor" formControlName="idFornecedor">
+            <mat-option *ngFor="let fornecedor of dropFornecedores" [value]="fornecedor.Id">{{fornecedor.Descricao}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field style="margin-left: 20px;">
+          <input formControlName="solicitante" placeholder="Solicitante" matInput>
+        </mat-form-field>
+        <mat-form-field style="margin-left: 10px;">
+          <input matInput [matDatepicker]="dataPedido"
+                 placeholder="Data Pedido"
+                 formControlName="dataPedido">
+          <mat-datepicker-toggle matIconSuffix [for]="dataPedido"></mat-datepicker-toggle>
+          <mat-datepicker #dataPedido></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div class="row" style="align-items: end; margin-left: 700px;">
+        <button mat-raised-button
+                color="primary"
+        >Pesquisar</button>
+
+        <button style="margin-left: 30px;"
+                mat-raised-button
+                color="primary"
+        >Adicionar</button>
+
+        <button style="margin-left: 30px;"
+                mat-raised-button
+                color="primary"
+        >Exportar Excel</button>
+      </div>
+    </form>
+  </div>
+  <hr />
+  <app-grid-compras #GridComprasComponent></app-grid-compras>
+</mat-accordion>

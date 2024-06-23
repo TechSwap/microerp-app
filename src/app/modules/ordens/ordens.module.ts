@@ -10,6 +10,8 @@ import { ModalServicoComponent } from './servicos/modal/modal-servico/modal-serv
 import { GridServicosComponent } from './servicos/grid/grid-servicos/grid-servicos.component';
 import {SharedModule} from "../../shared/shared.module";
 import {CurrencyMaskModule} from "ng2-currency-mask";
+import { GridComprasComponent } from './compras/grid/grid-compras/grid-compras.component';
+import { ModalComprasComponent } from './compras/modal/modal-compras/modal-compras.component';
 
 
 @NgModule({
@@ -18,7 +20,9 @@ import {CurrencyMaskModule} from "ng2-currency-mask";
     ProducaoComponent,
     ComprasComponent,
     ModalServicoComponent,
-    GridServicosComponent
+    GridServicosComponent,
+    GridComprasComponent,
+    ModalComprasComponent
   ],
   imports: [
     CommonModule,

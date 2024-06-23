@@ -9,7 +9,6 @@ import {ClientesService} from "../../../services/clientes.service";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {DateAdapter} from "@angular/material/core";
 import {OrdemServicosService} from "../../../services/ordem-servicos.service";
-import {ClientesComponent} from "../../cadastros/clientes/clientes.component";
 import {SelectModel} from "../../../models/SelectModel";
 import {BaseComponent} from "../../shared/base/base.component";
 
