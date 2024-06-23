@@ -65,7 +65,7 @@ export class GridDepartamentosComponent implements OnInit{
   }
 
   public loadGridDepartamento(list: Departamento[], totalRecords: number | undefined ) {
-    this.departamentos = new MatTableDataSource<Departamento>(list)
+    this.departamentos = new MatTableDataSource<Departamento>(list.sort((a, b) => a.descricao.localeCompare(b.descricao)))
     this.totalRecords = totalRecords != 0 ? totalRecords : 0
   }
 

@@ -82,7 +82,7 @@ export class DepartamentosComponent extends BaseComponent implements OnInit{
     this.departamentoService.getListaDepartamentos(metaData).subscribe(
       (result) => {
         if (result.statusCode === 200) {
-          //this.gridDepartamentosComponent.loadGridDepartamento(result.data, result.metaData.totalRecords)
+          this.gridDepartamentosComponent.loadGridDepartamento(result.data, result.metaData.totalRecords)
           this.dropDepartamentos = this.loadDropDepartamento(result.data, this.dropDepartamentos)
         } else {
           this.notification.warning('Erro ao Listar');
@@ -91,8 +91,25 @@ export class DepartamentosComponent extends BaseComponent implements OnInit{
       }, (error) => {
         this.notification.warning('Erro ao Listar');
         this.loading.hide();
-      })
+      }
+    )
+  }
 
+  searchDepartamentos() {
+    let dados = this.searchDepartamento.value;
+
+    this.departamentoService.getsearchDepartamentos(dados.idDepartamento).subscribe(
+      (result) => {
+        if (result.statusCode === 200) {
+          this.gridDepartamentosComponent.loadGridDepartamento(result.data, result.metaData.totalRecords)
+        } else {
+
+        }
+      },
+      (error) => {
+
+      }
+    );
   }
 
 }

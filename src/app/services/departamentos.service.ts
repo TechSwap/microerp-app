@@ -53,5 +53,13 @@ export class DepartamentosService {
     return this._service.put<Result>(route, token, request)
   }
 
+  getsearchDepartamentos(idDepartamento: string) {
+    let pageNumber = 1
+    let pageSize =  15
+
+    let route = formatingRoute(`/departamento/lista-departamentos?idDepartamento=${idDepartamento}&metaData.pageNumber=${pageNumber}&metaData.pageSize=${pageSize}`)
+    let token = getToken()
+    return this._service.get<ResultList>(route, token)
+  }
 
 }
