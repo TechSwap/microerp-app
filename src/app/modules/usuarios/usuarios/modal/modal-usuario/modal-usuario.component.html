@@ -1,0 +1,38 @@
+<div class="container" style="width: 850px;">
+  <h3 mat-dialog-title>{{ isUpdate ? 'Atualizar Usuario' : 'Adicionar Usuario'}}</h3>
+  <mat-dialog-content>
+    <form [formGroup]="userForm">
+      <div class="form-fields">
+        <input hidden formControlName="userId">
+        <mat-form-field>
+          <input matInput placeholder="Nome" formControlName="nome" required>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Email" formControlName="email" required >
+        </mat-form-field>
+        <mat-form-field style="margin-left: 20px;">
+          <mat-select placeholder="Departamento" formControlName="idDepartamento">
+            <mat-option *ngFor="let departamento of dropDepartamentos" [value]="departamento.Id">{{departamento.Descricao}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="form-fields">
+        <mat-form-field>
+          <input matInput placeholder="Senha" [type]="hide ? 'password' : 'text'" formControlName="senha">
+          <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Confirmar Senha" [type]="hidec ? 'password' : 'text'" formControlName="confirmarSenha">
+          <mat-icon matSuffix (click)="hidec = !hidec">{{hidec ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </mat-form-field>
+        <mat-slide-toggle style="margin-left: 25px;" color="primary" formControlName="ativo">Ativo</mat-slide-toggle>
+
+      </div>
+
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close (click)="onCloseClick()">Cancelar</button>
+    <button mat-button (click)="onSubmit()">{{ isUpdate ? 'Atualizar' : 'Adicionar'}}</button>
+  </mat-dialog-actions>
+</div>
