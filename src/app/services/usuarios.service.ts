@@ -22,25 +22,36 @@ export class UsuariosService {
     const route = formatingRoute(
       `/usuario/lista-usuarios?metaData.pageNumber=${pageNumber}&metaData.pageSize=${pageSize}`
     );
+    return this._service.get<ResultList>(route, this._token);
+  }
+
+  searchUsuarios(nome: string, email:string, metaData: Metadata) {
+    console.info("Searching: ", nome)
+    let name = nome !== '' ? `?nome=${nome}` : '';
+    let emailComp = email!== ''? `${name === ''? '?': '&'}email=${email}` : ''
+    let pageNumber = metaData != null ? metaData.pageNumber : 1;
+    let pageSize = metaData != null ? metaData.pageSize : 200;
+
+    const route = name !== '' || emailComp !== ''
+        ? formatingRoute(`/usuario/lista-usuarios${name}${emailComp}&metaData.pageNumber=${pageNumber}&metaData.pageSize=${pageSize}`)
+        : formatingRoute(`/usuario/lista-usuarios?metaData.pageNumber=${pageNumber}&metaData.pageSize=${pageSize}`);
 
     return this._service.get<ResultList>(route, this._token);
   }
 
+
   addUsuario(user: UserRequest) {
     const route = formatingRoute(`/user`);
-
     return this._service.post<Result>(route, this._token, user);
   }
 
   updateUsuario(user: UserRequest) {
     const route = formatingRoute(`/user`);
-
     return this._service.put<Result>(route, this._token, user);
   }
 
   getUser(id: string) {
     const route = formatingRoute(`/user?id=${id}`);
-
     return this._service.get<Result>(route, this._token);
   }
 
@@ -52,7 +63,6 @@ export class UsuariosService {
 
   deleteUser(id: string) {
     const route = formatingRoute(`/user?id=${id}`);
-
     return this._service.delete<Result>(route, this._token);
   }
 }

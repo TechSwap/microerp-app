@@ -26,7 +26,7 @@ export class ModalUsuarioComponent extends BaseComponent implements OnInit {
     'userId': [''],
     'nome': ['', Validators.required],
     'email': ['', Validators.required],
-    'idDepartamento': [''],
+    'departamentoId': [''],
     'senha': [''],
     'confirmarSenha': [''],
     'ativo': [''],
@@ -57,10 +57,11 @@ export class ModalUsuarioComponent extends BaseComponent implements OnInit {
   }
 
   loadData(dados: UserRequest){
+    this.isUpdate = !!dados.userId
     this.userForm.controls['userId'].setValue(dados.userId)
     this.userForm.controls['nome'].setValue(dados.nome)
     this.userForm.controls['email'].setValue(dados.email)
-    this.userForm.controls['idDepartamento'].setValue(dados.idDepartamento)
+    this.userForm.controls['departamentoId'].setValue(dados.idDepartamento)
     this.userForm.controls['senha'].setValue(dados.senha)
     this.userForm.controls['confirmarSenha'].setValue(dados.confirmarSenha)
     this.userForm.controls['ativo'].setValue(dados.ativo)
@@ -78,7 +79,7 @@ export class ModalUsuarioComponent extends BaseComponent implements OnInit {
       userId: dados.userId,
       nome: dados.nome,
       email: dados.email,
-      idDepartamento: dados.idDepartamento,
+      idDepartamento: dados.departamentoId,
       senha: dados.senha,
       confirmarSenha: dados.confirmarSenha,
       ativo: dados.ativo

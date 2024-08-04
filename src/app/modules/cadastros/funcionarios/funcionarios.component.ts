@@ -39,9 +39,6 @@ export class FuncionariosComponent extends BaseComponent implements OnInit {
   ) {
     super();
   }
-
-
-
   ngOnInit(): void {
     this.getListaDepartamentos()
   }
@@ -111,13 +108,10 @@ export class FuncionariosComponent extends BaseComponent implements OnInit {
       (result) => {
         if (result.statusCode === 200) {
           this.dropDepartamentos = this.loadDropDepartamentos(result.data, this.dropDepartamentos)
-
         } else {
-
         }
       },
       (error) => {
-
       }
     );
   }

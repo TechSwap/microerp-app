@@ -3,16 +3,13 @@ import { environment } from "src/environments/environment.development"
 import { validStr } from "./string-helpers.utils"
 import { UserResponseModel } from "../models/response/user-response.model"
 
-
 export const formatingRoute = (pathRoute: string) => {
   const urlApi = environment.UrlApi
-
   return `${urlApi}${pathRoute}`
 }
 
 export const headers = (token: string | null ) => {
   let opt = {}
-
   if (validStr(token)) {
     opt = {
       headers: new HttpHeaders({
@@ -42,11 +39,9 @@ export const getToken = () => {
 export const getUser = () => {
   let user = localStorage.getItem('User')
   let objUser;
-
   if (user) {
     objUser = JSON.parse(user)
   }
-
   return objUser;
 }
 
@@ -60,12 +55,9 @@ export const validToken = () => {
   let expiresAt = localStorage.getItem('expires_at')
   if(expiresAt) {
     let today = new Date().getDate();
-
     let expiresIn = JSON.parse(expiresAt)
-
     return today < expiresIn
-
   } else {
     return false
   }
- }
+}

@@ -4,6 +4,7 @@ export interface UserRequest {
   idDepartamento: string;
   email: string;
   ativo?: boolean;
-  senha: string;
-  confirmarSenha: string;
+  senha?: string;
+  confirmarSenha?: string;
+  role?:string;
 }

@@ -142,11 +142,9 @@ export class ModalFuncionarioComponent extends BaseComponent implements OnInit{
         if (result.statusCode === 200) {
           this.dropDepartamentos = this.loadDropDepartamentos(result.data, this.dropDepartamentos)
         } else {
-
         }
       },
       (error) => {
-
       }
     );
   }

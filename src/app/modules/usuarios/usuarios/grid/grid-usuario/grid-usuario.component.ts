@@ -4,11 +4,15 @@ import {MatTableDataSource} from "@angular/material/table";
 import {UsuariosResponse} from "../../../../../models/response/usuarios-response.model";
 import {MatPaginator, PageEvent} from "@angular/material/paginator";
 import {Metadata} from "../../../../../models/resultlist";
-import {MatDialog} from "@angular/material/dialog";
+import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {NotificationService} from "../../../../../services/notification.service";
 import {UsuariosService} from "../../../../../services/usuarios.service";
 import {NgxSpinnerService} from "ngx-spinner";
 import {Fornecedor} from "../../../../../models/response/fornecedor-response.model";
+import {Cliente} from "../../../../../models/response/cliente-response.model";
+import {ModalClienteComponent} from "../../../../cadastros/clientes/modal/modal-cliente/modal-cliente.component";
+import {ModalResult} from "../../../../../models/modal-result.model";
+import {ModalUsuarioComponent} from "../../modal/modal-usuario/modal-usuario.component";
 
 @Component({
   selector: 'app-grid-usuario',
@@ -16,7 +20,6 @@ import {Fornecedor} from "../../../../../models/response/fornecedor-response.mod
   styleUrls: ['./grid-usuario.component.css']
 })
 export class GridUsuarioComponent extends BaseComponent implements OnInit {
-
   metaData: Metadata = {
     pageNumber: 1,
     pageSize: 15,
@@ -57,7 +60,7 @@ export class GridUsuarioComponent extends BaseComponent implements OnInit {
       (result) => {
         if(result !== null) {
           if (result.statusCode === 200 && result.data.length > 0) {
-            this.loadGrid(result.data,  result.metaData?.totalRecords)
+            this.loadGridUsuario(result.data,  result.metaData?.totalRecords)
           } else {
             this.usuarios = new MatTableDataSource<UsuariosResponse>();
             this.notification.warning('Erro ao Listar');
@@ -74,7 +77,7 @@ export class GridUsuarioComponent extends BaseComponent implements OnInit {
     );
   }
 
-  public loadGrid(data: UsuariosResponse[], totalRecords: number | undefined ) {
+  public loadGridUsuario(data: UsuariosResponse[], totalRecords: number | undefined ) {
     this.usuarios = new MatTableDataSource<UsuariosResponse>(data);
     this.totalRecords = totalRecords != 0 ?  totalRecords : 0
   }
@@ -88,7 +91,6 @@ export class GridUsuarioComponent extends BaseComponent implements OnInit {
   }
 
   activeUsuario(user: UsuariosResponse) {
-    console.info("Active: ", user)
     this.loading.show();
     this.usuariosService.activeUser(user.userId).subscribe(
       (result) => {
@@ -104,7 +106,6 @@ export class GridUsuarioComponent extends BaseComponent implements OnInit {
   }
 
   deleteUsuario(user: UsuariosResponse) {
-    console.info("Delete: ", user)
     this.loading.show();
     this.usuariosService.deleteUser(user.userId).subscribe(
       (result) => {
@@ -118,5 +119,36 @@ export class GridUsuarioComponent extends BaseComponent implements OnInit {
         this.loading.hide();
         this.notification.warning('Erro ao deletar .')
       })
+  }
+
+  editUser(user: UsuariosResponse) {
+    this.loading.show();
+    this.usuariosService.getUser(user.userId).subscribe(
+      (result) => {
+        if (result.statusCode === 200) {
+          this.loading.hide();
+          const dialogConfig = new MatDialogConfig();
+          dialogConfig.autoFocus = true;
+          dialogConfig.disableClose = true;
+          dialogConfig.data = {
+            width: '700px',
+            dados: result.data
+          };
+          const dialogRef = this.dialog.open(ModalUsuarioComponent, dialogConfig)
+
+          dialogRef.afterClosed().subscribe((result: ModalResult) => {
+            if(result.success) {
+              this.notification.success('Usuario atualizado com sucesso.')
+              this.listaUsuarios(this.metaData)
+            }
+          });
+        }
+      },
+      (error) => {
+        this.loading.hide();
+        console.info('Error Load Modal Cliente: ', error)
+        this.notification.error('Erro ao atualizar o usuario.')
+      }
+    )
   }
 }
