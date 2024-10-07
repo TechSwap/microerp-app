@@ -47,7 +47,7 @@ export const getUser = () => {
 
 export const saveToken = (user: UserResponseModel) => {
   localStorage.setItem('accessToken', user.accessToken)
-  localStorage.setItem('expires_at', JSON.stringify(new Date().getDate()+1))
+  localStorage.setItem('expires_at', JSON.stringify(new Date().getDate()+user.expiresIn))
   localStorage.setItem('User', JSON.stringify(user))
 }
 

@@ -17,6 +17,7 @@ import {CurrencyMaskModule} from "ng2-currency-mask";
 import {IConfig, NgxMaskDirective, NgxMaskPipe, provideEnvironmentNgxMask} from 'ngx-mask';
 import {BaseComponent} from "./modules/shared/base/base.component";
 import {UsuariosModule} from "./modules/usuarios/usuarios.module";
+import {EmpresaModule} from "./modules/empresa/empresa.module";
 
 
 const maskConfig: Partial<IConfig> = {
@@ -46,6 +47,7 @@ const maskConfig: Partial<IConfig> = {
     CadastrosModule,
     OrdensModule,
     UsuariosModule,
+    EmpresaModule,
     CurrencyMaskModule,
     NgxMaskDirective,
     NgxMaskPipe

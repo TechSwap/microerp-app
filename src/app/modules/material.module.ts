@@ -42,6 +42,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { NgxDropzoneModule } from 'ngx-dropzone';
+
 
 @NgModule({
   exports: [
@@ -88,7 +90,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatTreeModule,
     PortalModule,
     ScrollingModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    NgxDropzoneModule
   ]
 })
 export class MaterialModule {}

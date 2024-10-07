@@ -27,21 +27,22 @@
         </mat-form-field>
       </div>
       <div class="row" style="align-items: end; margin-left: 700px;">
-        <button mat-raised-button
-                color="primary"
-                (click)="$event.preventDefault(); searchOs()"
+        <button  style="width: 100px;"
+            mat-raised-button
+            color="primary"
+            (click)="$event.preventDefault(); searchOs()"
         >Pesquisar</button>
 
-        <button style="margin-left: 30px;"
-                mat-raised-button
-                color="primary"
+        <button style="margin-left: 30px; width: 100px;"
+            mat-raised-button
+            color="primary"
             (click)="$event.preventDefault(); openAddOS()"
         >Adicionar</button>
 
-        <button style="margin-left: 30px;"
-                mat-raised-button
-                color="primary"
-                (click)="$event.preventDefault(); exportExcel()"
+        <button style="margin-left: 30px; width: 100px;"
+            mat-raised-button
+            color="primary"
+            (click)="$event.preventDefault(); exportExcel()"
         >Exportar Excel</button>
       </div>
     </form>

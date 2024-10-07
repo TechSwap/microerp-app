@@ -16,6 +16,7 @@ import { PerfilComponent } from './modules/usuarios/perfil/perfil.component';
 import {FuncionariosComponent} from "./modules/cadastros/funcionarios/funcionarios.component";
 import {FornecedoresComponent} from "./modules/cadastros/fornecedores/fornecedores.component";
 import {DepartamentosComponent} from "./modules/cadastros/departamentos/departamentos.component";
+import {EmpresaComponent} from "./modules/empresa/empresa/empresa.component";
 
 const routes: Routes = [
   {
@@ -40,6 +41,7 @@ const routes: Routes = [
       { path: 'producao/resumo', component: ResumoComponent, canActivate: [AuthenticadedGuard] },
       { path: 'usuarios', component: UsuariosComponent, canActivate: [AuthenticadedGuard] },
       { path: 'perfil', component: PerfilComponent, canActivate: [AuthenticadedGuard] },
+      { path: 'empresa', component: EmpresaComponent, canActivate: [AuthenticadedGuard] },
 
     ],
   }

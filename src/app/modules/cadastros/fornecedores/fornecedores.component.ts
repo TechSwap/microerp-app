@@ -98,8 +98,4 @@ export class FornecedoresComponent extends BaseComponent implements OnInit{
       }
     );
   }
-
-
-
-
 }

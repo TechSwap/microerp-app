@@ -1,0 +1,94 @@
+<form class="form" [formGroup]="empresaForm">
+  <input hidden formControlName="empresaId">
+  <div class="row">
+    <mat-form-field class="form-fields col-md-5" style="margin-left: 20px;">
+      <mat-label>Razao Social</mat-label>
+      <input matInput placeholder="Insira o nome da empresa" formControlName="razaoSocial" >
+    </mat-form-field>
+    <mat-form-field class="form-fields col-md-5" style="margin-left: 20px;">
+      <mat-label>Nome Fantasia</mat-label>
+      <input matInput placeholder="Insira o nome da empresa" formControlName="nomeFantasia" >
+    </mat-form-field>
+  </div>
+  <div class="row">
+    <mat-form-field class="form-fields col-md-3" style="margin-left: 20px;">
+      <mat-label>CNPJ</mat-label>
+      <input matInput placeholder="Insira o CEP" formControlName="cnpj" >
+    </mat-form-field>
+    <mat-form-field class="form-fields col-md-3">
+      <mat-label>I.E</mat-label>
+      <input matInput placeholder="Insira o CEP" formControlName="inscricaoEstadual">
+    </mat-form-field>
+    <mat-form-field class="form-fields col-md-2">
+      <mat-label>Fundação</mat-label>
+      <input matInput [matDatepicker]="picker" placeholder="Escolha a data" formControlName="dataFundacao">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field class="form-fields col-md-3">
+      <mat-label>Tipo de Empresa</mat-label>
+      <mat-select formControlName="tipoEmpresa">
+        <mat-option value="micro">Micro</mat-option>
+        <mat-option value="pequena">Pequena</mat-option>
+        <mat-option value="media">Média</mat-option>
+        <mat-option value="grande">Grande</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="row">
+    <mat-form-field class="form-fields col-md-4" style="margin-left: 20px;">
+      <mat-label>Cep</mat-label>
+      <input matInput placeholder="Insira o CEP" formControlName="cep"  (change)="$event.preventDefault(); buscaCep($event)" >
+    </mat-form-field>
+    <mat-form-field class="form-fields col-md-4">
+      <mat-label>Responsavel</mat-label>
+      <input matInput placeholder="Insira o CEP" formControlName="responsavel" >
+    </mat-form-field>
+  </div>
+<div class="row">
+  <mat-form-field class="form-fields col-md-6" style="margin-left: 20px;">
+    <mat-label>Endereço</mat-label>
+    <input matInput placeholder="Insira o endereço"  formControlName="logradouro">
+  </mat-form-field>
+  <mat-form-field class="form-fields col-md-3">
+    <mat-label>Numero</mat-label>
+    <input matInput placeholder="Insira o endereço" formControlName="numero" >
+  </mat-form-field>
+</div>
+
+<div class="row">
+  <mat-form-field class="form-fields col-md-3" style="margin-left: 20px;">
+    <mat-label>Bairro</mat-label>
+    <input matInput placeholder="Insira o endereço" formControlName="bairro" >
+  </mat-form-field>
+  <mat-form-field class="form-fields col-md-3">
+    <mat-label>Cidade</mat-label>
+    <input matInput placeholder="Insira a cidade"  formControlName="cidade">
+  </mat-form-field>
+  <mat-form-field class="form-fields col-md-3">
+    <mat-label>Estado</mat-label>
+    <input matInput placeholder="Insira o telefone" formControlName="estado">
+  </mat-form-field>
+</div>
+
+<div class="row">
+  <mat-form-field class="form-fields col-md-3" style="margin-left: 20px;">
+    <mat-label>Email</mat-label>
+    <input matInput placeholder="Insira o email"  type="email" formControlName="email">
+  </mat-form-field>
+  <mat-form-field class="form-fields col-md-3">
+    <mat-label>Telefone</mat-label>
+    <input matInput placeholder="Insira o telefone" formControlName="contato1">
+  </mat-form-field>
+  <div class="col-md-3" *ngIf="isLoadLogo">
+    <img src="{{ imgSrc }}" alt="logo">
+  </div>
+</div>
+<div class="row">
+  <button class="col-md-3" style="margin-left: 20px;margin-bottom: 15px;"  type="button" mat-flat-button (click)="fileInput.click()">Adicione um arquivo</button>
+  <input class="col-md-3" hidden (change)="onSelect($event)" #fileInput type="file">
+  <span class="file-name col-md-3">{{selectedFile?.name}}</span>
+
+</div>
+  <button mat-raised-button color="primary" style="margin-left: 20px;width: 85%; height: 95%;" (click)="$event.preventDefault(); updateEmpresa()">Atualizar</button>
+</form>
