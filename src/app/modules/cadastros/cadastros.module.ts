@@ -19,10 +19,10 @@ import { ModalFuncionarioComponent } from './funcionarios/modal/modal-funcionari
 import { DepartamentosComponent } from './departamentos/departamentos.component';
 import { ModalDepartamentosComponent } from './departamentos/modal/modal-departamentos/modal-departamentos.component';
 import { GridDepartamentosComponent } from './departamentos/grid/grid-departamentos/grid-departamentos.component';
-import {NgxMaskDirective} from "ngx-mask";
-import {CurrencyMaskModule} from "ng2-currency-mask";
-import { GridProdutoComponent } from './podutos/grid/grid-produto/grid-produto.component';
-import { ModalProdutoComponent } from './podutos/modal/modal-produto/modal-produto.component';
+import { NgxMaskDirective } from "ngx-mask";
+import { CurrencyMaskModule } from "ng2-currency-mask";
+import { ModalProdutoComponent } from './produtos/modal/modal-produto/modal-produto.component';
+import { GridProdutoComponent } from './produtos/grid/grid-produto/grid-produto.component';
 
 @NgModule({
   declarations: [
@@ -41,8 +41,8 @@ import { ModalProdutoComponent } from './podutos/modal/modal-produto/modal-produ
     DepartamentosComponent,
     ModalDepartamentosComponent,
     GridDepartamentosComponent,
-    GridProdutoComponent,
     ModalProdutoComponent,
+    GridProdutoComponent,
   ],
     imports: [
         CommonModule,
