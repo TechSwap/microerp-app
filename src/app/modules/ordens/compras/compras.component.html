@@ -34,9 +34,10 @@
         <button style="margin-left: 30px; width: 100px;"
                 mat-raised-button
                 color="primary"
+                (click)="$event.preventDefault(); openAddOC()"
         >Adicionar</button>
 
-        <button style="margin-left: 30px; width: 100px;"
+        <button style="margin-left: 30px; width: 180px;"
                 mat-raised-button
                 color="primary"
         >Exportar Excel</button>

@@ -172,7 +172,6 @@ export class ModalServicoComponent extends BaseComponent implements OnInit {
       pageNumber: 1,
       pageSize: 200,
     };
-
     this.clienteService.listClientes(metaData).subscribe(
       (result) => {
         if (result.statusCode === 200) {
@@ -190,9 +189,7 @@ export class ModalServicoComponent extends BaseComponent implements OnInit {
 
   setPrevisaoEntrega(type: string, event:  MatDatepickerInputEvent<Date>) {
     let dataLancamento = moment(event.value).format('YYYY-MM-DD')
-
     let prazo = this.osForm.controls['prazo'].value
-
     if(prazo === ''||  prazo === undefined) {
       alert('Digite um prazo')
     }else {
@@ -205,7 +202,6 @@ export class ModalServicoComponent extends BaseComponent implements OnInit {
 
   onSubmit(): void {
     this.loading.show();
-
     let dados = this.osForm.value
     let detalhes = this.detalheOrdemServicos
 
@@ -225,8 +221,6 @@ export class ModalServicoComponent extends BaseComponent implements OnInit {
       dataPrevisaoEntrega: dados.dataPrevEntrega,
       detalhes: detalhes,
     }
-
-    console.info('ID: ', dados.idOrdemServico)
 
     if(dados.idOrdemServico === '') {
       this.ordemServicosService.addNovaOs(req).subscribe(
@@ -265,7 +259,6 @@ export class ModalServicoComponent extends BaseComponent implements OnInit {
     let dataPrevEntrega = moment(dados.dataPrevEntrega).toDate()
     let dataEntrega = dados.dataEntrega !== '' ? moment(dados.dataEntrega).toDate() : moment(dados.lancamento).add(dados.prazo, 'd').toDate()
     let lancamento = moment(dados.lancamento).toDate()
-
     this.detalheOrdemServicos = dados.detalheOrdemServicos;
 
     this.osForm.controls['idOrdemServico'].setValue(dados.idOrdemServico)

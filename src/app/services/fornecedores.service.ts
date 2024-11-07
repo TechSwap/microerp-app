@@ -15,7 +15,6 @@ export class FornecedoresService {
   ) {  }
 
   listFornecedores(metaData: Metadata) {
-    console.info('Metada: ', metaData)
     let pageNumber = metaData != null ? metaData.pageNumber : 1
     let pageSize = metaData != null ? metaData.pageSize : 15
 

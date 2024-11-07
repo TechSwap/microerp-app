@@ -69,14 +69,11 @@ export class ServicosComponent extends BaseComponent implements OnInit {
     dialogConfig.data = {
       width: '700px'
     };
-
-
     const dialogRef = this.dialog.open(ModalServicoComponent,{
       data: {
         OS: this.novaOs
       }
     });
-
     dialogRef.afterClosed().subscribe((result) => {
       if(result.success) {
         let metaData: Metadata = {

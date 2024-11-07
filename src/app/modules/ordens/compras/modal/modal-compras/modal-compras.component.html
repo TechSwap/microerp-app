@@ -1,1 +1,99 @@
-<p>modal-compras works!</p>
+<div class="container" style="width: 950px;">
+  <h3 mat-dialog-title>Ordem Compras</h3>
+  <mat-dialog-content>
+    <form [formGroup]="ocForm">
+      <div class="d-flex flex-row">
+        <input type="hidden" formControlName="idOrdemCompra" name="idOrdemCompra">
+        <mat-form-field style="width:600px;">
+          <mat-select placeholder="Fornecedor" formControlName="idFornecedor">
+            <mat-option *ngFor="let fornecedor of dropFornecedores" [value]="fornecedor.Id">{{fornecedor.Descricao}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="d-flex flex-row">
+        <mat-form-field style="margin-left: 10px;">
+          <input matInput placeholder="Solicitante"
+                 formControlName="solicitante" required>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select placeholder="Departamento" formControlName="idDepartamento">
+            <mat-option *ngFor="let departamento of dropDepartamentos" [value]="departamento.Id">{{departamento.Descricao}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="d-flex flex-row">
+        <mat-card style="width: 100%;">
+          <mat-card-header class="justify-content-between">
+            <mat-card-title>Items</mat-card-title>
+            <mat-card-actions  align="end">
+              <button mat-mini-fab color="primary" (click)="mostraConteudo()">
+                <mat-icon>plus_one</mat-icon>
+              </button>
+            </mat-card-actions>
+          </mat-card-header>
+          <ng-container *ngIf="this.conteudo" >
+            <div class="d-flex flex-row" style="width: 70%;">
+              <form [formGroup]="detalhesOC">
+                <input type="hidden" formControlName="idDetalhesOrdemServico" name="idDetalhesOrdemServico">
+                <input type="hidden" formControlName="ordemServicoId" name="ordemServicoId">
+                <mat-form-field fxFlex="40">
+                  <input matInput placeholder="Descricao" formControlName="descricao" name="descricao">
+                </mat-form-field>
+                <mat-form-field style="margin-left: 5px;" fxFlex="20">
+                  <input matInput placeholder="Valor Unitario"
+                         currencyMask
+                         [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
+                         formControlName="valorUnitario"
+                         name="valorUnitario">
+                </mat-form-field>
+                <mat-form-field style="margin-left: 5px;" fxFlex="20">
+                  <input matInput placeholder="Quantidade" formControlName="qtd" name="qtd">
+                </mat-form-field>
+                <mat-form-field style="margin-left: 5px;" fxFlex="15">
+                  <mat-select placeholder="Unidade" formControlName="unidade" name="unidade">
+                    <mat-option *ngFor="let unidade of unidades" [value]="unidade.value">{{unidade.viewValue}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <div style="margin-top: 20px; margin-left: 8px;" fxFlex="5">
+                  <button mat-flat-button color="primary" >Add</button>
+                </div>
+              </form>
+            </div>
+            <div class="d-flex flex-row">
+              <ng-container *ngIf="detalheOrdemServicos.length > 0">
+                <div>
+                  <table mat-table [dataSource]="detalhes" class="mat-elevation-z8">
+                    <ng-container matColumnDef="descricao">
+                      <th mat-header-cell *matHeaderCellDef>Descricao</th>
+                      <td style="width: 200px;" mat-cell *matCellDef="let detalheOrdemServico">{{detalheOrdemServico.descricao}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="valorUnitario">
+                      <th mat-header-cell *matHeaderCellDef>Valor Unitario</th>
+                      <td style="width: 200px;" mat-cell *matCellDef="let detalheOrdemServico">{{detalheOrdemServico.valorUnitario | currency: 'BRL':true }}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="qtd">
+                      <th mat-header-cell *matHeaderCellDef>Quantidade</th>
+                      <td style="width: 150px;" mat-cell *matCellDef="let detalheOrdemServico">{{detalheOrdemServico.quantidade}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="unidade">
+                      <th mat-header-cell *matHeaderCellDef>Unidade</th>
+                      <td style="width: 200px;" mat-cell *matCellDef="let detalheOrdemServico">{{detalheOrdemServico.unidade}}</td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row;
+                      columns: displayedColumns;">
+                    </tr>
+                  </table>
+                </div>
+              </ng-container>
+            </div>
+          </ng-container>
+        </mat-card>
+      </div>
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close (click)="onCloseClick()">Cancelar</button>
+    <button mat-button >Adicionar</button>
+  </mat-dialog-actions>
+</div>
