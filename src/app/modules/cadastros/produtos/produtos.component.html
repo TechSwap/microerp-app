@@ -1,1 +1,37 @@
-<p>produtos works!</p>
+<mat-accordion>
+  <mat-expansion-panel [expanded]=false (opened)=true>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Produtos
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+  </mat-expansion-panel>
+  <div class="formSearchClientes">
+    <br />
+    <form >
+      <div class="d-flex flex-row">
+        <mat-form-field style="margin-left: 20px;">
+          <mat-select placeholder="Cliente" formControlName="idCliente">
+            <mat-option ></mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field style="margin-left: 20px; margin-top: 15px;">
+          <input mask="000.000.000/0000-00" placeholder="CNPJ" formControlName="cnpj" matInput>
+        </mat-form-field>
+        <mat-form-field style="margin-left: 20px;">
+          <input  placeholder="Contato" formControlName="contato" matInput>
+        </mat-form-field>
+        <mat-form-field style="margin-left: 20px;">
+          <input  placeholder="Email" formControlName="email" matInput>
+        </mat-form-field>
+      </div>
+      <div class="row" style="align-items: end; margin-left: 500px;">
+        <button style="width: 100px;" mat-raised-button color="primary" (click)="$event.preventDefault();">Pesquisar</button>
+        <button style="margin-left: 30px; width: 100px;" mat-raised-button color="primary"
+                (click)="$event.preventDefault();">Adicionar</button>
+      </div>
+    </form>
+  </div>
+  <hr />
+  <app-grid-produto></app-grid-produto>
+</mat-accordion>

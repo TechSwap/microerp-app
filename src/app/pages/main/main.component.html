@@ -31,9 +31,9 @@
             <a mat-list-item routerLink="/cadastros/fornecedores">Fornecedores</a>
             <a mat-list-item routerLink="/cadastros/funcionarios">Funcionarios</a>
             <a mat-list-item routerLink="/cadastros/departamentos">Departamentos</a>
-            <a mat-list-item routerLink="/cadastros/ferramentas">Ferramentas</a>
-            <a mat-list-item routerLink="/cadastros/maquinas">Maquinas</a>
-            <a mat-list-item routerLink="/cadastros/produtos">Produtos</a>
+<!--            <a mat-list-item routerLink="/cadastros/ferramentas">Ferramentas</a>-->
+<!--            <a mat-list-item routerLink="/cadastros/maquinas">Maquinas</a>-->
+<!--            <a mat-list-item routerLink="/cadastros/produtos">Produtos</a>-->
           </mat-nav-list>
         </mat-expansion-panel>
 
@@ -45,6 +45,15 @@
             <a mat-list-item routerLink="/ordens/compras">Compras</a>
             <a mat-list-item routerLink="/ordens/producao">Produção</a>
             <a mat-list-item routerLink="/ordens/servicos">Servicos</a>
+          </mat-nav-list>
+        </mat-expansion-panel>
+        <mat-expansion-panel [class.mat-elevation-z0]="true">
+          <mat-expansion-panel-header>
+            Orcamentos
+          </mat-expansion-panel-header>
+          <mat-nav-list>
+            <a mat-list-item routerLink="/orcamento/compras">Compras</a>
+            <a mat-list-item routerLink="/orcamento/servicos">Servicos</a>
           </mat-nav-list>
         </mat-expansion-panel>
 
