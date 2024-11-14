@@ -1,5 +1,5 @@
 import { HttpHeaders } from "@angular/common/http"
-import { environment } from "src/environments/environment.development"
+import { environment } from "src/environments/environment"
 import { validStr } from "./string-helpers.utils"
 import { UserResponseModel } from "../models/response/user-response.model"
 

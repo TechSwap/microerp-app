@@ -6,14 +6,14 @@ export interface OrdemServicosRequestModel {
   idCliente: string,
   solicitante: string,
   notaEntrada: string,
-  notaSaida: string,
+  notaSaida?: string,
   pedido: string,
   orcamento: string,
   valorTotal: number,
   prazo: number,
   dataCadastro: Date,
-  dataEntrega: Date,
-  dataPrevisaoEntrega: Date,
+  dataEntrega?: Date | string ,
+  dataPrevisaoEntrega?: Date,
   detalhes: DetalheOrdemServico[]
 }
 

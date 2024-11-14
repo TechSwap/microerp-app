@@ -1,4 +1,4 @@
 export const environment = {
-  production: true,
-  UrlApi: 'http://api.microerp.solutions/v1'
+  production: false,
+  UrlApi: 'https://localhost:7131/v1'
 };

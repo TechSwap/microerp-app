@@ -66,35 +66,35 @@
         </mat-form-field>
         <mat-form-field style="margin-left: 10px;">
           <input matInput placeholder="Nota de Saida"
-                 formControlName="notaSaida" required>
+                 formControlName="notaSaida">
         </mat-form-field>
       </div>
       <div class="d-flex flex-row">
-        <mat-card>
-          <mat-card-header>
+        <mat-card  style="width: 100%;">
+          <mat-card-header class="justify-content-between">
             <mat-card-title>Items</mat-card-title>
+            <mat-card-actions  align="end">
+              <button mat-mini-fab color="primary" (click)="mostraConteudo()">
+                <mat-icon>plus_one</mat-icon>
+              </button>
+            </mat-card-actions>
           </mat-card-header>
-          <mat-card-actions  align="end">
-            <button mat-mini-fab color="primary" (click)="mostraConteudo()">
-              <mat-icon>plus_one</mat-icon>
-            </button>
-          </mat-card-actions>
           <ng-container *ngIf="this.conteudo" >
             <div class="d-flex flex-row">
               <form [formGroup]="detalhesOS">
                 <input type="hidden" formControlName="idDetalhesOrdemServico" name="idDetalhesOrdemServico">
                 <input type="hidden" formControlName="ordemServicoId" name="ordemServicoId">
-                <mat-form-field fxFlex="40">
+                <mat-form-field fxFlex="30">
                   <input matInput placeholder="Descricao" formControlName="descricao" name="descricao">
                 </mat-form-field>
-                <mat-form-field style="margin-left: 5px;" fxFlex="20">
+                <mat-form-field style="margin-left: 5px;" fxFlex="15">
                   <input matInput placeholder="Valor Unitario"
                          currencyMask
                          [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
                          formControlName="valorUnitario"
                          name="valorUnitario">
                 </mat-form-field>
-                <mat-form-field style="margin-left: 5px;" fxFlex="20">
+                <mat-form-field style="margin-left: 5px;" fxFlex="15">
                   <input matInput placeholder="Quantidade" formControlName="qtd" name="qtd">
                 </mat-form-field>
                 <mat-form-field style="margin-left: 5px;" fxFlex="15">

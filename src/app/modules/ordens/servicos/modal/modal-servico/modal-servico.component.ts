@@ -87,6 +87,7 @@ export class ModalServicoComponent extends BaseComponent implements OnInit {
     this.os = this.data.OS
     if(this.os.numeroOS !== 0) {
       this.osNumber = this.os.numeroOS;
+      console.info('Os: ', this.os)
       this.loadData(this.os)
       this.isUpdate = true;
     }else {
@@ -113,7 +114,8 @@ export class ModalServicoComponent extends BaseComponent implements OnInit {
   }
 
   onCloseClick(): void {
-    this.dialogRef.close();
+    this.resultAddItem = {success: true}
+    this.dialogRef.close(this.resultAddItem);
   }
 
   mostraConteudo() {
@@ -205,14 +207,14 @@ export class ModalServicoComponent extends BaseComponent implements OnInit {
     let dados = this.osForm.value
     let detalhes = this.detalheOrdemServicos
 
-    let req: OrdemServicosRequestModel = {
+    const req: OrdemServicosRequestModel = {
       idOrdemServico: dados.idOrdemServico,
       numeroOs: Number(this.osNumber),
       idCliente: dados.idCliente,
       solicitante: dados.solicitante,
       notaEntrada: dados.notaEntrada,
       notaSaida: dados.notaSaida,
-      pedido: dados.pedido,
+      pedido:dados.pedido,
       orcamento: dados.orcamento,
       valorTotal: parseFloat(dados.valorTotal),
       prazo: Number(dados.prazo),
@@ -221,6 +223,7 @@ export class ModalServicoComponent extends BaseComponent implements OnInit {
       dataPrevisaoEntrega: dados.dataPrevEntrega,
       detalhes: detalhes,
     }
+
 
     if(dados.idOrdemServico === '') {
       this.ordemServicosService.addNovaOs(req).subscribe(
@@ -237,7 +240,6 @@ export class ModalServicoComponent extends BaseComponent implements OnInit {
         }
       )
     }else {
-      console.info('Update: ')
       this.ordemServicosService.putOs(req).subscribe(
         (result) => {
           if (result.statusCode === 204) {
@@ -256,9 +258,9 @@ export class ModalServicoComponent extends BaseComponent implements OnInit {
   }
 
   loadData(dados: any) {
-    let dataPrevEntrega = moment(dados.dataPrevEntrega).toDate()
-    let dataEntrega = dados.dataEntrega !== '' ? moment(dados.dataEntrega).toDate() : moment(dados.lancamento).add(dados.prazo, 'd').toDate()
-    let lancamento = moment(dados.lancamento).toDate()
+    console.info('Dados: ', JSON.stringify(dados))
+    let dataPrevEntrega = dados.dataPrevisaoEntrega === '' ? '' : moment(dados.dataPrevisaoEntrega).toDate()
+    let dataEntrega = dados.dataEntrega === '' || dados.dataEntrega == "0001-01-01T00:00:00" ? '' : moment(dados.dataEntrega).toDate()
     this.detalheOrdemServicos = dados.detalheOrdemServicos;
 
     this.osForm.controls['idOrdemServico'].setValue(dados.idOrdemServico)
@@ -271,7 +273,7 @@ export class ModalServicoComponent extends BaseComponent implements OnInit {
     this.osForm.controls['valorTotal'].setValue(dados.valorTotal)
     this.osForm.controls['lancamento'].setValue(dados.lancamento)
     this.osForm.controls['dataPrevEntrega'].setValue(dataPrevEntrega)
-    this.osForm.controls['dataEntrega'].setValue(dataEntrega )
+    this.osForm.controls['dataEntrega'].setValue(dataEntrega)
     this.osForm.controls['notaSaida'].setValue(dados.notaSaida)
     this.mostraConteudo()
     this.detalhes.data.push(...this.detalheOrdemServicos);

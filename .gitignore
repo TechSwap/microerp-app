@@ -45,3 +45,6 @@ Thumbs.db
 # Nginx
 .nginx/sites-available
 .nginx/letsencrypt
+
+# Environment
+environment.production.ts

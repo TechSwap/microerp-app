@@ -51,8 +51,14 @@ export class OrdemServicosService {
   }
 
   addNovaOs(request: OrdemServicosRequestModel) {
+
     const route = formatingRoute('/ordemservico');
 
+    Object.keys(request).forEach((key) => {
+      if (request["dataEntrega"] === null || request["dataEntrega"] === undefined || request["dataEntrega"] === "") {
+        delete request["dataEntrega"];
+      }
+    });
     return this._service.post<Result>(route, this._token, request);
   }
 

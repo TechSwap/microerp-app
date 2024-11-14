@@ -39,9 +39,14 @@ export class GridServicosComponent extends BaseComponent implements OnInit {
 
   jsonServicos: OrdemServicoResponse[] = []
 
+  metaData: Metadata = {
+    pageNumber: 1,
+    pageSize: 10,
+  }
+
   @ViewChild('paginator', { static: true }) paginator!: MatPaginator;
   totalRecords? = 0;
-  pageSize = 15;
+  pageSize = 10;
   pageIndex = 0;
 
   constructor(
@@ -55,11 +60,7 @@ export class GridServicosComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let metaData: Metadata = {
-      pageNumber: 1,
-      pageSize: 15,
-    }
-    this.getListaOs(metaData);
+    this.getListaOs(this.metaData);
   }
 
   pageChangeEvent(event: PageEvent) {
@@ -111,14 +112,9 @@ export class GridServicosComponent extends BaseComponent implements OnInit {
           });
           dialogRef.afterClosed().subscribe((result) => {
             if(result.success) {
-              let metaData: Metadata = {
-                pageNumber: 1,
-                pageSize: 15,
-              }
-              this.getListaOs(metaData)
+              this.getListaOs(this.metaData)
             }
           });
-
         } else {
           this.toastrService.warning('Erro ao Listar', 'Atenção!');
         }
