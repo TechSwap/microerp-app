@@ -20,8 +20,8 @@ export class ExcelService {
     this.saveAsExcelFile(excelBuffer, excelFileName)
   }
 
-  private saveAsExcelFile(buffer: any, fileName: string): void {
-    const data: Blob = new Blob([buffer], {
+  public saveAsExcelFile(buffer: any, fileName: string): void {
+    const data: Blob = new Blob([new Uint8Array(buffer.length).map((_, index) => buffer.charCodeAt(index))], {
       type: EXCEL_TYPE
     })
     FileSaver.saveAs(data, fileName + new Date().getTime() + EXCEL_EXTENSION)

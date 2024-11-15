@@ -11,6 +11,7 @@ import {DateAdapter} from "@angular/material/core";
 import {OrdemServicosService} from "../../../services/ordem-servicos.service";
 import {SelectModel} from "../../../models/SelectModel";
 import {BaseComponent} from "../../shared/base/base.component";
+import {ExcelService} from "../../../services/excel.service";
 
 @Component({
   selector: 'app-servicos',
@@ -51,6 +52,7 @@ export class ServicosComponent extends BaseComponent implements OnInit {
     private formBuilder: FormBuilder,
     private dateAdapter: DateAdapter<Date>,
     private ordemServicosService: OrdemServicosService,
+    private excelService: ExcelService,
     public dialog: MatDialog
   ) {
     super();
@@ -109,7 +111,6 @@ export class ServicosComponent extends BaseComponent implements OnInit {
 
     this.ordemServicosService.searchOs(dados.idCliente, dados.solicitante, dados.dataLancamento).subscribe(
       (result) => {
-        console.info('Result: ', result)
         if (result.statusCode === 200) {
           this.gridComponent.loadGrid(result.data, result.metaData?.totalRecords)
         } else {
@@ -125,6 +126,16 @@ export class ServicosComponent extends BaseComponent implements OnInit {
   protected readonly encodeURI = encodeURI;
 
   exportExcel() {
-    this.gridComponent.exportAsXLSX()
+    this.ordemServicosService.getRelatorio().subscribe(
+      (result) => {
+        if (result.statusCode === 200) {
+          const bytes = atob(result.data.dados)
+          this.excelService.saveAsExcelFile(bytes, 'OrdemServico')
+        }
+      },
+      (error) => {
+        console.info('Error: ', JSON.stringify(error))
+      })
+    // this.gridComponent.exportAsXLSX()
   }
 }

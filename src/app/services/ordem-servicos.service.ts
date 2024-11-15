@@ -75,4 +75,9 @@ export class OrdemServicosService {
 
     return this._service.put<Result>(route, this._token, request);
   }
+
+  getRelatorio() {
+    const route = formatingRoute('/ordemservico/relatorio')
+    return this._service.get<Result>(route, this._token)
+  }
 }
