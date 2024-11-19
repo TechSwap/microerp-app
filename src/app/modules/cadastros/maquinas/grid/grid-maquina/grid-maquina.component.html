@@ -1,0 +1,52 @@
+<div>
+  <table mat-table [dataSource]="maquinas" class="mat-elevation-z8">
+    <!-- Column definitions -->
+    <ng-container matColumnDef="numeroSerie">
+      <th mat-header-cell *matHeaderCellDef>Numero de Serie</th>
+      <td style="width: 150px;" mat-cell *matCellDef="let maquina">{{maquina.numeroSerie}}</td>
+    </ng-container>
+    <ng-container matColumnDef="descricao">
+      <th mat-header-cell *matHeaderCellDef>Descricao</th>
+      <td style="width: 200px;" mat-cell *matCellDef="let maquina">{{maquina.descricao}}</td>
+    </ng-container>
+    <ng-container matColumnDef="fabricante">
+      <th mat-header-cell *matHeaderCellDef>Fabricante</th>
+      <td style="width: 200px;" mat-cell *matCellDef="let maquina">{{maquina.fabricante}}</td>
+    </ng-container>
+    <!-- Ativo Column -->
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef> Status </th>
+      <td style="width: 100px;" mat-cell *matCellDef="let element"> {{element.status === 1 ? 'Ativo' : 'Inativo'}} </td>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Ações </th>
+      <td style="width: 250px;" mat-cell *matCellDef="let element">
+        <button mat-icon-button color="primary" [disabled]="element.vendida" >
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button (click)="activeMaquina(element)" [disabled]="element.vendida" >
+          <mat-icon [ngClass]="element.status === 1 ? 'ativo' : 'inativo' ">task_alt</mat-icon>
+        </button>
+        <button mat-icon-button [disabled]="element.vendida" (click)="sellMaquina(element)" >
+          <mat-icon  [ngClass]="element.vendida ? 'ativo' : 'inativo' ">paid</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" [disabled]="element.vendida" (click)="deleteMaquina(element)" >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <!-- Add other columns similarly -->
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  <mat-paginator #paginator
+                 (page)="pageChangeEvent($event)"
+                 [length]="totalRecords"
+                 [pageSize]="pageSize"
+                 [pageIndex]="pageIndex"
+                 [pageSizeOptions]="[5, 10, 30]"
+                 showFirstLastButtons>
+  </mat-paginator>
+</div>

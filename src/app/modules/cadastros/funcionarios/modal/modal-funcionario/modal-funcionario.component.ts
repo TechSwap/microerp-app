@@ -64,7 +64,6 @@ export class ModalFuncionarioComponent extends BaseComponent implements OnInit{
       },
       (error) => {
         this.notification.error('Erro ao buscar codigo')
-
         this.loading.hide();
       }
     )

@@ -7,11 +7,8 @@ export class PhonePipe implements PipeTransform {
 
   transform(value: string): string {
     let foneFormated = ''
-
-
     if (value !== null || value !== "") {
       let tel = value.replace(/\D/g, '')
-
        if(tel.length > 12) {
          foneFormated = tel.replace(/(\d{2})?(\d{2})?(\d{5})?(\d{4})/, '+$1 ($2) $3-$4')
        }else if(tel.length > 11) {
@@ -29,9 +26,7 @@ export class PhonePipe implements PipeTransform {
            foneFormated = tel.replace(/^(\d*)/, '($1')
          }
        }
-
     }
-
     return foneFormated;
   }
 

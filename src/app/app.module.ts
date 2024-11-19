@@ -19,7 +19,6 @@ import {BaseComponent} from "./modules/shared/base/base.component";
 import {UsuariosModule} from "./modules/usuarios/usuarios.module";
 import {EmpresaModule} from "./modules/empresa/empresa.module";
 
-
 const maskConfig: Partial<IConfig> = {
   validation: false,
 };

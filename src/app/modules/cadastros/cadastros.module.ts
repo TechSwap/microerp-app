@@ -23,6 +23,8 @@ import { NgxMaskDirective } from "ngx-mask";
 import { CurrencyMaskModule } from "ng2-currency-mask";
 import { ModalProdutoComponent } from './produtos/modal/modal-produto/modal-produto.component';
 import { GridProdutoComponent } from './produtos/grid/grid-produto/grid-produto.component';
+import { GridMaquinaComponent } from './maquinas/grid/grid-maquina/grid-maquina.component';
+import { ModalMaquinaComponent } from './maquinas/modal/modal-maquina/modal-maquina.component';
 
 @NgModule({
   declarations: [
@@ -43,20 +45,22 @@ import { GridProdutoComponent } from './produtos/grid/grid-produto/grid-produto.
     GridDepartamentosComponent,
     ModalProdutoComponent,
     GridProdutoComponent,
+    GridMaquinaComponent,
+    ModalMaquinaComponent,
   ],
-    imports: [
-        CommonModule,
-        MaterialModule,
-        ToastrModule.forRoot({
-            timeOut: 150000, // 15 seconds
-            closeButton: true,
-            progressBar: true,
-        }),
-        FormsModule,
-        ReactiveFormsModule,
-        NgxMaskDirective,
-        CurrencyMaskModule,
-    ],
+  imports: [
+    CommonModule,
+    MaterialModule,
+    ToastrModule.forRoot({
+      timeOut: 150000, // 15 seconds
+      closeButton: true,
+      progressBar: true,
+    }),
+    FormsModule,
+    ReactiveFormsModule,
+    NgxMaskDirective,
+    CurrencyMaskModule,
+  ],
   providers: [
     { provide: DEFAULT_DIALOG_CONFIG, useValue: { hasBackdrop: false } },
   ]

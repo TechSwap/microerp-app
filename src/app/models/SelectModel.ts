@@ -1,4 +1,4 @@
 export interface SelectModel {
-  Id: string
+  Id: string | number
   Descricao: string
 }

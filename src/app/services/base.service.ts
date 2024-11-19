@@ -13,7 +13,6 @@ export class BaseService {
   ) { }
 
   getCep(cep: string) {
-
     cep = formatCep(cep)
 
     let route = `https://viacep.com.br/ws/${cep}/json/`

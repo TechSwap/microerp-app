@@ -1,0 +1,38 @@
+<div class="container" style="width: 850px;">
+  <h3 mat-dialog-title>{{ isUpdate ? 'Atualizar Maquina' : 'Adicionar Maquina'}}</h3>
+  <mat-dialog-content>
+    <form [formGroup]="maquinaForm">
+      <div class="form-fields">
+        <input hidden formControlName="idMaquina">
+        <mat-form-field style="margin-left: 10px;">
+          <input matInput placeholder="Nome" formControlName="nome" required>
+        </mat-form-field>
+        <mat-form-field style="margin-left: 10px;">
+          <input matInput placeholder="Numero Serie" formControlName="numeroSerie" oninput="this.value = this.value.toUpperCase()">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select placeholder="Departamento" formControlName="departamentoId">
+            <mat-option *ngFor="let departamento of dropDepartamentos" [value]="departamento.Id">{{departamento.Descricao}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="form-fields">
+        <mat-form-field style="margin-left: 10px;">
+          <input matInput placeholder="Fabricante" formControlName="fabricante">
+        </mat-form-field>
+        <mat-form-field style="margin-left: 10px;">
+          <input matInput placeholder="AtivoFixo" formControlName="ativoFixo">
+        </mat-form-field>
+        <mat-form-field style="margin-left: 10px;">
+          <mat-select placeholder="Status" formControlName="status">
+            <mat-option *ngFor="let status of dropStatus" [value]="status.Id">{{status.Descricao}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close (click)="onCloseClick()">Cancelar</button>
+    <button mat-button (click)="onSubmit()">{{ isUpdate ? 'Atualizar' : 'Adicionar'}}</button>
+  </mat-dialog-actions>
+</div>

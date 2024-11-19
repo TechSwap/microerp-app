@@ -1,1 +1,36 @@
-<p>maquinas works!</p>
+<mat-accordion>
+  <mat-expansion-panel [expanded]=false (opened)=true>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Maquinas
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+  </mat-expansion-panel>
+  <div>
+    <br />
+    <form [formGroup]="searchForm">
+      <div class="d-flex flex-row">
+        <mat-form-field>
+          <mat-select placeholder="Departamento" formControlName="departamentoId">
+            <mat-option *ngFor="let departamento of dropDepartamentos" [value]="departamento.Id">{{departamento.Descricao}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="form-field" style="margin-left: 10px;" >
+          <input matInput formControlName="numeroSerie" placeholder="Numero Serie">
+        </mat-form-field>
+        <mat-form-field class="form-field" style="margin-left: 10px;">
+          <input matInput formControlName="fabricante" placeholder="Fabricante">
+        </mat-form-field>
+      </div>
+      <div class="row" style="align-items: end; margin-left: 700px;">
+        <button style="width: 100px;" mat-raised-button color="primary"
+                (click)="$event.preventDefault(); "
+        >Pesquisar</button>
+        <button style="margin-left: 30px; width: 100px;" mat-raised-button color="primary"
+                (click)="$event.preventDefault(); addMaquina()">Adicionar</button>
+      </div>
+    </form>
+  </div>
+  <hr />
+  <app-grid-maquina #GridMaquinasComponent></app-grid-maquina>
+</mat-accordion>
