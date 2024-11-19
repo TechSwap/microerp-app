@@ -93,8 +93,6 @@ export class MaquinasComponent extends BaseComponent implements OnInit {
 
   searchMaquinas() {
     let dados = this.searchForm.value
-    console.info('Dados: ', dados)
-
     this.maquinaService.searchMaquinas(dados.departamentoId, dados.numeroSerie, dados.fabricante).subscribe(
       (result) => {
         if (result.statusCode === 200) {
