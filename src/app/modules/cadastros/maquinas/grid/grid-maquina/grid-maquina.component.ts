@@ -5,11 +5,14 @@ import {Funcionario} from "../../../../../models/response/funcionario.model";
 import {Maquina} from "../../../../../models/response/maquina.model";
 import {Metadata} from "../../../../../models/resultlist";
 import {MatPaginator, PageEvent} from "@angular/material/paginator";
-import {MatDialog} from "@angular/material/dialog";
+import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {MaquinasService} from "../../../../../services/maquinas.service";
 import {NgxSpinnerService} from "ngx-spinner";
 import {Cliente} from "../../../../../models/response/cliente-response.model";
 import {NotificationService} from "../../../../../services/notification.service";
+import {ModalClienteComponent} from "../../../clientes/modal/modal-cliente/modal-cliente.component";
+import {ModalResult} from "../../../../../models/modal-result.model";
+import {ModalMaquinaComponent} from "../../modal/modal-maquina/modal-maquina.component";
 
 @Component({
   selector: 'app-grid-maquina',
@@ -116,6 +119,36 @@ export class GridMaquinaComponent extends BaseComponent implements  OnInit {
         this.loading.hide();
         this.notification.warning('Erro ao excluir.')
       })
+  }
+
+  editMaquina(maquina: Maquina) {
+    this.loading.show();
+    this.maquinaService.findOneMaquina(maquina).subscribe(
+      (result) => {
+        if (result.statusCode === 200) {
+          this.loading.hide();
+          const dialogConfig = new MatDialogConfig();
+          dialogConfig.autoFocus = true;
+          dialogConfig.disableClose = true;
+          dialogConfig.data = {
+            width: '700px',
+            dados: result.data
+          };
+          const dialogRef = this.dialog.open(ModalMaquinaComponent, dialogConfig)
+
+          dialogRef.afterClosed().subscribe((result: ModalResult) => {
+            if(result.success) {
+              this.notification.success('Maquina atualizada com sucesso.')
+              this.getMaquinas(this.metaData)
+            }
+          });
+        }
+      },
+      (error) => {
+        this.loading.hide();
+        console.info('Error ao  carregar a  Maquina: ', error)
+      }
+    )
   }
 
 }

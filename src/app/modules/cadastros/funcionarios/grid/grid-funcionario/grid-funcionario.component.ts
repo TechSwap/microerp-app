@@ -75,7 +75,6 @@ export class GridFuncionarioComponent extends BaseComponent implements  OnInit {
           const dialogRef = this.dialog.open(ModalFuncionarioComponent, dialogConfig)
 
           dialogRef.afterClosed().subscribe(result => {
-
           });
         }
       },

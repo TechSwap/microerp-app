@@ -12,6 +12,8 @@ import {ModalFuncionarioComponent} from "../funcionarios/modal/modal-funcionario
 import {ModalMaquinaComponent} from "./modal/modal-maquina/modal-maquina.component";
 import {GridFuncionarioComponent} from "../funcionarios/grid/grid-funcionario/grid-funcionario.component";
 import {GridMaquinaComponent} from "./grid/grid-maquina/grid-maquina.component";
+import {MaquinasService} from "../../../services/maquinas.service";
+import {GridServicosComponent} from "../../ordens/servicos/grid/grid-servicos/grid-servicos.component";
 
 @Component({
   selector: 'app-maquinas',
@@ -27,15 +29,15 @@ export class MaquinasComponent extends BaseComponent implements OnInit {
     'departamentoId': [''],
   })
 
-  @ViewChild('GridMaquinaComponent')
-  GridMaquinasComponent!: GridMaquinaComponent;
+  @ViewChild('GridMaquinaComponent') GridMaquinaComponent!: any;
 
   constructor(
     public dialog: MatDialog,
     private departamentoService: DepartamentosService,
     private formBuilder: FormBuilder,
     private loading: NgxSpinnerService,
-    private notification: NotificationService
+    private notification: NotificationService,
+    private maquinaService: MaquinasService
   ) {
     super();
   }
@@ -52,7 +54,8 @@ export class MaquinasComponent extends BaseComponent implements OnInit {
       , idMaquina: ""
       , nome: ""
       , numeroSerie: ""
-      , status: 0
+      , status: ''
+      , vendida: false
     }
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
@@ -88,4 +91,21 @@ export class MaquinasComponent extends BaseComponent implements OnInit {
     );
   }
 
+  searchMaquinas() {
+    let dados = this.searchForm.value
+    console.info('Dados: ', dados)
+
+    this.maquinaService.searchMaquinas(dados.departamentoId, dados.numeroSerie, dados.fabricante).subscribe(
+      (result) => {
+        if (result.statusCode === 200) {
+          this.GridMaquinaComponent.loadGriMaquinas(result.data, result.metaData?.totalRecords)
+        } else {
+          this.GridMaquinaComponent.loadGriMaquinas([], 0)
+        }
+      },
+      (error) => {
+        this.GridMaquinaComponent.loadGriMaquinas([], 0)
+      }
+    );
+  }
 }

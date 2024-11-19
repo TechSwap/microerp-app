@@ -5,34 +5,37 @@
       <div class="form-fields">
         <input hidden formControlName="idMaquina">
         <mat-form-field style="margin-left: 10px;">
-          <input matInput placeholder="Nome" formControlName="nome" required>
+          <input matInput placeholder="Nome" formControlName="nome" [readonly]=vendidaChecked required>
         </mat-form-field>
         <mat-form-field style="margin-left: 10px;">
-          <input matInput placeholder="Numero Serie" formControlName="numeroSerie" oninput="this.value = this.value.toUpperCase()">
+          <input matInput placeholder="Numero Serie" formControlName="numeroSerie" [readonly]=vendidaChecked oninput="this.value = this.value.toUpperCase()">
         </mat-form-field>
         <mat-form-field>
-          <mat-select placeholder="Departamento" formControlName="departamentoId">
-            <mat-option *ngFor="let departamento of dropDepartamentos" [value]="departamento.Id">{{departamento.Descricao}}</mat-option>
+          <mat-select placeholder="Departamento" formControlName="departamentoId"  >
+            <mat-option *ngFor="let departamento of dropDepartamentos" [disabled]=vendidaChecked [value]="departamento.Id">{{departamento.Descricao}}</mat-option>
           </mat-select>
         </mat-form-field>
       </div>
       <div class="form-fields">
         <mat-form-field style="margin-left: 10px;">
-          <input matInput placeholder="Fabricante" formControlName="fabricante">
+          <input matInput placeholder="Fabricante" formControlName="fabricante" [readonly]=vendidaChecked >
         </mat-form-field>
         <mat-form-field style="margin-left: 10px;">
-          <input matInput placeholder="AtivoFixo" formControlName="ativoFixo">
+          <input matInput placeholder="AtivoFixo" formControlName="ativoFixo" [readonly]=vendidaChecked >
         </mat-form-field>
         <mat-form-field style="margin-left: 10px;">
-          <mat-select placeholder="Status" formControlName="status">
-            <mat-option *ngFor="let status of dropStatus" [value]="status.Id">{{status.Descricao}}</mat-option>
+          <mat-select placeholder="Status" formControlName="status"  >
+            <mat-option *ngFor="let status of dropStatus" [disabled]=vendidaChecked [value]="status.Id">{{status.Descricao}}</mat-option>
           </mat-select>
         </mat-form-field>
+      </div>
+      <div class="form-fields" *ngIf="isUpdate">
+        <mat-slide-toggle labelPosition="before" color="primary" [disabled]=vendidaChecked style="margin-left: 10px;" [checked]="vendidaChecked"   (change)="checkVendida($event)" >Vendida</mat-slide-toggle>
       </div>
     </form>
   </mat-dialog-content>
   <mat-dialog-actions align="end">
     <button mat-button mat-dialog-close (click)="onCloseClick()">Cancelar</button>
-    <button mat-button (click)="onSubmit()">{{ isUpdate ? 'Atualizar' : 'Adicionar'}}</button>
+    <button mat-button [disabled]=vendidaChecked (click)="onSubmit()">{{ isUpdate ? 'Atualizar' : 'Adicionar'}}</button>
   </mat-dialog-actions>
 </div>

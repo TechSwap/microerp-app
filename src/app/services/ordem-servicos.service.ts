@@ -51,7 +51,6 @@ export class OrdemServicosService {
   }
 
   addNovaOs(request: OrdemServicosRequestModel) {
-
     const route = formatingRoute('/ordemservico');
 
     Object.keys(request).forEach((key) => {

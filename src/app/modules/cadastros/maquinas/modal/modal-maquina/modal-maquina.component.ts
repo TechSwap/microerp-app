@@ -4,12 +4,12 @@ import {SelectModel} from "../../../../../models/SelectModel";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {NgxSpinnerService} from "ngx-spinner";
-import {FuncionariosService} from "../../../../../services/funcionarios.service";
 import {DepartamentosService} from "../../../../../services/departamentos.service";
 import {NotificationService} from "../../../../../services/notification.service";
 import {Metadata} from "../../../../../models/resultlist";
 import {Maquina} from "../../../../../models/response/maquina.model";
 import {MaquinasService} from "../../../../../services/maquinas.service";
+import {MatSlideToggleChange} from "@angular/material/slide-toggle";
 
 @Component({
   selector: 'app-modal-maquina',
@@ -20,6 +20,7 @@ export class ModalMaquinaComponent extends BaseComponent implements OnInit {
   isUpdate: boolean = false
   dropDepartamentos: SelectModel[] =  []
   dropStatus: SelectModel[] =  []
+  vendidaChecked = false
 
   maquinaForm: FormGroup = this.formBuilder.group({
     'idMaquina': [''],
@@ -44,8 +45,8 @@ export class ModalMaquinaComponent extends BaseComponent implements OnInit {
   }
   ngOnInit(): void {
     this.getListaDepartamentos()
-    this.loadDropStatus()
     this.loadMaquina(this.data.dados)
+    this.loadDropStatus()
   }
 
   onSubmit() {
@@ -59,23 +60,48 @@ export class ModalMaquinaComponent extends BaseComponent implements OnInit {
       idDepartamento: dados.departamentoId,
       status: dados.status,
       numeroSerie: dados.numeroSerie,
-      ativoFixo: dados.ativoFixo
+      ativoFixo: dados.ativoFixo,
+      vendida: this.vendidaChecked
     }
 
-    this.maquinaService.postMaquina(req).subscribe((result) => {
-      if (result.statusCode === 204) {
-        this.dialogRef.close({
-          success: true
-        });
-      }
-      this.loading.hide();
-    }, (error) => {
-      if (error.status === 400 || error.status === 404) {
-        let msg = error.statusText
-        this.notification.warning(msg)
-      }
-      this.loading.hide();
-    })
+    if (dados.idMaquina === '') {
+      this.maquinaService.postMaquina(req).subscribe((result) => {
+        if (result.statusCode === 204) {
+          this.dialogRef.close({
+            success: true
+          });
+        }
+        this.loading.hide();
+      }, (error) => {
+        if (error.status === 400 || error.status === 404) {
+          let msg = error.statusText
+          this.notification.warning(msg)
+        }
+        this.loading.hide();
+      })
+    }else {
+      this.maquinaService.putMaquina(req).subscribe(
+        (result) => {
+          if (result.statusCode === 204) {
+            this.dialogRef.close({
+              success: true
+            });
+            this.loading.hide();
+
+          }
+        },
+        (error) => {
+          console.info('Error: ', error)
+          this.loading.hide();
+          this.notification.warning('Erro ao atualizar');
+        }
+      )
+    }
+  }
+
+  checkVendida(event: MatSlideToggleChange) {
+    console.log(`Checked value: ${event.source.checked}`);
+    this.vendidaChecked = event.source.checked;
   }
 
 
@@ -114,6 +140,7 @@ export class ModalMaquinaComponent extends BaseComponent implements OnInit {
   }
 
   loadMaquina(dados: Maquina) {
+    console.info('Dados: ', dados)
     this.isUpdate = dados.idMaquina !== ''
     this.maquinaForm.controls['idMaquina'].setValue(dados.idMaquina)
     this.maquinaForm.controls['numeroSerie'].setValue(dados.numeroSerie)
@@ -122,6 +149,7 @@ export class ModalMaquinaComponent extends BaseComponent implements OnInit {
     this.maquinaForm.controls['fabricante'].setValue(dados.fabricante)
     this.maquinaForm.controls['ativoFixo'].setValue(dados.ativoFixo)
     this.maquinaForm.controls['status'].setValue(dados.status)
+    this.vendidaChecked = dados.vendida
   }
 
 }

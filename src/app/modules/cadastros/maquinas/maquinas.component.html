@@ -24,7 +24,7 @@
       </div>
       <div class="row" style="align-items: end; margin-left: 700px;">
         <button style="width: 100px;" mat-raised-button color="primary"
-                (click)="$event.preventDefault(); "
+                (click)="$event.preventDefault(); searchMaquinas()"
         >Pesquisar</button>
         <button style="margin-left: 30px; width: 100px;" mat-raised-button color="primary"
                 (click)="$event.preventDefault(); addMaquina()">Adicionar</button>
@@ -32,5 +32,5 @@
     </form>
   </div>
   <hr />
-  <app-grid-maquina #GridMaquinasComponent></app-grid-maquina>
+  <app-grid-maquina #GridMaquinaComponent></app-grid-maquina>
 </mat-accordion>

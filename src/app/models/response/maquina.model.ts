@@ -3,8 +3,8 @@ export interface Maquina {
   numeroSerie: string;
   fabricante: string;
   nome: string;
-  status: number
-  vendida?: boolean
-  ativoFixo?: string
-  idDepartamento?: string
+  status: number | string;
+  vendida: boolean;
+  ativoFixo?: string;
+  idDepartamento?: string;
 }

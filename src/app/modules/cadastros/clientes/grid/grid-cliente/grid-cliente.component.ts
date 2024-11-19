@@ -43,7 +43,6 @@ export class GridClienteComponent implements OnInit {
 
   getListaClientes(metaData: Metadata) {
     this.loading.show();
-
     this.clienteService.listClientes(metaData).subscribe(
       (result) => {
         if (result.statusCode === 200) {
@@ -69,10 +68,8 @@ export class GridClienteComponent implements OnInit {
       pageNumber: event.pageIndex + 1,
       pageSize: event.pageSize,
     }
-
     this.getListaClientes(metaData)
   }
-
 
   editCliente(cliente: Cliente) {
     this.loading.show();
@@ -88,7 +85,6 @@ export class GridClienteComponent implements OnInit {
             dados: result.data
           };
           const dialogRef = this.dialog.open(ModalClienteComponent, dialogConfig)
-
           dialogRef.afterClosed().subscribe((result: ModalResult) => {
             if(result.success) {
               this.notification.success('Cliente atualizado com sucesso.')
@@ -129,7 +125,6 @@ export class GridClienteComponent implements OnInit {
           this.notification.success('Atualizado com sucesso!')
         }
         this.loading.hide();
-
       }, (error) => {
         this.loading.hide();
         this.notification.warning('Erro ao atualizar.')
