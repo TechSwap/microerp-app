@@ -12,7 +12,9 @@ import {SharedModule} from "../../shared/shared.module";
 import {CurrencyMaskModule} from "ng2-currency-mask";
 import { GridComprasComponent } from './compras/grid/grid-compras/grid-compras.component';
 import { ModalComprasComponent } from './compras/modal/modal-compras/modal-compras.component';
-
+import { GridProducaoComponent } from './producao/grid/grid-producao/grid-producao.component';
+import { OrdemProducaoComponent } from './producao/Op/ordem-producao/ordem-producao.component';
+import {RouterLink} from "@angular/router";
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import { ModalComprasComponent } from './compras/modal/modal-compras/modal-compr
     ModalServicoComponent,
     GridServicosComponent,
     GridComprasComponent,
-    ModalComprasComponent
+    ModalComprasComponent,
+    GridProducaoComponent,
+    OrdemProducaoComponent
   ],
   imports: [
     CommonModule,
@@ -30,7 +34,8 @@ import { ModalComprasComponent } from './compras/modal/modal-compras/modal-compr
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
-    CurrencyMaskModule
+    CurrencyMaskModule,
+    RouterLink
   ],
    schemas: [CUSTOM_ELEMENTS_SCHEMA],
     providers: [

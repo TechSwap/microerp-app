@@ -1,1 +1,47 @@
-<p>producao works!</p>
+<mat-accordion>
+  <mat-expansion-panel [expanded]=false (opened)=true>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Ordens de Producao
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+  </mat-expansion-panel>
+  <div class="formSearchClientes">
+    <br />
+    <form [formGroup]="searchOpForm">
+      <div class="d-flex flex-row">
+        <mat-form-field style="margin-left: 10px; width: 400px;">
+          <mat-select placeholder="Cliente" formControlName="idCliente">
+            <mat-option style="font-size: 14px" *ngFor="let cliente of dropClientes" [value]="cliente.Id">{{cliente.Descricao}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field style="margin-left: 20px;">
+          <input  placeholder="Solicitante" matInput>
+        </mat-form-field>
+        <mat-form-field style="margin-left: 10px;">
+          <input matInput [matDatepicker]="dataLancamento"
+                 placeholder="Data Lancamento"
+                 >
+          <mat-datepicker-toggle matIconSuffix [for]="dataLancamento"></mat-datepicker-toggle>
+          <mat-datepicker #dataLancamento></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div class="row" style="align-items: end; margin-left: 700px;">
+        <button  style="width: 100px;"
+                 mat-raised-button
+                 color="primary"
+                 (click)="$event.preventDefault(); "
+        >Pesquisar</button>
+        <a
+          style="margin-left: 30px; width: 100px;"
+                mat-raised-button
+           class="btn btn-primary"
+                color="primary"
+                (click)="$event.preventDefault();"
+        >Adicionar</a>
+      </div>
+    </form>
+  </div>
+  <hr />
+
+</mat-accordion>
