@@ -223,8 +223,6 @@ export class ModalServicoComponent extends BaseComponent implements OnInit {
       dataPrevisaoEntrega: dados.dataPrevEntrega,
       detalhes: detalhes,
     }
-
-
     if(dados.idOrdemServico === '') {
       this.ordemServicosService.addNovaOs(req).subscribe(
         (result) => {

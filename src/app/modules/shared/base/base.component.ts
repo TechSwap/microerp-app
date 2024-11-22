@@ -3,6 +3,7 @@ import {Cliente} from "../../../models/response/cliente-response.model";
 import {SelectModel} from "../../../models/SelectModel";
 import {Departamento} from "../../../models/response/departamento-response.model";
 import {Fornecedor} from "../../../models/response/fornecedor-response.model";
+import {UnidadeMedida} from "../../../models/unidade.model";
 
 @Component({
   selector: 'app-base',
@@ -56,6 +57,23 @@ export class BaseComponent {
         Descricao: departamento.descricao
       });
     });
+    return drop;
+  }
+
+  public loadDropUnidades(drop: SelectModel[]) {
+    let unidades: UnidadeMedida[] = [
+      { value: 'PC', viewValue: 'Pecas' },
+      { value: 'MT', viewValue: 'Metros' },
+      { value: 'LT', viewValue: 'Litros' },
+    ];
+    let firstPosition: SelectModel = { Id: "", Descricao: "Selecione" }
+    drop.push(firstPosition)
+    unidades.forEach(unidade => {
+      drop.push({
+        Id: unidade.value,
+        Descricao: unidade.viewValue
+      });
+    })
     return drop;
   }
 }
