@@ -12,6 +12,10 @@ import {MatTableDataSource} from "@angular/material/table";
 import {DetalheOrdemServico} from "../../../../../models/ordemServico.model";
 import {DetalheOrdemProducao} from "../../../../../models/ordemProducao.model";
 import {numericOnly} from "../../../../../utils/input-helpers.utils";
+import {OrdemProducaoRequestModel} from "../../../../../models/request/ordem-producao-request.model";
+import {OrdemProducaoService} from "../../../../../services/ordem-producao.service";
+import {ToastrService} from "ngx-toastr";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-ordem-producao',
@@ -21,9 +25,11 @@ import {numericOnly} from "../../../../../utils/input-helpers.utils";
 export class OrdemProducaoComponent extends BaseComponent implements OnInit {
   novaOp: FormGroup = this.formBuilder.group({
     'idOrdemServico': [''],
-    'idCliente': ['']
+    'idCliente': [''],
+    'prazo': ['']
   })
   detalhesOP: FormGroup = this.formBuilder.group({
+    'idx': [''],
     'idDetalhesOrdemProducao': [''],
     'idOrdemProducao': [''],
     'descricao': [''],
@@ -40,19 +46,22 @@ export class OrdemProducaoComponent extends BaseComponent implements OnInit {
   unidades: SelectModel[] = []
   conteudo = false
   isUpdate = false
+  removed = false
+  idxRemove: DetalheOrdemProducao  = {descricao: "", idDetalhesOrdemProducao: "", idOrdemProducao: "", index: 0, prazoEntrega: undefined, quantidade: 0, unidade: ""}
 
   constructor(
     private clienteService: ClientesService,
     private ordemServicosService: OrdemServicosService,
+    private ordemProducaoService: OrdemProducaoService,
     private loading: NgxSpinnerService,
+    private toastrService: ToastrService,
+    private router: Router,
     private formBuilder: FormBuilder
   ) {
     super();
   }
   ngOnInit(): void {
     this.getListOs()
-    this.getListaClientes()
-    this.getUnidades()
   }
 
   getListaClientes() {
@@ -65,8 +74,9 @@ export class OrdemProducaoComponent extends BaseComponent implements OnInit {
       (result) => {
         if (result.statusCode === 200) {
           this.dropClientes = this.loadDropClientes(result.data, this.dropClientes)
-          this.loading.hide();
         }
+        this.getUnidades()
+        this.loading.hide();
       },
       (error) => {
         this.loading.hide();
@@ -92,6 +102,7 @@ export class OrdemProducaoComponent extends BaseComponent implements OnInit {
             Descricao: o.numeroOS
           })
         })
+        this.getListaClientes()
         this.loading.hide();
       }
       },
@@ -113,11 +124,27 @@ export class OrdemProducaoComponent extends BaseComponent implements OnInit {
           if (result.statusCode === 200) {
             let os = result.data
             this.novaOp.controls['idCliente'].setValue(os.idCliente)
+            this.novaOp.controls['prazo'].setValue(os.prazo)
+            let detalhes = os.detalheOrdemServicos
+
+            let idx = 0;
+            detalhes.forEach((d: DetalheOrdemServico) => {
+              let deta: DetalheOrdemProducao = {
+                idOrdemProducao: "",
+                index: idx === 0 ? 1 : idx + 1,
+                descricao: d.descricao,
+                quantidade: d.quantidade,
+                unidade: d.unidade
+              }
+              idx++
+              this.detalheOp.push(deta)
+              this.detalhesOrdemProducao.data = [...this.detalheOp]
+            });
+            this.mostraConteudo()
           }
           this.loading.hide();
         },
         (error) => {
-
           this.loading.hide();
         }
       );
@@ -132,9 +159,7 @@ export class OrdemProducaoComponent extends BaseComponent implements OnInit {
 
   adicionaDetalhe() {
     let det = this.detalhesOP.value
-
-    let idx = this.detalheOp.length
-
+    let idx = this.detalheOp.length > 0 ? 0 : this.detalheOp.length
     let dado: DetalheOrdemProducao = {
       index: idx === 0 ? 0 : idx + 1,
       descricao: det.descricao,
@@ -155,11 +180,56 @@ export class OrdemProducaoComponent extends BaseComponent implements OnInit {
     this.detalhesOP.controls['unidade'].setValue(item.unidade)
   }
 
-  getItemLista(detalhe: DetalheOrdemProducao) {
-    this.loadFormDetalhes(detalhe)
+  resetFormDetalhes() {
+    this.detalhesOP.controls['idDetalhesOrdemProducao'].setValue('')
+    this.detalhesOP.controls['idOrdemProducao'].setValue('')
+    this.detalhesOP.controls['descricao'].setValue('')
+    this.detalhesOP.controls['qtd'].setValue('')
+    this.detalhesOP.controls['unidade'].setValue('')
   }
 
-  onSubmit() {}
+  getItemLista(detalhe: DetalheOrdemProducao) {
+    this.loadFormDetalhes(detalhe)
+    this.removed = !this.removed
+    this.idxRemove = detalhe;
+  }
+
+  removeIten() {
+    let idx = this.idxRemove
+    let exitsIdx = this.detalheOp.findIndex((d) => d === idx)
+    if(exitsIdx !== -1) {
+      if (idx != null) {
+        this.detalheOp.splice(exitsIdx, 1)
+      }
+      this.detalhesOrdemProducao.data = [...this.detalheOp]
+      this.removed = false
+      this.resetFormDetalhes()
+    }
+  }
+
+  onSubmit() {
+    this.loading.show();
+    let baseForm = this.novaOp.value
+    var req: OrdemProducaoRequestModel = {
+      idOrdemServico: baseForm.idOrdemServico,
+      idCliente: baseForm.idCliente,
+      prazo: baseForm.prazo,
+      detalhes: this.detalheOp
+    }
+    this.ordemProducaoService.addNovaOp(req).subscribe(
+      (result) => {
+        if (result.statusCode === 204) {
+          this.loading.hide();
+          this.router.navigate(['/ordens'])
+        }
+      },
+      (error) => {
+        this.loading.hide();
+        this.toastrService.warning('Erro ao Listar', 'Atenção!');
+      }
+    )
+
+  }
 
   protected readonly numericOnly = numericOnly;
 }

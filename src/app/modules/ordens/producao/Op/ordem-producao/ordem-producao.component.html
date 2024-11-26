@@ -43,6 +43,7 @@
       <ng-container *ngIf="this.conteudo" >
       <div class="d-flex flex-row">
         <form [formGroup]="detalhesOP">
+          <input type="hidden" formControlName="idx" name="idx">
           <input type="hidden" formControlName="idDetalhesOrdemProducao" name="idDetalhesOrdemProducao">
           <input type="hidden" formControlName="idOrdemProducao" name="idOrdemProducao">
           <mat-form-field fxFlex="50">
@@ -62,8 +63,10 @@
             </mat-select>
           </mat-form-field>
 
-          <div style="margin-top: 20px; margin-left: 15px;" fxFlex="5">
+          <div class="row flex-row" style="margin-top: 20px; margin-left: 15px; width: 200px;" >
             <button mat-flat-button color="primary" (click)="adicionaDetalhe()">Add</button>
+            <span></span>
+            <a *ngIf="removed" class="btn btn-danger" (click)="removeIten()" >Remove</a>
           </div>
         </form>
       </div>

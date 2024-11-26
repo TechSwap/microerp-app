@@ -13,9 +13,10 @@ export interface OrdemProducaoModel {
 export interface DetalheOrdemProducao {
   index?: number;
   idDetalhesOrdemProducao?: string;
-  idOrdemProducao: string;
+  idOrdemProducao?: string;
   descricao: string;
   quantidade: number;
   unidade: string;
   prazoEntrega?: Date;
+  dataEntrega? : Date
 }
