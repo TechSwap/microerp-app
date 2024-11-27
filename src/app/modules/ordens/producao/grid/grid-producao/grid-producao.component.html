@@ -1,1 +1,51 @@
-<p>grid-producao works!</p>
+<div>
+  <table mat-table [dataSource]="servicos" class="mat-elevation-z8">
+
+    <!-- Column definitions -->
+    <ng-container matColumnDef="numeroOP">
+      <th mat-header-cell *matHeaderCellDef>Numero OP</th>
+      <td style="width: 150px;" mat-cell *matCellDef="let servico">{{servico.numeroOp}}</td>
+    </ng-container>
+    <ng-container matColumnDef="cliente">
+      <th mat-header-cell *matHeaderCellDef>Cliente</th>
+      <td style="width: 300px;" mat-cell *matCellDef="let servico">{{servico.cliente}}</td>
+    </ng-container>
+    <ng-container matColumnDef="numeroOS">
+      <th mat-header-cell *matHeaderCellDef>Numero OS</th>
+      <td style="width: 150px;" mat-cell *matCellDef="let servico">{{servico.numeroOs}}</td>
+    </ng-container>
+    <ng-container matColumnDef="itens">
+      <th mat-header-cell *matHeaderCellDef>Itens</th>
+      <td style="width: 200px;" mat-cell *matCellDef="let servico">{{servico.itens}}</td>
+    </ng-container>
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef> Status  </th>
+      <td style="width: 200px;" mat-cell *matCellDef="let servico"> {{servico.status}} </td>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Ações </th>
+      <td style="width: 250px;" mat-cell *matCellDef="let servico">
+        <button mat-icon-button color="primary" >
+          <mat-icon>build</mat-icon>
+        </button>
+        <button mat-icon-button color="primary" >
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+    <!-- Add other columns similarly -->
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  <mat-paginator
+    (page)="pageChangeEvent($event)"
+    [length]="totalRecords"
+    [pageSize]="pageSize"
+    [pageIndex]="pageIndex"
+    [pageSizeOptions]="[10, 20, 30]"
+    showFirstLastButtons></mat-paginator>
+</div>

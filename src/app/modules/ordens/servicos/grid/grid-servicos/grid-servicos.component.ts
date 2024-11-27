@@ -73,7 +73,6 @@ export class GridServicosComponent extends BaseComponent implements OnInit {
 
   getListaOs(metaData: Metadata) {
     this.loading.show();
-
     this.ordemServicosService.listaOs(metaData).subscribe(
       (result) => {
         if(result !== null) {

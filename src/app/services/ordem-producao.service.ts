@@ -5,6 +5,7 @@ import {formatingRoute, getToken} from "../utils/http-helpers.utils";
 import {OrdemServicosRequestModel} from "../models/request/ordem-servico.request.model";
 import {Result} from "../models/result";
 import {OrdemProducaoRequestModel} from "../models/request/ordem-producao-request.model";
+import {Metadata, ResultList} from "../models/resultlist";
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,6 @@ export class OrdemProducaoService {
 
   addNovaOp(request: OrdemProducaoRequestModel) {
     const route = formatingRoute('/ordemproducao/novaop');
-
     Object.keys(request).forEach((key) => {
       if (request["idOrdemProducao"] === null || request["idOrdemProducao"] === undefined || request["idOrdemProducao"] === "") {
         delete request["idOrdemProducao"];
@@ -31,5 +31,14 @@ export class OrdemProducaoService {
       }
     });
     return this._service.post<Result>(route, this._token, request);
+  }
+
+  listaOps(metaData: Metadata) {
+    let pageNumber = metaData != null ? metaData.pageNumber : 1;
+    let pageSize = metaData != null ? metaData.pageSize : 200;
+
+    const route = formatingRoute(`/ordemproducao/lista-ops?metaData.pageNumber=${pageNumber}&metaData.pageSize=${pageSize}`);
+
+    return this._service.get<ResultList>(route, this._token);
   }
 }

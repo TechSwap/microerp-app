@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {BaseComponent} from "../../shared/base/base.component";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {Cliente} from "../../../models/response/cliente-response.model";
@@ -6,6 +6,8 @@ import {SelectModel} from "../../../models/SelectModel";
 import {Metadata} from "../../../models/resultlist";
 import {ClientesService} from "../../../services/clientes.service";
 import {NgxSpinnerService} from "ngx-spinner";
+import {GridServicosComponent} from "../servicos/grid/grid-servicos/grid-servicos.component";
+import {GridProducaoComponent} from "./grid/grid-producao/grid-producao.component";
 
 @Component({
   selector: 'app-producao',
@@ -19,6 +21,8 @@ export class ProducaoComponent extends BaseComponent implements OnInit {
   searchOpForm: FormGroup = this.formBuilder.group({
     'idCliente': [''],
   })
+
+  @ViewChild(GridProducaoComponent) gridProducaoComponent!: any;
   constructor(
     private formBuilder: FormBuilder,
     private clienteService: ClientesService,
