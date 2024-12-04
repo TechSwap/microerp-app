@@ -16,20 +16,27 @@
     </ng-container>
     <ng-container matColumnDef="valorTotal">
       <th mat-header-cell *matHeaderCellDef>Valor Total</th>
-      <td style="width: 200px;" mat-cell *matCellDef="let servico">{{servico.valorTotal | currency: 'BRL':true }}</td>
+      <td style="width: 100px;" mat-cell *matCellDef="let servico">{{servico.valorTotal | currency: 'BRL':true }}</td>
     </ng-container>
     <ng-container matColumnDef="itens">
       <th mat-header-cell *matHeaderCellDef>Itens</th>
-      <td style="width: 200px;" mat-cell *matCellDef="let servico">{{servico.itens}}</td>
+      <td style="width: 100px;" mat-cell *matCellDef="let servico">{{servico.itens}}</td>
     </ng-container>
     <ng-container matColumnDef="dataPrevisaoEntrega">
-      <th mat-header-cell *matHeaderCellDef> Previsao de Entrega  </th>
-      <td style="width: 200px;" mat-cell *matCellDef="let servico"> {{ servico.dataPrevisaoEntrega  | date :'dd/MM/yyyy' }} </td>
+      <th mat-header-cell *matHeaderCellDef>Previsao de Entrega </th>
+      <td style="width: 150px;" mat-cell *matCellDef="let servico"> {{ servico.dataPrevisaoEntrega  | date :'dd/MM/yyyy' }} </td>
+    </ng-container>
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef>Status </th>
+      <td style="width: 100px;" [ngClass]="getClass(servico.status)" mat-cell *matCellDef="let servico"> {{ getStatus(servico.status) }} </td>
     </ng-container>
 
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef> Ações </th>
       <td style="width: 150px;" mat-cell *matCellDef="let servico">
+        <button mat-icon-button color="warn" *ngIf="servico.status === 4">
+          <mat-icon>currency_exchange</mat-icon>
+        </button>
         <button mat-icon-button color="primary" (click)="editOrdem(servico)">
           <mat-icon>edit</mat-icon>
         </button>

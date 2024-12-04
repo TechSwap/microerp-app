@@ -15,7 +15,7 @@ import {numericOnly} from "../../../../../utils/input-helpers.utils";
 import {OrdemProducaoRequestModel} from "../../../../../models/request/ordem-producao-request.model";
 import {OrdemProducaoService} from "../../../../../services/ordem-producao.service";
 import {ToastrService} from "ngx-toastr";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-ordem-producao',
@@ -36,9 +36,8 @@ export class OrdemProducaoComponent extends BaseComponent implements OnInit {
     'qtd': [''],
     'unidade': ['']
   })
-
   displayedColumns: string[] = ['descricao', 'qtd', 'unidade'];
-
+  numeroOP: number = 0;
   detalhesOrdemProducao = new MatTableDataSource<DetalheOrdemProducao>()
   detalheOp: DetalheOrdemProducao[] = []
   dropClientes: SelectModel[] = []
@@ -47,6 +46,7 @@ export class OrdemProducaoComponent extends BaseComponent implements OnInit {
   conteudo = false
   isUpdate = false
   removed = false
+  idOrdemProducao = ''
   idxRemove: DetalheOrdemProducao  = {descricao: "", idDetalhesOrdemProducao: "", idOrdemProducao: "", index: 0, prazoEntrega: undefined, quantidade: 0, unidade: ""}
 
   constructor(
@@ -56,12 +56,62 @@ export class OrdemProducaoComponent extends BaseComponent implements OnInit {
     private loading: NgxSpinnerService,
     private toastrService: ToastrService,
     private router: Router,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private activatedRoute : ActivatedRoute
   ) {
     super();
   }
   ngOnInit(): void {
+    this.verifyOp()
     this.getListOs()
+  }
+
+  verifyOp() {
+    this.activatedRoute.paramMap.subscribe((params) => {
+      this.idOrdemProducao = <string>params.get('id')
+      console.info('Id: ', this.idOrdemProducao)
+      if(this.idOrdemProducao !== null) {
+        this.getOrdemProducao(this.idOrdemProducao)
+        this.isUpdate = true
+      }
+    })
+  }
+
+  getOrdemProducao(idOrdemProducao: string) {
+    this.loading.show()
+    this.ordemProducaoService.getOneOP(idOrdemProducao).subscribe((result) => {
+      if (result.statusCode === 200) {
+        this.numeroOP = result.data.numeroOp
+        let op = result.data
+        this.novaOp.controls['idOrdemServico'].setValue(op.idOrdemServico)
+        this.novaOp.controls['idOrdemServico'].disable()
+        this.novaOp.controls['idCliente'].setValue(op.idCliente)
+        this.novaOp.controls['idCliente'].disable()
+        this.novaOp.controls['prazo'].setValue(op.prazo)
+        let detalhes = op.detalhes
+
+        let idx = 0;
+        detalhes.forEach((d: DetalheOrdemProducao) => {
+          let deta: DetalheOrdemProducao = {
+            idDetalhesOrdemProducao: d.idDetalhesOrdemProducao,
+            idOrdemProducao: d.idOrdemProducao,
+            index: idx === 0 ? 1 : idx + 1,
+            descricao: d.descricao,
+            quantidade: d.quantidade,
+            unidade: d.unidade
+          }
+          idx++
+          this.detalheOp.push(deta)
+          this.detalhesOrdemProducao.data = [...this.detalheOp]
+        });
+        this.mostraConteudo()
+      }
+      this.loading.hide()
+    },
+      (error) => {
+        this.loading.hide();
+      }
+    )
   }
 
   getListaClientes() {

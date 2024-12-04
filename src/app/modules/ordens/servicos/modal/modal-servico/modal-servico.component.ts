@@ -87,7 +87,6 @@ export class ModalServicoComponent extends BaseComponent implements OnInit {
     this.os = this.data.OS
     if(this.os.numeroOS !== 0) {
       this.osNumber = this.os.numeroOS;
-      console.info('Os: ', this.os)
       this.loadData(this.os)
       this.isUpdate = true;
     }else {

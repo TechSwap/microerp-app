@@ -7,6 +7,10 @@ import {MatPaginator, PageEvent} from "@angular/material/paginator";
 import {NgxSpinnerService} from "ngx-spinner";
 import {ToastrService} from "ngx-toastr";
 import {OrdemProducaoService} from "../../../../../services/ordem-producao.service";
+import {Router} from "@angular/router";
+import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
+import {ModalServicoComponent} from "../../../servicos/modal/modal-servico/modal-servico.component";
+import {StartOrdemComponent} from "../../modal/start-ordem/start-ordem.component";
 
 @Component({
   selector: 'app-grid-producao',
@@ -15,7 +19,6 @@ import {OrdemProducaoService} from "../../../../../services/ordem-producao.servi
 })
 export class GridProducaoComponent extends BaseComponent implements OnInit {
   displayedColumns: string[] = [
-    'numeroOP',
     'cliente',
     'numeroOS',
     'itens',
@@ -36,8 +39,10 @@ export class GridProducaoComponent extends BaseComponent implements OnInit {
 
   constructor(
     private ordemProducaoService: OrdemProducaoService,
+    public dialog: MatDialog,
     private loading: NgxSpinnerService,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private router: Router
   ) {
     super();
   }
@@ -54,7 +59,6 @@ export class GridProducaoComponent extends BaseComponent implements OnInit {
     this.loading.show();
     this.ordemProducaoService.listaOps(metaData).subscribe(
       (result) => {
-        console.info('Result List', result)
         if(result !== null) {
           if (result.statusCode === 200 && result.data.length > 0) {
             this.loadGrid(result.data,  result.metaData?.totalRecords)
@@ -82,4 +86,47 @@ export class GridProducaoComponent extends BaseComponent implements OnInit {
     this.getListaOps(metaData)
   }
 
+  editOp(servico: OrdemProducaoResponse) {
+    let id = servico.idOrdemProducao
+    this.router.navigateByUrl(`/ordemProducao/${id}`)
+  }
+
+  startOp(servico: OrdemProducaoResponse) {
+    if(servico.itensDesc.length > 0) {
+      const dialogConfig = new MatDialogConfig();
+      dialogConfig.disableClose = true;
+      dialogConfig.data = {
+        width: '700px'
+      };
+
+      let data = {
+        idOrdemProducao: servico.idOrdemProducao,
+        itensDesc: servico.itensDesc
+      }
+
+      const dialogRef = this.dialog.open(StartOrdemComponent,{
+        data: {
+          Itens: data
+        }
+      });
+      dialogRef.afterClosed().subscribe((result) => {
+          let metaData: Metadata = {
+            pageNumber: 1,
+            pageSize: 10,
+          }
+          this.getListaOps(metaData)
+      });
+    }else {
+      this.toastrService.warning('Nao há itens nesta Ordem')
+    }
+  }
+
+  finallyOp(servico: OrdemProducaoResponse) {
+
+  }
+
+
+  loadData() {
+
+  }
 }

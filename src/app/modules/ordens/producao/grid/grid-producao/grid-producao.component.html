@@ -2,17 +2,13 @@
   <table mat-table [dataSource]="servicos" class="mat-elevation-z8">
 
     <!-- Column definitions -->
-    <ng-container matColumnDef="numeroOP">
-      <th mat-header-cell *matHeaderCellDef>Numero OP</th>
-      <td style="width: 150px;" mat-cell *matCellDef="let servico">{{servico.numeroOp}}</td>
+    <ng-container matColumnDef="numeroOS">
+      <th mat-header-cell *matHeaderCellDef>Numero OS</th>
+      <td style="width: 150px;" mat-cell *matCellDef="let servico">{{servico.numeroOs}}</td>
     </ng-container>
     <ng-container matColumnDef="cliente">
       <th mat-header-cell *matHeaderCellDef>Cliente</th>
       <td style="width: 300px;" mat-cell *matCellDef="let servico">{{servico.cliente}}</td>
-    </ng-container>
-    <ng-container matColumnDef="numeroOS">
-      <th mat-header-cell *matHeaderCellDef>Numero OS</th>
-      <td style="width: 150px;" mat-cell *matCellDef="let servico">{{servico.numeroOs}}</td>
     </ng-container>
     <ng-container matColumnDef="itens">
       <th mat-header-cell *matHeaderCellDef>Itens</th>
@@ -20,15 +16,24 @@
     </ng-container>
     <ng-container matColumnDef="status">
       <th mat-header-cell *matHeaderCellDef> Status  </th>
-      <td style="width: 200px;" mat-cell *matCellDef="let servico"> {{servico.status}} </td>
+      <td style="width: 200px;" [ngClass]="getClass(servico.status)" mat-cell *matCellDef="let servico"> {{ getStatus(servico.status) }} </td>
     </ng-container>
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef> Ações </th>
       <td style="width: 250px;" mat-cell *matCellDef="let servico">
-        <button mat-icon-button color="primary" >
+        <button mat-icon-button color="primary" *ngIf="servico.status !== 2"
+                (click)="$event.preventDefault(); startOp(servico)"
+        >
           <mat-icon>build</mat-icon>
         </button>
-        <button mat-icon-button color="primary" >
+        <button mat-icon-button color="primary" *ngIf="servico.status === 2 || servico.status === 3"
+                (click)="$event.preventDefault();"
+        >
+          <mat-icon>manage_history</mat-icon>
+        </button>
+        <button mat-icon-button color="primary"
+              (click)="$event.preventDefault(); editOp(servico)"
+        >
           <mat-icon>edit</mat-icon>
         </button>
         <button mat-icon-button color="warn" >

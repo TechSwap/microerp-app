@@ -96,3 +96,29 @@ body {
 .input-upper {
   text-transform: uppercase;
 }
+
+.Aberta {
+  background: #116de8;
+  color: #fff;
+}
+
+.EmProducao {
+  background: #4CAF50;
+  color: #fff;
+}
+
+.ProducaoParcial {
+  background: #ff6a07;
+  color: #fff;
+}
+
+.Concluido {
+  background: #ebdc30;
+  color: #fff;
+}
+
+.Faturado {
+  background: #F44336;
+  color: #FFFFFF;
+}
+

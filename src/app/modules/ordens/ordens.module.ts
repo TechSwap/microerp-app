@@ -15,6 +15,8 @@ import { ModalComprasComponent } from './compras/modal/modal-compras/modal-compr
 import { GridProducaoComponent } from './producao/grid/grid-producao/grid-producao.component';
 import { OrdemProducaoComponent } from './producao/Op/ordem-producao/ordem-producao.component';
 import {RouterLink} from "@angular/router";
+import { StartOrdemComponent } from './producao/modal/start-ordem/start-ordem.component';
+import { FinallyOrdemComponent } from './producao/modal/finally-ordem/finally-ordem.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import {RouterLink} from "@angular/router";
     GridComprasComponent,
     ModalComprasComponent,
     GridProducaoComponent,
-    OrdemProducaoComponent
+    OrdemProducaoComponent,
+    StartOrdemComponent,
+    FinallyOrdemComponent
   ],
   imports: [
     CommonModule,

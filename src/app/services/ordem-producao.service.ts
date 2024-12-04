@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
-import {ClientService} from "./client.service";
-import {Router} from "@angular/router";
-import {formatingRoute, getToken} from "../utils/http-helpers.utils";
-import {OrdemServicosRequestModel} from "../models/request/ordem-servico.request.model";
-import {Result} from "../models/result";
-import {OrdemProducaoRequestModel} from "../models/request/ordem-producao-request.model";
-import {Metadata, ResultList} from "../models/resultlist";
+import { ClientService } from "./client.service";
+import { Router } from "@angular/router";
+import { formatingRoute, getToken } from "../utils/http-helpers.utils";
+import { Result } from "../models/result";
+import {OrdemProducaoRequestModel, StartOp} from "../models/request/ordem-producao-request.model";
+import { Metadata, ResultList } from "../models/resultlist";
 
 @Injectable({
   providedIn: 'root'
@@ -40,5 +39,17 @@ export class OrdemProducaoService {
     const route = formatingRoute(`/ordemproducao/lista-ops?metaData.pageNumber=${pageNumber}&metaData.pageSize=${pageSize}`);
 
     return this._service.get<ResultList>(route, this._token);
+  }
+
+  getOneOP(idOrdemProducao: string) {
+    const route = formatingRoute(
+      `/ordemproducao/find-one?idOrdemProducao=${idOrdemProducao}`
+    );
+    return this._service.get<Result>(route, this._token);
+  }
+
+  startOp(req: StartOp) {
+    const route = formatingRoute('/ordemproducao/start-op')
+    return this._service.post<Result>(route, this._token, req)
   }
 }

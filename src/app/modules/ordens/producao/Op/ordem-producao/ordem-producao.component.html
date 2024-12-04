@@ -7,15 +7,16 @@
     </mat-expansion-panel-header>
   </mat-expansion-panel>
   <br />
+
   <form [formGroup]="novaOp">
     <div class="d-flex flex-row">
       <mat-form-field style="margin-left: 10px;">
-        <mat-select placeholder="Ordem Servico" formControlName="idOrdemServico" (selectionChange)="loadNumeroOs($event)" >
+        <mat-select placeholder="Ordem Servico" formControlName="idOrdemServico"  (selectionChange)="loadNumeroOs($event)" >
           <mat-option *ngFor="let os of dropOrdemServicos" [value]="os.Id">{{os.Descricao}}</mat-option>
         </mat-select>
       </mat-form-field>
       <mat-form-field style="margin-left: 10px; width: 600px;">
-        <mat-select placeholder="Cliente" formControlName="idCliente">
+        <mat-select placeholder="Cliente" formControlName="idCliente" >
           <mat-option *ngFor="let cliente of dropClientes" [value]="cliente.Id">{{cliente.Descricao}}</mat-option>
         </mat-select>
       </mat-form-field>
@@ -100,7 +101,7 @@
     </div>
 
     <div class="d-flex flex-row justify-content-end" style="margin-top: 100px;">
-      <a [routerLink]="['/ordens/producao']"  class="btn btn-danger">Cancelar</a>
+      <a [routerLink]="['/ordemProducao']"  class="btn btn-danger">Cancelar</a>
       <button style="margin-left: 10px; margin-right: 20px;" mat-raised-button color="primary" (click)="onSubmit()">{{ isUpdate ? 'Atualizar' : 'Adicionar'}}</button>
     </div>
   </form>

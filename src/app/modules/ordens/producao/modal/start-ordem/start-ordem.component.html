@@ -1,0 +1,41 @@
+<div class="container" style="width: 600px;">
+  <h3 mat-dialog-title>Iniciar Ordem Producao</h3>
+  <mat-dialog-content>
+      <div class="d-flex flex-row">
+        <mat-card  style="width: 100%;">
+          <mat-card-header class="justify-content-between">
+            <mat-card-title>Items</mat-card-title>
+          </mat-card-header>
+            <div class="d-flex flex-row">
+              <ng-container *ngIf="itens.length > 0">
+                <div>
+                  <table mat-table [dataSource]="listItens" class="mat-elevation-z8">
+                    <ng-container matColumnDef="id">
+                      <th mat-header-cell *matHeaderCellDef></th>
+                      <td style="width: 200px;" mat-cell *matCellDef="let item">
+                        <input type="checkbox" id="{{item.id}}" (click)="selectItemLista(item.id)" [checked]="item.status !== 0" [disabled]="item.status !== 0" >
+                      </td>
+                    </ng-container>
+                    <ng-container matColumnDef="descricao">
+                      <th mat-header-cell *matHeaderCellDef>Descricao</th>
+                      <td style="width: 200px;" mat-cell *matCellDef="let item">{{item.descricao}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="qtd">
+                      <th mat-header-cell *matHeaderCellDef>Quantidade</th>
+                      <td style="width: 150px;" mat-cell *matCellDef="let item">{{item.quantidade}}</td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row;
+                    columns: displayedColumns;"></tr>
+                  </table>
+                </div>
+              </ng-container>
+            </div>
+        </mat-card>
+      </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close (click)="onCloseClick()">Cancelar</button>
+    <button mat-button (click)="onSubmit()">Iniciar</button>
+  </mat-dialog-actions>
+</div>

@@ -37,17 +37,16 @@ const routes: Routes = [
       { path: 'cadastros/fornecedores', component: FornecedoresComponent, canActivate: [AuthenticadedGuard] },
       { path: 'cadastros/maquinas', component: MaquinasComponent, canActivate: [AuthenticadedGuard] },
       { path: 'ordens/compras', component: ComprasComponent, canActivate: [AuthenticadedGuard] },
-      { path: 'ordens/producao', component: ProducaoComponent, canActivate: [AuthenticadedGuard] },
-      { path: 'ordens/novaOp', component: OrdemProducaoComponent, canActivate: [AuthenticadedGuard] },
-      { path: 'ordens/servicos', component: ServicosComponent, canActivate: [AuthenticadedGuard] },
+      { path: 'ordemProducao', component: ProducaoComponent, pathMatch: "full", canActivate: [AuthenticadedGuard] },
+      { path: 'ordemProducao/novaOp', component: OrdemProducaoComponent, pathMatch: "full", canActivate: [AuthenticadedGuard] },
+      { path: 'ordemProducao/:id', component: OrdemProducaoComponent, canActivate: [AuthenticadedGuard] },
+      { path: 'ordemServicos', component: ServicosComponent, pathMatch: "full", canActivate: [AuthenticadedGuard] },
       { path: 'producao/resumo', component: ResumoComponent, canActivate: [AuthenticadedGuard] },
       { path: 'usuarios', component: UsuariosComponent, canActivate: [AuthenticadedGuard] },
       { path: 'perfil', component: PerfilComponent, canActivate: [AuthenticadedGuard] },
       { path: 'empresa', component: EmpresaComponent, canActivate: [AuthenticadedGuard] },
-
     ],
   }
-
 ];
 
 @NgModule({

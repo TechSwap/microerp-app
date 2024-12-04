@@ -24,6 +24,7 @@ export class GridServicosComponent extends BaseComponent implements OnInit {
     'valorTotal',
     'itens',
     'dataPrevisaoEntrega',
+    'status',
     'actions',
   ];
 

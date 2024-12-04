@@ -76,4 +76,36 @@ export class BaseComponent {
     })
     return drop;
   }
+
+  public getStatus(status: number): string {
+    if(status === 1) {
+      return  'Aberta'
+    } else if(status === 2) {
+      return 'Em Producao'
+    } else if(status === 3 ) {
+      return 'Producao Parcial'
+    } else if(status === 4) {
+      return 'Concluido'
+    } else if(status === 5) {
+      return 'Faturado'
+    } else {
+      return ''; // Add this line to handle the case when status is not one of the expected values
+    }
+  }
+
+  public getClass(status: number): string {
+    if(status === 1) {
+      return  'Aberta'
+    } else if(status === 2) {
+      return 'EmProducao'
+    } else if(status === 3 ) {
+      return 'ProducaoParcial'
+    } else if(status === 4) {
+      return 'Concluido'
+    } else if(status === 5) {
+      return 'Faturado'
+    } else {
+      return ''; // Add this line to handle the case when status is not one of the expected values
+    }
+  }
 }

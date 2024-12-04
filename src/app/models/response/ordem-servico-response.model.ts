@@ -6,4 +6,5 @@ export interface OrdemServicoResponse {
   valorTotal: number;
   itens: number;
   dataPrevisaoEntrega: Date;
+  status: number;
 }

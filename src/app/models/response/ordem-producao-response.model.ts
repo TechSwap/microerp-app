@@ -6,4 +6,5 @@ export interface OrdemProducaoResponse {
   numeroOs: string;
   status: number;
   itens: number;
+  itensDesc: [];
 }
