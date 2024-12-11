@@ -18,6 +18,7 @@ import {FornecedoresComponent} from "./modules/cadastros/fornecedores/fornecedor
 import {DepartamentosComponent} from "./modules/cadastros/departamentos/departamentos.component";
 import {EmpresaComponent} from "./modules/empresa/empresa/empresa.component";
 import {OrdemProducaoComponent} from "./modules/ordens/producao/Op/ordem-producao/ordem-producao.component";
+import { OrdemServicoComponent } from './modules/ordens/servicos/Os/ordem-servico/ordem-servico.component';
 
 const routes: Routes = [
   {
@@ -40,7 +41,9 @@ const routes: Routes = [
       { path: 'ordemProducao', component: ProducaoComponent, pathMatch: "full", canActivate: [AuthenticadedGuard] },
       { path: 'ordemProducao/novaOp', component: OrdemProducaoComponent, pathMatch: "full", canActivate: [AuthenticadedGuard] },
       { path: 'ordemProducao/:id', component: OrdemProducaoComponent, canActivate: [AuthenticadedGuard] },
-      { path: 'ordemServicos', component: ServicosComponent, pathMatch: "full", canActivate: [AuthenticadedGuard] },
+      { path: 'ordemServico', component: ServicosComponent, pathMatch: "full", canActivate: [AuthenticadedGuard] },
+      { path: 'ordemServico/novaOs', component: OrdemServicoComponent, pathMatch: "full", canActivate: [AuthenticadedGuard] },
+      { path: 'ordemServico/:id', component: OrdemServicoComponent, pathMatch: "full", canActivate: [AuthenticadedGuard] },
       { path: 'producao/resumo', component: ResumoComponent, canActivate: [AuthenticadedGuard] },
       { path: 'usuarios', component: UsuariosComponent, canActivate: [AuthenticadedGuard] },
       { path: 'perfil', component: PerfilComponent, canActivate: [AuthenticadedGuard] },

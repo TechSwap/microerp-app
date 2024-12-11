@@ -255,7 +255,6 @@ export class ModalServicoComponent extends BaseComponent implements OnInit {
   }
 
   loadData(dados: any) {
-    console.info('Dados: ', JSON.stringify(dados))
     let dataPrevEntrega = dados.dataPrevisaoEntrega === '' ? '' : moment(dados.dataPrevisaoEntrega).toDate()
     let dataEntrega = dados.dataEntrega === '' || dados.dataEntrega == "0001-01-01T00:00:00" ? '' : moment(dados.dataEntrega).toDate()
     this.detalheOrdemServicos = dados.detalheOrdemServicos;

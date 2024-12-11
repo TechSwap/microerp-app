@@ -1,0 +1,172 @@
+<mat-accordion>
+    <mat-expansion-panel [expanded]=true (opened)=true>
+      <mat-expansion-panel-header>
+        <mat-panel-title style="margin-top: 8px;">
+          <h3>Ordem Servico: {{osNumber}}</h3>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+    </mat-expansion-panel>
+    <br />
+  
+    <form [formGroup]="osForm">
+        <div class="d-flex flex-row">
+          <input type="hidden" formControlName="idOrdemServico" name="idOrdemServico">
+          <mat-form-field style="width: 600px; margin-left: 10px;">
+            <mat-label>Cliente</mat-label>
+              <mat-select placeholder="Cliente" formControlName="idCliente">
+                <mat-option *ngFor="let cliente of dropClientes" [value]="cliente.Id">{{cliente.Descricao}}</mat-option>
+              </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="d-flex flex-row">
+          <mat-form-field style="margin-left: 10px;">
+            <mat-label>Solicitante</mat-label>
+            <input matInput placeholder="Solicitante"
+                   formControlName="solicitante" required>
+          </mat-form-field>
+          <mat-form-field style="margin-left: 10px;">
+            <mat-label>Nota Entrada</mat-label>
+            <input matInput placeholder="Nota Entrada"
+                   formControlName="notaEntrada">
+          </mat-form-field>
+          <mat-form-field style="margin-left: 10px;">
+            <mat-label>Pedido</mat-label>
+            <input matInput placeholder="Pedido"
+                   formControlName="pedido">
+          </mat-form-field>
+        </div>
+        <div class="d-flex flex-row">
+          <mat-form-field style="margin-left: 10px;">
+            <mat-label>Orcamento</mat-label>
+            <input matInput placeholder="Orcamento"
+                   formControlName="orcamento">
+          </mat-form-field>
+          <mat-form-field style="margin-left: 10px;">
+            <mat-label>Prazo</mat-label>
+            <input matInput placeholder="Prazo"
+                   formControlName="prazo"
+                   min="0" max="9999"
+                   required (keypress)="numericOnly($event)" >
+          </mat-form-field>
+          <mat-form-field style="margin-left: 5px;">
+            <mat-label>Valor Total</mat-label>
+            <input matInput placeholder="Valor Total"
+                   currencyMask
+                   [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
+                   formControlName="valorTotal" required>
+          </mat-form-field>
+          <mat-form-field style="margin-left: 5px;">
+            <mat-label>Data Lancamento</mat-label>
+            <input matInput [matDatepicker]="lancamento"
+                   placeholder="Data Lancamento"
+                   (dateChange)="setPrevisaoEntrega('change', $event)"
+                   formControlName="lancamento" required>
+            <mat-datepicker-toggle matIconSuffix [for]="lancamento"></mat-datepicker-toggle>
+            <mat-datepicker #lancamento></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="d-flex flex-row">
+          <mat-form-field style="margin-left: 10px;">
+            <mat-label>Previsao Entrega</mat-label>
+            <input matInput [matDatepicker]="dataPrevEntrega"
+                   placeholder="Previsao Entrega"
+                   formControlName="dataPrevEntrega" >
+            <mat-datepicker-toggle matIconSuffix [for]="dataPrevEntrega"></mat-datepicker-toggle>
+            <mat-datepicker #dataPrevEntrega></mat-datepicker>
+          </mat-form-field>
+          <div *ngIf="isUpdate">
+            <mat-form-field style="margin-left: 10px;">
+                <mat-label>Data Entrega</mat-label>
+                <input matInput [matDatepicker]="dataEntrega"
+                    placeholder="Data Entrega"
+                    formControlName="dataEntrega">
+                <mat-datepicker-toggle matIconSuffix [for]="dataEntrega"></mat-datepicker-toggle>
+                <mat-datepicker #dataEntrega></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field style="margin-left: 10px;" ngIf="isUpdate">
+                <mat-label>Nota de Saida</mat-label>
+                <input matInput placeholder="Nota de Saida"
+                    formControlName="notaSaida">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="d-flex flex-row">
+          <mat-card  style="width: 100%;">
+            <mat-card-header class="justify-content-between">
+                <mat-card-title>Items</mat-card-title>
+              <mat-card-actions  align="end">
+                <button mat-mini-fab color="primary" (click)="mostraConteudo()">
+                  <mat-icon>plus_one</mat-icon>
+                </button>
+              </mat-card-actions>
+            </mat-card-header>
+            <ng-container *ngIf="this.conteudo" >
+              <div class="d-flex flex-row">
+                <form [formGroup]="detalhesOS">
+                  <input type="hidden" formControlName="idDetalhesOrdemServico" name="idDetalhesOrdemServico">
+                  <input type="hidden" formControlName="ordemServicoId" name="ordemServicoId">
+                  <mat-form-field fxFlex="30">
+                    <input matInput placeholder="Descricao" formControlName="descricao" name="descricao">
+                  </mat-form-field>
+                  <mat-form-field style="margin-left: 5px;" fxFlex="15">
+                    <input matInput placeholder="Valor Unitario"
+                           currencyMask
+                           [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
+                           formControlName="valorUnitario"
+                           name="valorUnitario">
+                  </mat-form-field>
+                  <mat-form-field style="margin-left: 5px;" fxFlex="15">
+                    <input matInput placeholder="Quantidade" formControlName="qtd" name="qtd">
+                  </mat-form-field>
+                  <mat-form-field style="margin-left: 5px;" fxFlex="15">
+                    <mat-select placeholder="Unidade" formControlName="unidade" name="unidade">
+                      <mat-option *ngFor="let unidade of unidades" [value]="unidade.value">{{unidade.viewValue}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <div class="row flex-row" style="margin-top: 20px; margin-left: 15px; width: 180px;">
+                    <button mat-flat-button style="width: 70px;" color="primary" (click)="addListaDetalhes()">Add</button>
+                    <span> </span>
+                    <a *ngIf="removed" style="width: 90px;" class="btn btn-danger" (click)="removeIten()" >Remove</a>
+                  </div>
+                </form>
+              </div>
+                <div class="d-flex flex-row">
+                <ng-container *ngIf="detalheOrdemServicos.length > 0">
+                  <div style="width: 100%;">
+                    <table mat-table [dataSource]="detalhes" class="mat-elevation-z8">
+                      <ng-container matColumnDef="descricao">
+                        <th mat-header-cell *matHeaderCellDef>Descricao</th>
+                        <td style="width: 200px;" mat-cell *matCellDef="let detalheOrdemServico">{{detalheOrdemServico.descricao}}</td>
+                      </ng-container>
+                      <ng-container matColumnDef="valorUnitario">
+                        <th mat-header-cell *matHeaderCellDef>Valor Unitario</th>
+                        <td style="width: 200px;" mat-cell *matCellDef="let detalheOrdemServico">{{detalheOrdemServico.valorUnitario | currency: 'BRL':true }}</td>
+                      </ng-container>
+                      <ng-container matColumnDef="qtd">
+                        <th mat-header-cell *matHeaderCellDef>Quantidade</th>
+                        <td style="width: 150px;" mat-cell *matCellDef="let detalheOrdemServico">{{detalheOrdemServico.quantidade}}</td>
+                      </ng-container>
+                      <ng-container matColumnDef="unidade">
+                        <th mat-header-cell *matHeaderCellDef>Unidade</th>
+                        <td style="width: 200px;" mat-cell *matCellDef="let detalheOrdemServico">{{detalheOrdemServico.unidade}}</td>
+                      </ng-container>
+                      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                      <tr mat-row *matRowDef="let row;
+                      columns: displayedColumns;"
+                      (click)="getItemLista(row)" 
+                      ></tr>
+                    </table>
+                  </div>
+                </ng-container>
+              </div>
+            </ng-container>
+          </mat-card>
+        </div>
+        <div class="d-flex flex-row justify-content-end" style="margin-top: 100px;">
+            <a [routerLink]="['/ordemServico']"  class="btn btn-danger">Cancelar</a>
+            <button style="margin-left: 10px; margin-right: 20px;" mat-raised-button color="primary" (click)="onSubmit()">{{ isUpdate ? 'Atualizar' : 'Adicionar'}}</button>
+          </div>
+      </form>
+  
+  </mat-accordion>
+  

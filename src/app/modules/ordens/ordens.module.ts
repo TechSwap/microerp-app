@@ -17,6 +17,7 @@ import { OrdemProducaoComponent } from './producao/Op/ordem-producao/ordem-produ
 import {RouterLink} from "@angular/router";
 import { StartOrdemComponent } from './producao/modal/start-ordem/start-ordem.component';
 import { FinallyOrdemComponent } from './producao/modal/finally-ordem/finally-ordem.component';
+import { OrdemServicoComponent } from './servicos/Os/ordem-servico/ordem-servico.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { FinallyOrdemComponent } from './producao/modal/finally-ordem/finally-or
     GridProducaoComponent,
     OrdemProducaoComponent,
     StartOrdemComponent,
-    FinallyOrdemComponent
+    FinallyOrdemComponent,
+    OrdemServicoComponent
   ],
   imports: [
     CommonModule,

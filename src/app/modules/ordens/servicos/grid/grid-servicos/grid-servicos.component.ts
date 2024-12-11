@@ -10,6 +10,7 @@ import {ModalServicoComponent} from "../../modal/modal-servico/modal-servico.com
 import {MatDialog} from "@angular/material/dialog";
 import {ExcelService} from "src/app/services/excel.service";
 import {BaseComponent} from "../../../../shared/base/base.component";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-grid-servicos',
@@ -55,7 +56,8 @@ export class GridServicosComponent extends BaseComponent implements OnInit {
     public dialog: MatDialog,
     private loading: NgxSpinnerService,
     private excelService: ExcelService,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private router: Router
   ) {
     super();
   }
@@ -101,30 +103,9 @@ export class GridServicosComponent extends BaseComponent implements OnInit {
     this.jsonServicos = data
   }
 
-  editOrdem(servico: OrdemServicoResponse) {
-    this.ordemServicosService.getOneOs(servico.idOrdemServico).subscribe(
-      (result) => {
-        if (result.statusCode === 200) {
-          const dialogRef = this.dialog.open(ModalServicoComponent,{
-            data: {
-              OS:result.data
-            }
-          });
-          dialogRef.afterClosed().subscribe((result) => {
-            if(result.success) {
-              this.getListaOs(this.metaData)
-            }
-          });
-        } else {
-          this.toastrService.warning('Erro ao Listar', 'Atenção!');
-        }
-        this.loading.hide();
-      },
-      (error) => {
-        this.toastrService.warning('Erro ao Listar', 'Atenção!');
-        this.loading.hide();
-      }
-    );
+  editOrdem(servico: OrdemServicoResponse) {  
+    let id = servico.idOrdemServico
+    this.router.navigateByUrl(`/ordemServico/${id}`)
   }
 
   removerOrdem(servico: OrdemServicoResponse) {
