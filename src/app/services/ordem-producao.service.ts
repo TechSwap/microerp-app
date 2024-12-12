@@ -3,7 +3,7 @@ import { ClientService } from "./client.service";
 import { Router } from "@angular/router";
 import { formatingRoute, getToken } from "../utils/http-helpers.utils";
 import { Result } from "../models/result";
-import {OrdemProducaoRequestModel, StartOp} from "../models/request/ordem-producao-request.model";
+import {CancellyOp, OrdemProducaoRequestModel, StartOp} from "../models/request/ordem-producao-request.model";
 import { Metadata, ResultList } from "../models/resultlist";
 
 @Injectable({
@@ -50,6 +50,11 @@ export class OrdemProducaoService {
 
   startOp(req: StartOp) {
     const route = formatingRoute('/ordemproducao/start-op')
+    return this._service.post<Result>(route, this._token, req)
+  }
+
+  cancellyOp(req: CancellyOp) {
+    const route = formatingRoute('/ordemproducao/cancelly-op')
     return this._service.post<Result>(route, this._token, req)
   }
 }

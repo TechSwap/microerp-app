@@ -22,22 +22,18 @@
       <th mat-header-cell *matHeaderCellDef> Ações </th>
       <td style="width: 250px;" mat-cell *matCellDef="let servico">
         <button mat-icon-button color="primary" *ngIf="servico.status !== 2"
-                (click)="$event.preventDefault(); startOp(servico)"
-        >
+            (click)="$event.preventDefault(); startOp(servico)">
           <mat-icon>build</mat-icon>
         </button>
         <button mat-icon-button color="primary" *ngIf="servico.status === 2 || servico.status === 3"
-                (click)="$event.preventDefault();"
-        >
+          (click)="$event.preventDefault(); finallyOp(servico)">
           <mat-icon>manage_history</mat-icon>
         </button>
-        <button mat-icon-button color="primary"
-              (click)="$event.preventDefault(); editOp(servico)"
-        >
+        <button mat-icon-button color="primary" (click)="$event.preventDefault(); editOp(servico)">
           <mat-icon>edit</mat-icon>
         </button>
-        <button mat-icon-button color="warn" >
-          <mat-icon>delete</mat-icon>
+        <button mat-icon-button color="warn" (click)="$event.preventDefault(); cancellyOp(servico)" >
+          <mat-icon >delete</mat-icon>
         </button>
       </td>
     </ng-container>

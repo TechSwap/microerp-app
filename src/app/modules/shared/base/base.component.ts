@@ -87,6 +87,8 @@ export class BaseComponent {
     } else if(status === 4) {
       return 'Concluido'
     } else if(status === 5) {
+      return 'Cancelada'
+    }else if(status === 6) {
       return 'Faturado'
     } else {
       return ''; // Add this line to handle the case when status is not one of the expected values
@@ -103,6 +105,8 @@ export class BaseComponent {
     } else if(status === 4) {
       return 'Concluido'
     } else if(status === 5) {
+      return 'Cancelada'
+    }else if(status === 6) {
       return 'Faturado'
     } else {
       return ''; // Add this line to handle the case when status is not one of the expected values

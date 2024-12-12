@@ -1,0 +1,33 @@
+<mat-accordion>
+  <mat-expansion-panel [expanded]=false (opened)=true>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Operacoes
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+  </mat-expansion-panel>
+  <div>
+    <br />
+    <form [formGroup]="formSearchOperacoes">
+      <div class="d-flex flex-row">
+        <mat-form-field style="margin-left: 20px;">
+          <mat-label>Departamento</mat-label>
+          <mat-select placeholder="Departamento" formControlName="departamentoId">
+            <mat-option *ngFor="let departamento of dropDepartamentos" [value]="departamento.Id">{{departamento.Descricao}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field style="margin-left: 20px;">
+          <mat-label>Responsavel</mat-label>
+          <input  placeholder="Responsavel" formControlName="responsavel" matInput>
+        </mat-form-field>
+      </div>
+    </form>
+      <div class="row" style="align-items: end; margin-left: 500px;">
+        <button style="width: 100px;" mat-raised-button color="primary" (click)="$event.preventDefault();">Pesquisar</button>
+        <button style="margin-left: 30px; width: 100px;" mat-raised-button color="primary"
+                (click)="$event.preventDefault(); addOperacao()">Adicionar</button>
+      </div>    
+  </div>
+  <hr />
+  <app-grid-operacoes #gridOperacoes></app-grid-operacoes>
+</mat-accordion>

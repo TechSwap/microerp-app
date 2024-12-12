@@ -19,6 +19,7 @@ import {DepartamentosComponent} from "./modules/cadastros/departamentos/departam
 import {EmpresaComponent} from "./modules/empresa/empresa/empresa.component";
 import {OrdemProducaoComponent} from "./modules/ordens/producao/Op/ordem-producao/ordem-producao.component";
 import { OrdemServicoComponent } from './modules/ordens/servicos/Os/ordem-servico/ordem-servico.component';
+import { OperacoesComponent } from './modules/cadastros/operacoes/operacoes/operacoes.component';
 
 const routes: Routes = [
   {
@@ -37,6 +38,7 @@ const routes: Routes = [
       { path: 'cadastros/departamentos', component: DepartamentosComponent, canActivate: [AuthenticadedGuard] },
       { path: 'cadastros/fornecedores', component: FornecedoresComponent, canActivate: [AuthenticadedGuard] },
       { path: 'cadastros/maquinas', component: MaquinasComponent, canActivate: [AuthenticadedGuard] },
+      { path: 'cadastros/operacoes', component: OperacoesComponent, canActivate: [AuthenticadedGuard] },
       { path: 'ordens/compras', component: ComprasComponent, canActivate: [AuthenticadedGuard] },
       { path: 'ordemProducao', component: ProducaoComponent, pathMatch: "full", canActivate: [AuthenticadedGuard] },
       { path: 'ordemProducao/novaOp', component: OrdemProducaoComponent, pathMatch: "full", canActivate: [AuthenticadedGuard] },

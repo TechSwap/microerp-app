@@ -11,6 +11,8 @@ import {Router} from "@angular/router";
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {ModalServicoComponent} from "../../../servicos/modal/modal-servico/modal-servico.component";
 import {StartOrdemComponent} from "../../modal/start-ordem/start-ordem.component";
+import { FinallyOrdemComponent } from '../../modal/finally-ordem/finally-ordem.component';
+import { CancellyOrdemComponent } from '../../modal/cancelly-ordem/cancelly-ordem.component';
 
 @Component({
   selector: 'app-grid-producao',
@@ -121,8 +123,56 @@ export class GridProducaoComponent extends BaseComponent implements OnInit {
     }
   }
 
-  finallyOp(servico: OrdemProducaoResponse) {
+  finallyOp(servico: OrdemProducaoResponse) {    
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.data = {
+      width: '700px'
+    };
 
+    let data = {
+      idOrdemProducao: servico.idOrdemProducao,
+      itensDesc: servico.itensDesc
+    }
+
+    const dialogRef = this.dialog.open(FinallyOrdemComponent,{
+      data: {
+        Itens: data
+      }
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+        let metaData: Metadata = {
+          pageNumber: 1,
+          pageSize: 10,
+        }
+        this.getListaOps(metaData)
+    }); 
+  }
+
+  cancellyOp(servico: OrdemProducaoResponse) {    
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.data = {
+      width: '700px'
+    };
+
+    let data = {
+      idOrdemProducao: servico.idOrdemProducao,
+      itensDesc: servico.itensDesc
+    }
+
+    const dialogRef = this.dialog.open(CancellyOrdemComponent,{
+      data: {
+        Itens: data
+      }
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+        let metaData: Metadata = {
+          pageNumber: 1,
+          pageSize: 10,
+        }
+        this.getListaOps(metaData)
+    }); 
   }
 
 

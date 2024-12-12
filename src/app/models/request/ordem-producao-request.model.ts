@@ -22,3 +22,9 @@ export interface StartOp {
   IdOrdemProducaoDetalhes: string[]
 }
 
+export interface CancellyOp {
+  IdOrdemProducao: string
+  Motivo: string
+}
+
+

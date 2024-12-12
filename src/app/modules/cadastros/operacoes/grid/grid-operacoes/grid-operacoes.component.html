@@ -1,0 +1,51 @@
+<div>
+    <table mat-table [dataSource]="operacoes" class="mat-elevation-z8">
+      <!-- Column definitions -->
+      <ng-container matColumnDef="operacao">
+        <th mat-header-cell *matHeaderCellDef>Operacao</th>
+        <td style="width: 200px;" mat-cell *matCellDef="let operacao">{{operacao.descricao}}</td>
+      </ng-container>
+      <ng-container matColumnDef="departamento">
+        <th mat-header-cell *matHeaderCellDef>Departamento</th>
+        <td style="width: 200px;" mat-cell *matCellDef="let operacao">{{operacao.departamento}}</td>
+      </ng-container>
+      <ng-container matColumnDef="responsavel">
+        <th mat-header-cell *matHeaderCellDef>Responsavel</th>
+        <td style="width: 200px;" mat-cell *matCellDef="let operacao">{{operacao.responsavel}}</td>
+      </ng-container>
+      <!-- Ativo Column -->
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef> Ativo </th>
+        <td style="width: 200px;" mat-cell *matCellDef="let element"> {{element.status ? 'Sim' : 'Não'}} </td>
+      </ng-container>
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Ações </th>
+        <td style="width: 150px;" mat-cell *matCellDef="let element">
+          <button mat-icon-button color="primary" >
+            <mat-icon>edit</mat-icon>
+            
+          </button>
+          <button mat-icon-button >
+            <mat-icon [ngClass]="element.status ? 'ativo' : 'inativo' ">task_alt</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+  
+      <!-- Add other columns similarly -->
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator #paginator
+                   (page)="pageChangeEvent($event)"
+                   [length]="totalRecords"
+                   [pageSize]="pageSize"
+                   [pageIndex]="pageIndex"
+                   [pageSizeOptions]="[5, 10, 30]"
+                   showFirstLastButtons>
+    </mat-paginator>
+  </div>
+  

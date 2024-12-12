@@ -42,7 +42,7 @@ export class DepartamentosService {
   }
 
   delete(idDepartamento: string) {
-    let route = formatingRoute(`/departamento?idDepartamento=${idDepartamento}`)
+    let route = formatingRoute(`/departamento/delete?idDepartamento=${idDepartamento}`)
     let token = getToken()
     return this._service.delete<Result>(route, token)
   }

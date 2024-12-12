@@ -44,8 +44,12 @@ export class GridFuncionarioComponent extends BaseComponent implements  OnInit {
     this.loading.show();
     this.funcionarioService.listFuncionarios(metaData).subscribe(
       (result) => {
-        if (result.statusCode === 200) {
-          this.loadGridFuncionarios(result.data, result.metaData.totalRecords)
+        if(result === null) {
+          this.loadGridFuncionarios([], 0)
+        }else {
+          if (result.statusCode === 200 || result.statusCode === 204) {
+            this.loadGridFuncionarios(result.data, result.metaData.totalRecords)
+          } 
         }
         this.loading.hide();
 

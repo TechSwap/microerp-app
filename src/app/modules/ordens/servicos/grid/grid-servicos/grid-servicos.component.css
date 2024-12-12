@@ -18,7 +18,12 @@
   color: #fff;
 }
 
-.Faturado {
+.Cancelada {
   background: #F44336;
+  color: #FFFFFF;
+}
+
+.Faturado {
+  background: #3188ec;
   color: #FFFFFF;
 }

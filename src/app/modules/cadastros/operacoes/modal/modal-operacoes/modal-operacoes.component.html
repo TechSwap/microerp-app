@@ -1,0 +1,31 @@
+<div class="container" style="width: 850px;">
+    <h3 mat-dialog-title>{{ isUpdate ? 'Atualizar Operacao' : 'Adicionar Operacao'}}</h3>
+    <mat-dialog-content>
+      <form [formGroup]="operacoesForm">
+        <div class="form-fields">
+          <input hidden formControlName="idOperacao">               
+          <mat-form-field>
+            <mat-label>Departamento</mat-label>
+            <mat-select placeholder="Departamento" formControlName="departamentoId">
+              <mat-option *ngFor="let departamento of dropDepartamentos" [value]="departamento.Id">{{departamento.Descricao}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="form-fields">
+          <mat-form-field style="margin-left: 10px; width: 100%;">
+            <mat-label>Descricao</mat-label>
+            <input matInput placeholder="Descricao" formControlName="descricao">
+          </mat-form-field>          
+          <div *ngIf="isUpdate" style="margin-left: 10px;">
+            <mat-label>Status</mat-label>
+            <mat-slide-toggle >{{operacoesForm.get('status')?.value ? 'Ativo' : 'Inativo'}}</mat-slide-toggle>
+          </div>        
+        </div>
+      </form>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button mat-button mat-dialog-close (click)="onCloseClick()">Cancelar</button>
+      <button mat-button (click)="onSubmit()">{{ isUpdate ? 'Atualizar' : 'Adicionar'}}</button>
+    </mat-dialog-actions>
+  </div>
+  

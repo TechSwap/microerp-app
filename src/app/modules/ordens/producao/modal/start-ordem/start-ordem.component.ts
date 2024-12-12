@@ -60,7 +60,6 @@ export class StartOrdemComponent extends BaseComponent implements OnInit{
     } else {
       this.listaIniciar.splice(itemIndex, 1);
     }
-    console.info('Lista: ', this.listaIniciar)
   }
 
   onSubmit() {

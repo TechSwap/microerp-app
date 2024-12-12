@@ -25,6 +25,9 @@ import { ModalProdutoComponent } from './produtos/modal/modal-produto/modal-prod
 import { GridProdutoComponent } from './produtos/grid/grid-produto/grid-produto.component';
 import { GridMaquinaComponent } from './maquinas/grid/grid-maquina/grid-maquina.component';
 import { ModalMaquinaComponent } from './maquinas/modal/modal-maquina/modal-maquina.component';
+import { OperacoesComponent } from './operacoes/operacoes/operacoes.component';
+import { GridOperacoesComponent } from './operacoes/grid/grid-operacoes/grid-operacoes.component';
+import { ModalOperacoesComponent } from './operacoes/modal/modal-operacoes/modal-operacoes.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +50,9 @@ import { ModalMaquinaComponent } from './maquinas/modal/modal-maquina/modal-maqu
     GridProdutoComponent,
     GridMaquinaComponent,
     ModalMaquinaComponent,
+    OperacoesComponent,
+    GridOperacoesComponent,
+    ModalOperacoesComponent,
   ],
   imports: [
     CommonModule,
