@@ -79,4 +79,9 @@ export class OrdemServicosService {
     const route = formatingRoute('/ordemservico/relatorio')
     return this._service.get<Result>(route, this._token)
   }
+
+  deleteDetail(idDetalhesOrdemServico: string | undefined) {   
+    const route = formatingRoute(`/ordemservico/delete-detail?idDetalhesOrdemServico=${idDetalhesOrdemServico}`)
+    return this._service.delete<Result>(route, this._token)
+  }
 }

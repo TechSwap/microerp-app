@@ -16,6 +16,7 @@ import {OrdemProducaoRequestModel} from "../../../../../models/request/ordem-pro
 import {OrdemProducaoService} from "../../../../../services/ordem-producao.service";
 import {ToastrService} from "ngx-toastr";
 import {ActivatedRoute, Router} from "@angular/router";
+import Swal from 'sweetalert2'; 
 
 @Component({
   selector: 'app-ordem-producao',
@@ -246,6 +247,7 @@ export class OrdemProducaoComponent extends BaseComponent implements OnInit {
   removeIten() {
     let idx = this.idxRemove
     let exitsIdx = this.detalheOp.findIndex((d) => d === idx)
+    this.confirmBox()
     if(exitsIdx !== -1) {
       if (idx != null) {
         this.detalheOp.splice(exitsIdx, 1)
@@ -282,4 +284,29 @@ export class OrdemProducaoComponent extends BaseComponent implements OnInit {
   }
 
   protected readonly numericOnly = numericOnly;
+
+  confirmBox(){
+    Swal.fire({
+      title: 'Voce quer realmente remover este item?',
+      text: 'Remover item da lista de Servicos!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sim',
+      cancelButtonText: 'Nao'
+    }).then((result) => {
+      if (result.value) {
+        Swal.fire(
+          'Deleted!',
+          'Your imaginary file has been deleted.',
+          'success'
+        )
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire(
+          'Cancelled',
+          'Your imaginary file is safe :)',
+          'error'
+        )
+      }
+    })
+  }
 }

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DateAdapter } from '@angular/material/core';
-import { MatDialogRef } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
@@ -12,13 +11,15 @@ import { UnidadeMedida } from 'src/app/models/unidade.model';
 import { BaseComponent } from 'src/app/modules/shared/base/base.component';
 import { ClientesService } from 'src/app/services/clientes.service';
 import { OrdemServicosService } from 'src/app/services/ordem-servicos.service';
-import { ModalServicoComponent } from '../../modal/modal-servico/modal-servico.component';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import * as moment from 'moment';
 import { dataPrevEntrega, numericOnly } from 'src/app/utils/input-helpers.utils';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Metadata } from 'src/app/models/resultlist';
 import { OrdemServicosRequestModel } from 'src/app/models/request/ordem-servico.request.model';
+import Swal from 'sweetalert2';
+import { StatusCodes } from 'http-status-codes';
+
 
 @Component({
   selector: 'app-ordem-servico',
@@ -108,7 +109,7 @@ export class OrdemServicoComponent  extends BaseComponent implements OnInit {
   getOrdem(idOrdemServico: string) {
     this.ordemServicosService.getOneOs(idOrdemServico).subscribe(
       (result) => {
-        if (result.statusCode === 200) {
+        if (result.statusCode === StatusCodes.OK) {
           this.os = result.data          
           this.osNumber = result.data.numeroOS
           this.loadData(this.os)          
@@ -132,7 +133,7 @@ export class OrdemServicoComponent  extends BaseComponent implements OnInit {
     this.loading.show();
     this.clienteService.listClientes(metaData).subscribe(
       (result) => {
-        if (result.statusCode === 200) {
+        if (result.statusCode === StatusCodes.OK) {
           this.clientes = result.data;
           this.dropClientes = this.loadDropClientes(result.data, this.dropClientes)
           this.loading.hide();
@@ -156,7 +157,7 @@ export class OrdemServicoComponent  extends BaseComponent implements OnInit {
     this.loading.show();
     this.ordemServicosService.getNovaOS().subscribe(
       (result) => {
-        if (result.statusCode === 200) {
+        if (result.statusCode === StatusCodes.OK) {
           this.osNumber = result.data.ordemServico;
         } else {
           this.toastrService.warning('Erro ao Listar', 'Atenção!');
@@ -234,17 +235,8 @@ export class OrdemServicoComponent  extends BaseComponent implements OnInit {
     return lista;
   }
 
-  removeIten() {
-    let idx = this.idxRemove
-    let exitsIdx = this.detalheOrdemServicos.findIndex((d) => d === idx)
-    if(exitsIdx !== -1) {
-      if (idx != null) {
-        this.detalheOrdemServicos.splice(exitsIdx, 1)
-      }
-      this.detalhes.data = [...this.detalheOrdemServicos]
-      this.removed = false
-      this.resetFormLista()
-    }
+  removeIten() { 
+    this.confirmBox(this.idxRemove)    
   }
 
   resetFormLista() {
@@ -296,10 +288,9 @@ export class OrdemServicoComponent  extends BaseComponent implements OnInit {
     if(dados.idOrdemServico === '') {
       this.ordemServicosService.addNovaOs(req).subscribe(
         (result) => {
-          if (result.statusCode === 204) {
+          if (result.statusCode === StatusCodes.NO_CONTENT) {
             this.loading.hide();
-            this.router.navigate(['/ordemServico'])
-           
+            this.router.navigate(['/ordemServico'])           
           }
         },
         (error) => {
@@ -310,7 +301,7 @@ export class OrdemServicoComponent  extends BaseComponent implements OnInit {
     }else {
       this.ordemServicosService.putOs(req).subscribe(
         (result) => {
-          if (result.statusCode === 204) {
+          if (result.statusCode === StatusCodes.NO_CONTENT) {
             this.loading.hide();
             this.router.navigate(['/ordemServico'])          
           }
@@ -324,7 +315,46 @@ export class OrdemServicoComponent  extends BaseComponent implements OnInit {
     }
   }
   
-
   protected readonly numericOnly = numericOnly;
+
+  confirmBox(detalhesOrdemServico: DetalheOrdemServico){
+    let idx = this.idxRemove
+    let exitsIdx = this.detalheOrdemServicos.findIndex((d) => d === detalhesOrdemServico) 
+
+    Swal.fire({
+      title: 'Voce quer realmente remover este item?',      
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sim',
+      cancelButtonText: 'Nao'
+    }).then((result) => {
+      if (result.value) {
+        let idDetalhesOrdemServico = detalhesOrdemServico.idDetalhesOrdemServico
+        this.loading.show();
+        this.ordemServicosService.deleteDetail(idDetalhesOrdemServico).subscribe(
+          (result) => {
+          console.info('Response: ', result)
+            if (result.statusCode === StatusCodes.NO_CONTENT) {
+              this.loading.hide();
+              if(exitsIdx !== -1) {
+                if (idx != null) {
+                  this.detalheOrdemServicos.splice(exitsIdx, 1)
+                }
+                this.detalhes.data = [...this.detalheOrdemServicos]
+                this.removed = false
+                this.resetFormLista()
+              }
+            }else {
+              this.toastrService.warning(result.msg, 'Atenção!');
+            }          
+        }, (error) => {
+          console.info('Error response: ', error)
+          this.loading.hide();
+          this.toastrService.warning('Erro ao remover item', 'Atenção!');
+        })       
+      } else if (result.dismiss === Swal.DismissReason.cancel) {       
+      }
+    })
+  }
 
 }

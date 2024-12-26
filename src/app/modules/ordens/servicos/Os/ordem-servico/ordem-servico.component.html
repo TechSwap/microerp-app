@@ -83,7 +83,7 @@
                 <mat-datepicker-toggle matIconSuffix [for]="dataEntrega"></mat-datepicker-toggle>
                 <mat-datepicker #dataEntrega></mat-datepicker>
             </mat-form-field>
-            <mat-form-field style="margin-left: 10px;" ngIf="isUpdate">
+            <mat-form-field style="margin-left: 10px;" *ngIf="isUpdate">
                 <mat-label>Nota de Saida</mat-label>
                 <input matInput placeholder="Nota de Saida"
                     formControlName="notaSaida">
