@@ -19,12 +19,19 @@ export interface Itens {
 
 export interface StartOp {
   IdOrdemProducao: string
-  IdOrdemProducaoDetalhes: string[]
+  Detalhes: Detalhes[]
 }
 
 export interface CancellyOp {
   IdOrdemProducao: string
   Motivo: string
+}
+
+export interface Detalhes {
+  idOrdemProducaoDetalhe?: string;
+  idOperacao?: string;
+  idFuncionario?: string;
+  horasTrabalhadas?: number
 }
 
 

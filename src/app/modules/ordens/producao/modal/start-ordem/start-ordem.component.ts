@@ -6,7 +6,7 @@ import {MatTableDataSource} from "@angular/material/table";
 import {NgxSpinnerService} from "ngx-spinner";
 import {OrdemProducaoService} from "../../../../../services/ordem-producao.service";
 import {ToastrService} from "ngx-toastr";
-import {Itens, StartOp} from "../../../../../models/request/ordem-producao-request.model";
+import {Detalhes, Itens, StartOp} from "../../../../../models/request/ordem-producao-request.model";
 
 
 @Component({
@@ -53,23 +53,27 @@ export class StartOrdemComponent extends BaseComponent implements OnInit{
     this.loading.hide()
   }
 
-  selectItemLista(item: string) {
+  selectItemLista(item: string) {    
     const itemIndex = this.listaIniciar.indexOf(item);
     if (itemIndex === -1) {
       this.listaIniciar.push(item);
     } else {
       this.listaIniciar.splice(itemIndex, 1);
-    }
+    }   
   }
 
   onSubmit() {
     if(this.listaIniciar.length <= 0){
       this.toastrService.warning('Selecione os itens a serem iniciados')
     }else{
-      this.loading.show()
+      this.loading.show()      
+      let detalhes: Detalhes[] = this.listaIniciar.map((id) => ({
+        idOrdemProducaoDetalhe: id
+      }))
+
       let req: StartOp = {
         IdOrdemProducao: this.idOrdemProducao
-        , IdOrdemProducaoDetalhes: this.listaIniciar
+        , Detalhes: detalhes
       }
       this.ordemProducaoService.startOp(req).subscribe((result) => {
         if (result.statusCode === 204) {

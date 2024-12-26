@@ -68,8 +68,7 @@ export class OrdemProducaoComponent extends BaseComponent implements OnInit {
 
   verifyOp() {
     this.activatedRoute.paramMap.subscribe((params) => {
-      this.idOrdemProducao = <string>params.get('id')
-      console.info('Id: ', this.idOrdemProducao)
+      this.idOrdemProducao = <string>params.get('id')     
       if(this.idOrdemProducao !== null) {
         this.getOrdemProducao(this.idOrdemProducao)
         this.isUpdate = true
@@ -142,11 +141,11 @@ export class OrdemProducaoComponent extends BaseComponent implements OnInit {
     this.loading.show();
     this.ordemServicosService.listaOs(metaData).subscribe(
       (result) => {
-      if (result.statusCode === 200) {
+      if (result.statusCode === 200) {       
         let firstPosition: SelectModel = { Id: "", Descricao: "Selecione" }
         this.dropOrdemServicos.push(firstPosition)
         let os : OrdemServicoResponse[] = result.data;
-        os.forEach(o => {
+        os.filter((ordem) => ordem.status === 0).forEach(o => {
           this.dropOrdemServicos.push({
             Id: o.idOrdemServico,
             Descricao: o.numeroOS
@@ -268,9 +267,10 @@ export class OrdemProducaoComponent extends BaseComponent implements OnInit {
     }
     this.ordemProducaoService.addNovaOp(req).subscribe(
       (result) => {
+        console.info('Response Add Ordem: ', result)
         if (result.statusCode === 204) {
           this.loading.hide();
-          this.router.navigate(['/ordens'])
+          this.router.navigate(['/ordemProducao'])
         }
       },
       (error) => {

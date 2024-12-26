@@ -88,7 +88,7 @@ export class OperacoesComponent extends BaseComponent implements OnInit {
         if(result === null) {
           this.gridOperacoes.loadGridOperacoes([], 0)
         }else {
-          if (result.statusCode === 200 || result.statusCode === 204) {
+          if (result.statusCode === 200 || result.statusCode === 204) {           
             this.gridOperacoes.loadGridOperacoes(result.data, result.metaData.totalRecords)
           } 
         }
